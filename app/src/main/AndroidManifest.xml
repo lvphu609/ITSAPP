@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.llh_pc.it_support" >
+
+    <!-- allow -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/CustomActionBarTheme" >
+        <activity
+            android:name=".activities.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/delete_title_bar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.frmDK_DN"
+            android:label="@string/title_activity_frm_dk__dn"
+            android:theme="@style/delete_title_bar" >
+        </activity>
+        <activity
+            android:name=".activities.frmDangNhap"
+            android:label="@string/title_activity_frm_dang_nhap" >
+        </activity>
+        <activity
+            android:name=".activities.Main2Activity"
+            android:label="@string/title_activity_main2" >
+        </activity>
+        <activity
+            android:name=".activities.frmQuenMK"
+            android:label="@string/title_activity_frm_quen_mk" >
+        </activity>
+        <activity
+            android:name=".activities.frmTaoMoiMK"
+            android:label="@string/title_activity_frm_quen_mk" >
+        </activity>
+        <activity
+            android:name=".activities.frmTaoMoiMatKhau"
+            android:label="@string/title_activity_frm_quen_mk" >
+        </activity>
+        <activity
+            android:name=".activities.frmBaoHu"
+            android:label="@string/title_activity_frm_bao_hu" >
+        </activity>
+        <activity
+            android:name=".activities.frmChildPost"
+            android:label="@string/title_activity_frm_child_post" >
+        </activity>
+        <activity
+            android:name=".activities.Main22Activity"
+            android:label="@string/title_activity_main22" >
+        </activity>
+        <activity
+            android:name=".activities.frmDangKy"
+            android:label="@string/title_activity_frm_dang_ky" >
+        </activity>
+        <activity
+            android:name=".activities.frmThongBao"
+            android:label="@string/title_activity_frm_thong_bao" >
+        </activity>
+        <activity
+            android:name=".activities.frmTimKiem"
+            android:label="@string/title_activity_frm_tim_kiem" >
+        </activity>
+        <activity
+            android:name=".activities.frmLuuTru"
+            android:label="@string/title_activity_frm_luu_tru" >
+        </activity>
+        <activity
+            android:name=".activities.frmTabHost"
+            android:label="@string/title_activity_frm_tab_host" >
+        </activity>
+    </application>
+
+</manifest>
