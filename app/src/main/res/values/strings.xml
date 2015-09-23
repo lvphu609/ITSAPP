@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">IT_Support</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_frm_dk__dn">frmDK_DN</string>
+    <string name="title_activity_frm_dang_nhap">Đăng nhập</string>
+    <string name="msg_can_not_connect_to_network">Không có kết nối internet. Vui lòng thử lại.</string>
+    <string name="msg_can_not_connect_to_server">Không thể kết nối tới máy chủ.</string>
+    <string name="title_activity_frm_dang_ky">Đăng Ký</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_frm_quen_mat_khau">frmQuenMatKhau</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="title_activity_frm_quen_mk">Quên mật khẩu</string>
+    <string name="title_activity_frm_tao_moi_mk">frmTaoMoiMK</string>
+    <string name="title_activity_frm_tao_moi_mat_khau">frmTaoMoiMatKhau</string>
+    <string name="title_activity_frm_bao_hu">Báo hỏng</string>
+    <string name="title_activity_post_adapter">PostAdapter</string>
+    <string name="lable_quenmk">Vui lòng nhập email của bạn. Mã xác thực sẽ được gửi đến mail này</string>
+    <string name="title_activity_child_post">childPost</string>
+    <string name="title_activity_frm_child_post">Báo hỏng</string>
+    <string name="title_activity_child_post_adapter">ChildPostAdapter</string>
+    <string name="title_activity_detail_fragment">DetailFragment</string>
+    <string name="title_activity_main22">Main22Activity</string>
+    <string name="title_activity_custom_drawer_adapter">CustomDrawerAdapter</string>
+    <string name="title_activity_frm_thong_bao">frmThongBao</string>
+    <string name="title_activity_frm_tim_kiem">frmTimKiem</string>
+    <string name="title_activity_frm_luu_tru">frmLuuTru</string>
+    <string name="title_activity_frm_tab_host">frmTabHost</string>
+    <string name="title_checkbox_preference">Hồ sơ cá nhân</string>
+    <string name="title_activity_profile">Profile</string>
+</resources>
