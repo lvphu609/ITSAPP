@@ -80,10 +80,8 @@
             android:name=".activities.frmTabHost"
             android:label="@string/title_activity_frm_tab_host" >
         </activity>
-        <activity
-            android:name=".activities.Profile"
-            android:label="@string/title_activity_profile" >
-        </activity>
+        <activity android:name=".activities.Profile"
+            android:label="@string/title_activity_profile"></activity>
 
     </application>
 
