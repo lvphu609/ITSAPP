@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Base64;
 import android.view.Display;
 import android.view.Gravity;
@@ -20,36 +17,25 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.llh_pc.it_support.adapters.ChildPostAdapter;
+import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.models.GetAccount;
 import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
-import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
-import com.example.llh_pc.it_support.models.JsonParses.PostParse;
-import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
-import com.example.llh_pc.it_support.utils.Events.eventGetAccount;
-
-import com.example.llh_pc.it_support.R;
-import com.example.llh_pc.it_support.models.Account;
-import com.example.llh_pc.it_support.utils.Events.eventLogin;
+import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
-import com.example.llh_pc.it_support.utils.SharePreference;
 import com.google.gson.Gson;
 
-import java.net.URL;
 import java.util.ArrayList;
 
 public class Profile extends Activity {
@@ -65,6 +51,7 @@ public class Profile extends Activity {
     ImageButton setavatar;
     EditText eemail, efullname,  eadress,ephone,password,passcu,passmoi,cfpassmoi;
     Button pc,laptop,mayin,scan,mayfax,photocopy,editProfile,OK,changePass;
+    ImageLoader imageload;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,7 +73,7 @@ public class Profile extends Activity {
         StrictMode.enableDefaults();
 
         accdal = new AccountDAL(getBaseContext());
-
+        imageload =new ImageLoader(getBaseContext());
 
 
 
@@ -207,7 +194,7 @@ public class Profile extends Activity {
                      acctye = getAccountJson.getDKresults().getAccount_type().toString();
                      avatar= getAccountJson.getDKresults().getAvatar().toString();
 //                     avatar1 = StringToBitMap(avatar);
-//                    arrayListAccount = getListPostJson.getResults();
+//                    arrayListAccount = getAccountJson.getResults();
 //                    for(GetAccount str: arrayListAccount){
 //                        String email = str.getEmail();
 //                        String ho_ten = str.getFull_name();
@@ -228,6 +215,7 @@ public class Profile extends Activity {
         ephone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
         setavatar = (ImageButton) findViewById (R.id.bntImage);
+        imageload.DisplayImage(avatar,setavatar);
 
         eemail.setText(email);
         efullname.setText(full_name);
