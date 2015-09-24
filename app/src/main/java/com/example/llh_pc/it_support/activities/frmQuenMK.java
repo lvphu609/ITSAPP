@@ -1,6 +1,7 @@
 package com.example.llh_pc.it_support.activities;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -40,6 +41,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
+        //btnSend.setTextColor(Color.WHITE);
         edtMail = (EditText)findViewById(R.id.edtMail);
         edtMail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -62,7 +64,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 else
                 {
                     btnSend.setEnabled(true);
-                    btnSend.setBackgroundColor(0x0099ff);
+                    btnSend.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     btnSend.invalidate();
                 }
             }

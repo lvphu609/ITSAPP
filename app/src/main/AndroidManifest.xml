@@ -3,6 +3,7 @@
     package="com.example.llh_pc.it_support" >
 
     <!-- allow -->
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -50,7 +51,8 @@
         </activity>
         <activity
             android:name=".activities.frmBaoHu"
-            android:label="@string/title_activity_frm_bao_hu" >
+            android:label="@string/title_activity_frm_bao_hu"
+            >
         </activity>
         <activity
             android:name=".activities.frmChildPost"

@@ -1,10 +1,15 @@
 package com.example.llh_pc.it_support.utils.Events;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmDK_DN;
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
@@ -49,8 +54,29 @@ public class eventSetPass implements View.OnClickListener {
             restClient.addParam(Account.CONFIRM_PASSWORD,CommonFunction.md5(apass));
             restClient.addParam(Account.EMAIL, mail);
             restClient.execute(RequestMethod.POST);
+            if(!pass.equals(apass))
+            {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.popup_validation, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                alertDialogBuilder.setView(promptsView);
+                final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                textView.setText("Vui lòng nhập lại mật khẩu.");
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
 
-            //if response success
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+            }
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
@@ -60,6 +86,28 @@ public class eventSetPass implements View.OnClickListener {
                     //save values into sharePreference
                     Intent intent = new Intent(context, frmDK_DN.class);
                     context.startActivity(intent);
+                }else
+                {
+                    LayoutInflater li = LayoutInflater.from(context);
+                    View promptsView = li.inflate(R.layout.popup_validation, null);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                    alertDialogBuilder.setView(promptsView);
+                    final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                    textView.setText("Mã xác thực không hợp lệ");
+                    // set dialog message
+                    alertDialogBuilder
+                            .setCancelable(false)
+                            .setPositiveButton("OK",
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+
+                                        }
+                                    });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
                 }
             }
         }catch (Exception ex)

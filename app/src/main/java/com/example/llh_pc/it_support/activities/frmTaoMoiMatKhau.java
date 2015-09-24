@@ -48,6 +48,11 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
 
         setData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        edtCode = (EditText)findViewById(R.id.edtCode);
+
+        edtPass = (EditText)findViewById(R.id.edtPassword);
+        edtAPass = (EditText)findViewById(R.id.edtAPass);
     }
 
     @Override
