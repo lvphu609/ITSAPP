@@ -3,6 +3,7 @@ package com.example.llh_pc.it_support.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.StrictMode;
@@ -10,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +41,8 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import static android.content.DialogInterface.*;
+
 public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener {
     public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_PostTile + Def.API_FORMAT_JSON;
     //progfile
@@ -51,6 +55,7 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
     DrawerLayout dLayout;
     ListView dList;
     ArrayAdapter<String> adapter1;
+    private OnClickListener dialogClickListener;
 
 
     @Override
@@ -153,6 +158,33 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         getData();
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Intent intent = new Intent(this, frmDK_DN.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(frmBaoHu.this);
+        new AlertDialog.Builder(frmBaoHu.this)
+                .setMessage("Thoát app?")
+                .setCancelable(false)
+                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        /*Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+                        startActivity(intent);
+                        //startActivity(intent);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // Perform Your Task Here--When No is pressed
+                        dialog.cancel();
+                    }
+                }).show();
     }
 
     @Override
