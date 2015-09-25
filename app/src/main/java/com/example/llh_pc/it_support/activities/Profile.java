@@ -42,6 +42,7 @@ public class Profile extends Activity {
  ImageButton bntImage;
     public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
     private ArrayList<GetAccount> arrayListAccount;
+    private ArrayList<String> arr = new ArrayList<String>();
     LinearLayout ll;
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
@@ -191,7 +192,8 @@ public class Profile extends Activity {
                      full_name = getAccountJson.getDKresults().getFull_name().toString();
                      phone = getAccountJson.getDKresults().getPhone_number().toString();
                      address =getAccountJson.getDKresults().getAddress().toString();
-                     acctye = getAccountJson.getDKresults().getAccount_type().toString();
+//                     acctye = getAccountJson.getDKresults().getAccount_type().toString();
+                    arr = getAccountJson.getDKresults().getAccount_type();
                      avatar= getAccountJson.getDKresults().getAvatar().toString();
 //                     avatar1 = StringToBitMap(avatar);
 //                    arrayListAccount = getAccountJson.getResults();
@@ -293,106 +295,135 @@ public class Profile extends Activity {
         mayfax = (Button) findViewById(R.id.bntMayfax);
         mayin = (Button) findViewById(R.id.bntMayin);
         chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
-        if(acctye.toString().equals("[1]"))
-        {
-            user.setVisibility(View.VISIBLE);
-            chuyenmon.setVisibility(View.INVISIBLE);
-        }
-        else
-        {
-            user.setVisibility(View.GONE);
-            provier.setVisibility(View.VISIBLE);
-            chuyenmon.setVisibility(View.VISIBLE);
-            if(acctye.toString().equals("[3]"))
-            {
 
-                pc.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[3,4]"))
-            {
-                pc.setVisibility(View.VISIBLE);
-                laptop.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[3,4,5]"))
-            {
-                pc.setVisibility(View.VISIBLE);
-                laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[3,4,5,6]"))
-            {
-                pc.setVisibility(View.VISIBLE);
-                laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[3,4,5,6,7]"))
-            {
-                pc.setVisibility(View.VISIBLE);
-                laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[3,4,5,6,7,8]"))
-            {
-                pc.setVisibility(View.VISIBLE);
-                laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);
-                mayfax.setVisibility(View.VISIBLE);
-            }
-            if(acctye.toString().equals("[4]"))
-            {laptop.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[4,5]"))
-            {laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[4,5,6]"))
-            {laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[4,5,6,7]"))
-            {       laptop.setVisibility(View.VISIBLE);
-                mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[4,5,6,7,8]"))
-             {    laptop.setVisibility(View.VISIBLE);
-                 mayin.setVisibility(View.VISIBLE);
-                 photocopy.setVisibility(View.VISIBLE);
-                 scan.setVisibility(View.VISIBLE);
-                 mayfax.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[5]"))
-            {  mayin.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[5,6]"))
-            { mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[5,6,7]"))
-            {    mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[5,6,7,8]"))
-            {     mayin.setVisibility(View.VISIBLE);
-                photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);
-                mayfax.setVisibility(View.VISIBLE);}}
-            if(acctye.toString().equals("[6]"))
-            {photocopy.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[6,7]"))
-            { photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[6,7,8]"))
-            { photocopy.setVisibility(View.VISIBLE);
-                scan.setVisibility(View.VISIBLE);
-                mayfax.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[7]"))
-            {scan.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[7,8]"))
-            {scan.setVisibility(View.VISIBLE);
-                mayfax.setVisibility(View.VISIBLE);}
-            if(acctye.toString().equals("[8]"))
-            {mayfax.setVisibility(View.VISIBLE);}
+        for (int i = 0 ; i < arr.size();i++)
+        {
+
+
+                if (arr.get(i).equals("1")) {
+                    user.setVisibility(View.VISIBLE);
+                    chuyenmon.setVisibility(View.INVISIBLE);
+                } else {
+                    user.setVisibility(View.GONE);
+                    provier.setVisibility(View.VISIBLE);
+                    chuyenmon.setVisibility(View.VISIBLE);
+                    if(arr.get(i).equals("3"))
+                    {pc.setVisibility(View.VISIBLE);}
+                    else if(arr.get(i).equals("4"))
+                    {laptop.setVisibility(View.VISIBLE);}
+                    else if(arr.get(i).equals("5"))
+                    {mayin.setVisibility(View.VISIBLE);}
+                    else if(arr.get(i).equals("6"))
+                    {photocopy.setVisibility(View.VISIBLE);}
+                    else if(arr.get(i).equals("7"))
+                    {scan.setVisibility(View.VISIBLE);}
+                    else if(arr.get(i).equals("8"))
+                    {mayfax.setVisibility(View.VISIBLE);}
+                    else {}
+                }
+
+
+        }
+//        if(acctye.toString().equals("[1]"))
+//        {
+//            user.setVisibility(View.VISIBLE);
+//            chuyenmon.setVisibility(View.INVISIBLE);
+//        }
+//        else
+//        {
+//            user.setVisibility(View.GONE);
+//            provier.setVisibility(View.VISIBLE);
+//            chuyenmon.setVisibility(View.VISIBLE);
+//            if(acctye.toString().equals("[3]"))
+//            {
+//
+//                pc.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[3,4]"))
+//            {
+//                pc.setVisibility(View.VISIBLE);
+//                laptop.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[3,4,5]"))
+//            {
+//                pc.setVisibility(View.VISIBLE);
+//                laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[3,4,5,6]"))
+//            {
+//                pc.setVisibility(View.VISIBLE);
+//                laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[3,4,5,6,7]"))
+//            {
+//                pc.setVisibility(View.VISIBLE);
+//                laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[3,4,5,6,7,8]"))
+//            {
+//                pc.setVisibility(View.VISIBLE);
+//                laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);
+//                mayfax.setVisibility(View.VISIBLE);
+//            }
+//            if(acctye.toString().equals("[4]"))
+//            {laptop.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[4,5]"))
+//            {laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[4,5,6]"))
+//            {laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[4,5,6,7]"))
+//            {       laptop.setVisibility(View.VISIBLE);
+//                mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[4,5,6,7,8]"))
+//             {    laptop.setVisibility(View.VISIBLE);
+//                 mayin.setVisibility(View.VISIBLE);
+//                 photocopy.setVisibility(View.VISIBLE);
+//                 scan.setVisibility(View.VISIBLE);
+//                 mayfax.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[5]"))
+//            {  mayin.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[5,6]"))
+//            { mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[5,6,7]"))
+//            {    mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[5,6,7,8]"))
+//            {     mayin.setVisibility(View.VISIBLE);
+//                photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);
+//                mayfax.setVisibility(View.VISIBLE);}}
+//            if(acctye.toString().equals("[6]"))
+//            {photocopy.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[6,7]"))
+//            { photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[6,7,8]"))
+//            { photocopy.setVisibility(View.VISIBLE);
+//                scan.setVisibility(View.VISIBLE);
+//                mayfax.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[7]"))
+//            {scan.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[7,8]"))
+//            {scan.setVisibility(View.VISIBLE);
+//                mayfax.setVisibility(View.VISIBLE);}
+//            if(acctye.toString().equals("[8]"))
+//            {mayfax.setVisibility(View.VISIBLE);}
 
     }
 

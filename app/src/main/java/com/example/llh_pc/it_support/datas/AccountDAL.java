@@ -32,7 +32,7 @@ public class AccountDAL {
 
     frmDangKy frmDK = new frmDangKy();
     private Context context;
-
+    public static boolean emailTontai =false;
     private String android_id = Def.STRING_EMPTY;
     //URL API
     private String url_dangky = Def.API_BASE_LINK + Def.API_CREATE + Def.API_FORMAT_JSON;
@@ -127,7 +127,7 @@ public class AccountDAL {
 
                 //if result from response success
                 if(getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-
+                    emailTontai =false;
 //                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 //                    SharedPreferences.Editor editor = sharedPreferences.edit();
 //                    id = getLoginJson.getResults().getAccount_id();
@@ -151,6 +151,7 @@ public class AccountDAL {
             }
         }
         catch(Exception e){
+            emailTontai= true;
             Log.e(Def.ERROR, e.getMessage());
             return new Result<String>(ResultStatus.FALSE, e.getMessage());
         }

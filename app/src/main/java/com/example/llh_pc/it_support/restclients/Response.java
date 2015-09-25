@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class Response  <S,T>  {
     public static final String STATUS_SUCCESS = "success";
     public static final String STATUS_FALSE = "failure";
-
+    public static final String STAUS_FALSE = "false";
     @SerializedName("status")
     private String status;
 
