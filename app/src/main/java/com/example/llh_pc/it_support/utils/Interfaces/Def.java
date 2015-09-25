@@ -15,6 +15,8 @@ public interface Def {
     public static final String API_FORMAT_JSON = "";
     public static final String API_LOGIN = "accounts/login/";
     public static final String API_GET_ACCOUNT_INFO_BY_ID ="accounts/get_account_info_by_id";
+    public static final String API_CHECKEMAIL ="accounts/check_email_exist";
+
     //Forgot Pass
     public static final String API_ForgotPass = "accounts/forgot_password";
     //reset pass
@@ -31,6 +33,7 @@ public interface Def {
     public static final String API_CREATESubPost = "posts/create/";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
+    public static final String REPONSE_CHECKEMAIL="true";
     public static final String STATUS = "status";
     public static final String MESSAGE = "message";
     public static final String RESULTS = "results";

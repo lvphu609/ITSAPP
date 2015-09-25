@@ -166,6 +166,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), frmDK_DN.class);
         startActivityForResult(myIntent, 0);
+
         return true;
     }
 
