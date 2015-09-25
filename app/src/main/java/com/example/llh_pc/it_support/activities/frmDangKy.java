@@ -1,7 +1,9 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +42,15 @@ import android.widget.Toast;
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.fragments.DateTimePicker;
+import com.example.llh_pc.it_support.models.Account;
+import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.models.Result;
+import com.example.llh_pc.it_support.models.ResultStatus;
+import com.example.llh_pc.it_support.restclients.RequestMethod;
+import com.example.llh_pc.it_support.restclients.Response;
+import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.google.gson.Gson;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
 
@@ -54,9 +66,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class frmDangKy extends ActionBarActivity {
-
+    private boolean is_network = false;
+    TextView errorname;
     AccountDAL accdal;
     TextView txtDate;
+    private Context context;
+    boolean emailTontai =false;
     //avatar
     Bitmap thumbnail, bm;
     public static String temp, accType, checkedbox;
@@ -78,8 +93,8 @@ public class frmDangKy extends ActionBarActivity {
     boolean checkMayPhotoInvisible = false;
     boolean checkScanInvisible = false;
     boolean checkfaxInvisible = false;
-    boolean inVaild =false;
-
+    boolean inVaild = false;
+    boolean checkpasswordtrue = false;
     public ArrayList<View> listEditText = new ArrayList<>();
     //API
 //    private Context context;
@@ -87,7 +102,7 @@ public class frmDangKy extends ActionBarActivity {
 //    private boolean is_network = false;
 //    private SharePreference share_preference;
 
-
+    private String url_checkemail = Def.API_BASE_LINK + Def.API_CHECKEMAIL + Def.API_FORMAT_JSON;
     //Camera
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -96,7 +111,7 @@ public class frmDangKy extends ActionBarActivity {
     ImageButton bntImage;
     Bitmap originImage;
     CheckBox prefCheckBox, provider, user, checkPC, Mayin, scan, fax, Laptop, photocopy;
-    TextView prefEditText, cbPC, cbLaptop, cbPhoto, cbScan, cbFax, cbMayin, chuyenmon, errorline1, errorline2;
+    TextView prefEditText, cbPC, cbLaptop, cbPhoto, cbScan, cbFax, cbMayin, chuyenmon, errorline1, errorline2, errorpass1, errorpass2,errorcfpassword,errorphone1,errorphone2,erroraddress;
     public static EditText Ifullname, Iemail, Ipassword, Iconfirmpassword, Iphone, Idia_chi;
     ArrayList<DateTimePicker> arrDate = new ArrayList<DateTimePicker>();
     ArrayAdapter<DateTimePicker> adapter = null;
@@ -147,9 +162,12 @@ public class frmDangKy extends ActionBarActivity {
 
             }
         });
-
+        //actionBar
+//        ActionBar actionBar = getActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dangkyok = (Button) findViewById(R.id.dangkyok);
+        dangkyok.setTextColor(getResources().getColor(R.color.actionbar_text));
         //Edittext
 
         Ifullname = (EditText) findViewById(R.id.full_name);
@@ -161,7 +179,8 @@ public class frmDangKy extends ActionBarActivity {
         //ErrorLine
         errorline1 = (TextView) findViewById(R.id.erroEmail1);
         errorline2 = (TextView) findViewById(R.id.erroEmail2);
-
+        errorcfpassword = (TextView) findViewById(R.id.cfpassword);
+        erroraddress = (TextView) findViewById(R.id.erroraddress);
         //cb
         cbPC = (TextView) findViewById(R.id.cbPC);
         cbLaptop = (TextView) findViewById(R.id.cbLaptop);
@@ -170,6 +189,11 @@ public class frmDangKy extends ActionBarActivity {
         cbFax = (TextView) findViewById(R.id.cbFax);
         cbScan = (TextView) findViewById(R.id.cbScan);
         chuyenmon = (TextView) findViewById(R.id.chuyenmon);
+        errorname = (TextView) findViewById(R.id.errorname);
+        errorpass1 = (TextView) findViewById(R.id.errorpass1);
+        errorpass2 = (TextView) findViewById(R.id.errorpass2);
+        errorphone1 =(TextView) findViewById(R.id.errorphone1);
+        errorphone2 =(TextView) findViewById(R.id.errorphone2);
         //set value
 
 
@@ -183,11 +207,14 @@ public class frmDangKy extends ActionBarActivity {
         dangkyok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (inVaild ==false)
-                {   checkErrorLineEmail =false;
+                getcheckEmail(Iemail.getText().toString());
+                fieldNull();
+                if (inVaild == false || emailTontai == true) {
+                    checkErrorLineEmail = false;
                     ErrorLine();
 
                 }
+
 
                 boolean allInformationtrue = false;
                 try {
@@ -196,9 +223,11 @@ public class frmDangKy extends ActionBarActivity {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                if (inVaild ==true) {
+                if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
+
                     startActivity(DN);
                     Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+
                 }
 
 
@@ -207,6 +236,17 @@ public class frmDangKy extends ActionBarActivity {
 
 //        AccountDAL abc = new AccountDAL(frmDangKy.this, listEditText);
 
+        Ifullname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true)
+                    errorname.setVisibility(View.GONE);
+                else {
+                    errorname.setVisibility(View.GONE);
+                }
+            }
+
+        });
 
         Ifullname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -222,6 +262,8 @@ public class frmDangKy extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
+
+                    errorname.setVisibility(View.VISIBLE);
                     fullnameflag = false;
                     setDongyEnble();
 
@@ -230,6 +272,20 @@ public class frmDangKy extends ActionBarActivity {
                     setDongyEnble();
                 }
 
+            }
+        });
+
+        Iemail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if (hasFocus == true) {
+                    errorline2.setVisibility(View.GONE);
+                    errorline1.setVisibility(View.GONE);
+                } else if (hasFocus == false) {
+                    errorline2.setVisibility(View.GONE);
+                    errorline1.setVisibility(View.GONE);
+                }
             }
         });
         Iemail.addTextChangedListener(new TextWatcher() {
@@ -246,11 +302,10 @@ public class frmDangKy extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if (s.toString().matches(""))
-                {
-
+                if (s.toString().matches("")) {
+                    errorline1.setVisibility(View.VISIBLE);
                     validate(s.toString());
-                    checkErrorLineEmail=false;
+                    checkErrorLineEmail = false;
                     emailflag = false;
                     setDongyEnble();
 
@@ -259,10 +314,24 @@ public class frmDangKy extends ActionBarActivity {
 //
                 else {
 
-                    inVaild =false;
+                    inVaild = false;
                     emailflag = true;
                     setDongyEnble();
                     validate(s.toString());
+                    errorline1.setVisibility(View.GONE);
+                }
+
+            }
+        });
+        Ipassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+
+
+                } else {
+                    errorpass1.setVisibility(View.GONE);
+                    errorpass2.setVisibility(View.GONE);
                 }
 
             }
@@ -281,11 +350,28 @@ public class frmDangKy extends ActionBarActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
+                    errorpass1.setVisibility(View.VISIBLE);
+                    errorpass2.setVisibility(View.GONE);
                     passwordflag = false;
                     setDongyEnble();
+                    checkpasswordtrue = false;
+                } else if (s.toString() != null && s.toString().length() <= 5) {
+                    checkpasswordtrue = false;
+                    errorpass2.setVisibility(View.VISIBLE);
+                    errorpass1.setVisibility(View.GONE);
                 } else {
+                    checkpasswordtrue = true;
                     passwordflag = true;
                     setDongyEnble();
+                }
+            }
+        });
+        Iconfirmpassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true) {
+                } else {
+                    errorcfpassword.setVisibility(View.GONE);
                 }
             }
         });
@@ -316,6 +402,16 @@ public class frmDangKy extends ActionBarActivity {
                 }
             }
         });
+        Iphone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true) {
+                } else {
+                    errorphone1.setVisibility(View.GONE);
+                    errorphone2.setVisibility(View.GONE);
+                }
+            }
+        });
         Iphone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -331,10 +427,32 @@ public class frmDangKy extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
                     phoneflag = false;
+                    errorphone1.setVisibility(View.VISIBLE);
+                    errorphone2.setVisibility(View.GONE);
+                    setDongyEnble();
+                } else if (Iphone.getText().toString().length() <= 9) {
+                    phoneflag = false;
+                    errorphone2.setVisibility(View.VISIBLE);
+                    errorphone1.setVisibility(View.GONE);
                     setDongyEnble();
                 } else {
                     phoneflag = true;
                     setDongyEnble();
+                    errorphone1.setVisibility(View.GONE);
+                    errorphone2.setVisibility(View.GONE);
+                }
+
+            }
+        });
+        Idia_chi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus ==true)
+                {}
+                else
+                {
+                    erroraddress.setVisibility(View.GONE);
+                    erroraddress.setVisibility(View.GONE);
                 }
             }
         });
@@ -354,6 +472,7 @@ public class frmDangKy extends ActionBarActivity {
                 if (s.toString().matches("")) {
                     addressflag = false;
                     setDongyEnble();
+                    erroraddress.setVisibility(View.VISIBLE);
 
                 } else {
                     addressflag = true;
@@ -384,11 +503,17 @@ public class frmDangKy extends ActionBarActivity {
 
     }
 
+    //
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_frm_dang_ky, menu);
+//        return true;
+//    }
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_dang_ky, menu);
-        return true;
+    public void onBackPressed() {
+        final Intent intent = new Intent(this, frmDK_DN.class);
+        startActivity(intent);
     }
 
     @Override
@@ -397,17 +522,22 @@ public class frmDangKy extends ActionBarActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        Intent myIntent = new Intent(getApplicationContext(), frmDK_DN.class);
+        startActivityForResult(myIntent, 0);
+
+        return true;
+
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
         //CheckBoxDiaup
 //        Intent intent = new Intent();
 //        intent.setClass(frmDangKy.this, setPreferenceActivity.class);
 //        startActivityForResult(intent, 0);
 
-        return super.onOptionsItemSelected(item);
+//        return super.onOptionsItemSelected(item);
 
     }
 
@@ -576,6 +706,7 @@ public class frmDangKy extends ActionBarActivity {
                 setDongyEnble();
                 BitMapToString(bm);
 
+
             }
         }
 
@@ -635,8 +766,8 @@ public class frmDangKy extends ActionBarActivity {
     private void showPopUp() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
-        helpBuilder.setTitle("Chuyên môn");
-        helpBuilder.setMessage("Chuyên môn sửa chữa");
+//        helpBuilder.setTitle("Chuyên môn");
+        helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
 
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
@@ -802,10 +933,14 @@ public class frmDangKy extends ActionBarActivity {
 //        }
 //    };
     public void setDongyEnble() {
-        if (fullnameflag == true && emailflag == true && passwordflag == true && confirmpasswordflag == true && phoneflag == true && addressflag == true && selectedImageflag == true && checkAccountType == true) {
+        if (fullnameflag == true && emailflag == true && passwordflag == true   && addressflag == true && selectedImageflag == true && checkAccountType == true) {
             dangkyok.setEnabled(true);
+            dangkyok.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
         } else {
             dangkyok.setEnabled(false);
+            dangkyok.setBackgroundColor(getResources().getColor(R.color.mauxam));
+            dangkyok.setTextColor(getResources().getColor(R.color.actionbar_text));
         }
 
     }
@@ -820,6 +955,8 @@ public class frmDangKy extends ActionBarActivity {
                 if (items[item].equals("Chụp ảnh")) {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
+                    TextView chonanh = (TextView) findViewById(R.id.chonanh);
+                    chonanh.setVisibility(View.GONE);
                 } else if (items[item].equals("Chọn từ thư viện")) {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
@@ -828,6 +965,8 @@ public class frmDangKy extends ActionBarActivity {
                     startActivityForResult(
                             Intent.createChooser(intent, "Select File"),
                             SELECT_FILE);
+                    TextView chonanh = (TextView) findViewById(R.id.chonanh);
+                    chonanh.setVisibility(View.GONE);
                 } else if (items[item].equals("Hủy")) {
                     dialog.dismiss();
                 }
@@ -925,12 +1064,13 @@ public class frmDangKy extends ActionBarActivity {
         if (checkErrorLineEmail == false) {
             errorline2.setVisibility(View.VISIBLE);
 
-        } else if (checkErrorLineEmail ==true) {
+        } else if (checkErrorLineEmail == true || accdal.emailTontai == false) {
             errorline2.setVisibility(View.GONE);
         }
 
     }
-    public  boolean validate(String hex) {
+
+    public boolean validate(String hex) {
 
 
         String emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@"
@@ -943,6 +1083,53 @@ public class frmDangKy extends ActionBarActivity {
             checkErrorLineEmail = true;
             ErrorLine();
         }
+
         return inVaild;
+    }
+
+    public Result<String> getcheckEmail(String email) {
+
+        try {
+
+            RestClient restClient = new RestClient(url_checkemail);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addParam(Account.EMAIL, email);
+            restClient.execute(RequestMethod.POST);
+            //if response success
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
+                //if result from response success
+                if (getLoginJson.getStatus().equalsIgnoreCase(Response.STAUS_FALSE)) {
+                    emailTontai =false;
+                    return new Result<String>(ResultStatus.FALSE, null, getLoginJson.getMessage());
+                } else {
+                     emailTontai =true;
+                    return new Result<String>(ResultStatus.FALSE, null, getLoginJson.getMessage());
+                }
+            }
+            else{
+                return new Result<String>(ResultStatus.FALSE,context.getResources().getString(R.string.msg_can_not_connect_to_network));
+
+            }
+        } catch (Exception e) {
+            Log.e(Def.ERROR, e.getMessage());
+            return new Result<String>(ResultStatus.FALSE, e.getMessage());
+        }
+    }
+    public void fieldNull()
+    {
+
+        if(fullnameflag == false){}
+
+        else if (emailflag == false){}
+        else if (checkpasswordtrue == false){errorpass2.setVisibility(View.VISIBLE);}
+        else if (confirmpasswordflag == false){errorcfpassword.setVisibility(View.VISIBLE);}
+        else if(phoneflag == false){errorphone2.setVisibility(View.VISIBLE);}
+        else if(addressflag == false){}
+        else if(selectedImageflag == false){}
+        else if(checkAccountType == false){}
+        else {return;}
     }
 }
