@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.activities.frmGhiChu;
 import com.example.llh_pc.it_support.activities.frmLuuTru;
 import com.example.llh_pc.it_support.models.JsonParses.PostParse;
 import com.example.llh_pc.it_support.models.Post;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
  * Created by LLH-PC on 9/22/2015.
  */
 public class evenSubPostType implements AdapterView.OnItemClickListener {
-    public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_CREATESubPost + Def.API_FORMAT_JSON;
+
     private Context context;
     private ArrayList<Post> arrayListPost;
     LocationManager locationManager ;
@@ -43,11 +44,19 @@ public class evenSubPostType implements AdapterView.OnItemClickListener {
     {
         this.context = current;
         this.arrayListPost = list;
-        gpsTracker = new GPSTracker(context);
+        //gpsTracker = new GPSTracker(context);
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        STT = position;
+        Post p = arrayListPost.get(STT);
+        String idPost = p.getId();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("type_id",idPost );
+        editor.commit();
+        Intent intent = new Intent(context, frmGhiChu.class);
+        context.startActivity(intent);
+        /*STT = position;
         LayoutInflater li = LayoutInflater.from(context);
         View promptsView = li.inflate(R.layout.popup_create_post, null);
 
@@ -115,6 +124,6 @@ public class evenSubPostType implements AdapterView.OnItemClickListener {
             AlertDialog alertDialog = alertDialogBuilder.create();
             // show it
             alertDialog.show();
-
+*/
     }
 }

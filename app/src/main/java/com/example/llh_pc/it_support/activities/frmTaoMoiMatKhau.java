@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +25,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
     private EditText edtCode,edtPass,edtAPass;
     private Button btnSetPass;
     private String mail;
+    private int A,B,C = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,14 +51,96 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
 
         setData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
 
+        btnSetPass.setTextColor(getResources().getColor(R.color.actionbar_text));
+
+        edtCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    A = 0;
+                    btnSetPass.setEnabled(false);
+                    btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                } else {
+                    A = 1;
+                    if (A + B + C == 3) {
+                        btnSetPass.setEnabled(true);
+                        btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                    }
+                }
+            }
+        });
+
+        edtPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    B = 0;
+                    btnSetPass.setEnabled(false);
+                    btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                } else {
+                    B = 1;
+                    if (A + B + C == 3) {
+                        btnSetPass.setEnabled(true);
+                        btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                    }
+                }
+            }
+        });
+        edtAPass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    C = 0;
+                    btnSetPass.setEnabled(false);
+                    btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                } else {
+                    C = 1;
+                    if (A + B + C == 3) {
+                        btnSetPass.setEnabled(true);
+                        btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                    }
+                }
+            }
+        });
+    }
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_frm_tao_moi_mat_khau, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
