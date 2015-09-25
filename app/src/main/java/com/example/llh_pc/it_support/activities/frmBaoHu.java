@@ -147,13 +147,13 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         initControl();
         setEventForControl();
         getData();
-
+        //finish();
 
     }
 
     @Override
     public void onBackPressed() {
-        final Intent intent = new Intent(this, frmDK_DN.class);
+        //final Intent intent = new Intent(this, frmDK_DN.class);
         AlertDialog.Builder builder = new AlertDialog.Builder(frmBaoHu.this);
         new AlertDialog.Builder(frmBaoHu.this)
                 .setMessage("Thoát app?")
@@ -161,11 +161,31 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which)
                     {
+                        Intent a = new Intent(Intent.ACTION_MAIN);
+                        a.addCategory(Intent.CATEGORY_HOME);
+                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(a);
+
+                        /*Intent intent=new Intent(frmBaoHu.this,MainActivity.class);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();*/
+
+
                         /*Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);*/
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                        //startActivity(intent);
+                        finish();*/
+
+
+
+
+                        /*Intent a = new Intent(Intent.ACTION_MAIN);
+                        a.addCategory(Intent.CATEGORY_HOME);
+                        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(a);*/
                         dialog.cancel();
                     }
                 })
@@ -178,12 +198,12 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 }).show();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_frm_bao_hu, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
