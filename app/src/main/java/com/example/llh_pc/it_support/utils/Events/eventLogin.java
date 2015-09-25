@@ -46,6 +46,7 @@ public class eventLogin implements View.OnClickListener {
         this.context = current;
         this.views = viewArrayList;
     }
+
     @Override
     public void onClick(View v) {
         try {
@@ -63,13 +64,10 @@ public class eventLogin implements View.OnClickListener {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
-
             EditText edtUserName = (EditText) views.get(0);
             EditText edtPassword = (EditText) views.get(1);
 
-
-
-            CheckBox cbSave = (CheckBox)views.get(2);
+            CheckBox cbSave = (CheckBox) views.get(2);
             String U = edtUserName.getText().toString();
             String P = edtPassword.getText().toString();
             RestClient restClient = new RestClient(url_login);
@@ -77,14 +75,13 @@ public class eventLogin implements View.OnClickListener {
             restClient.addParam(Account.EMAIL, U);
             restClient.addParam(Account.PASSWORD, CommonFunction.md5(P));
             restClient.execute(RequestMethod.POST);
-            if(!emailValidator(edtUserName.getText().toString()))
-            {
+            if (!emailValidator(edtUserName.getText().toString())) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Email không hợp lệ ");
+                textView.setText("Email không hợp lệ.");
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
@@ -100,13 +97,14 @@ public class eventLogin implements View.OnClickListener {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
-            }else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                String jsonObject = restClient.getResponse();
-                Gson gson = new Gson();
-                LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
-                //if result from response success
-                if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                    //save values into sharePreference
+            } else if (edtPassword.getText().length() >= 6) {
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
+                    //if result from response success
+                    if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                        //save values into sharePreference
                         String t = getLoginJson.getResults().getAccess_token();
                         String id = getLoginJson.getResults().getAccount_id();
                         editor.putString("token", t);
@@ -114,31 +112,50 @@ public class eventLogin implements View.OnClickListener {
                         editor.commit();
                         Intent intent = new Intent(context, frmTabHost.class);
                         context.startActivity(intent);
+                    } else {
+                        LayoutInflater li = LayoutInflater.from(context);
+                        View promptsView = li.inflate(R.layout.popup_validation, null);
+                        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                        alertDialogBuilder.setView(promptsView);
+                        final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                        textView.setText("Email hoặc mật khẩu không hợp lệ. Vui lòng nhập lại.");
+                        // set dialog message
+                        alertDialogBuilder
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int id) {
+                                            }
+                                        });
+
+                        // create alert dialog
+                        AlertDialog alertDialog = alertDialogBuilder.create();
+                        // show it
+                        alertDialog.show();
+                        editor.putInt("check", 1);
+                    }
                 }
-                else {
-                    LayoutInflater li = LayoutInflater.from(context);
-                    View promptsView = li.inflate(R.layout.popup_validation, null);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
-                    alertDialogBuilder.setView(promptsView);
-                    final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                    textView.setText("Email hoặc mật khẩu không hợp lệ. Vui lòng nhập lại.");
-                    // set dialog message
-                    alertDialogBuilder
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
+            } else {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.popup_validation, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setView(promptsView);
+                final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                textView.setText("Mật khẩu ");
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
 
-
-                                        }
-                                    });
-
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    // show it
-                    alertDialog.show();
-                    editor.putInt("check", 1);
-                }
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+                editor.putInt("check", 1);
             }
 
         } catch (Exception ex) {
@@ -158,6 +175,7 @@ public class eventLogin implements View.OnClickListener {
         return matcher.matches();
 
     }
+
     private class Asysnc extends AsyncTask<String, Void, ArrayList<LoginParse>> {
         @Override
         protected ArrayList<LoginParse> doInBackground(String... params) {

@@ -23,18 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtCode"
-            android:hint="Code"/>
+            android:hint="Nhập mã xác thực"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtPassword"
-            android:hint="*******"
+            android:hint="Mật khẩu mới"
             android:inputType="textPassword"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtAPass"
-            android:hint="*******"
+            android:hint="Nhập lại mật khẩu"
             android:inputType="textPassword"/>
     </LinearLayout>
     <LinearLayout
@@ -46,6 +46,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btnSetPass"
-            android:text="Xác nhận"/>
+            android:text="Xác nhận"
+            android:textColor="@color/actionbar_text"
+            android:background="@color/mauxam"
+            android:enabled="false"/>
     </LinearLayout>
 </LinearLayout>

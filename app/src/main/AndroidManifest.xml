@@ -51,8 +51,7 @@
         </activity>
         <activity
             android:name=".activities.frmBaoHu"
-            android:label="@string/title_activity_frm_bao_hu"
-            >
+            android:label="@string/title_activity_frm_bao_hu" >
         </activity>
         <activity
             android:name=".activities.frmChildPost"
@@ -84,9 +83,15 @@
         </activity>
         <activity
             android:name=".activities.Profile"
-            android:label="@string/title_activity_profile" >
+            android:label="@string/title_activity_profile" />
+        <activity
+            android:name=".activities.frmGhiChu"
+            android:label="@string/title_activity_frm_ghi_chu" >
         </activity>
-
+        <activity
+            android:name=".activities.frmGhiChuPost"
+            android:label="@string/title_activity_frm_ghi_chu_post" >
+        </activity>
     </application>
 
 </manifest>

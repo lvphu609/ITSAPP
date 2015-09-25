@@ -52,7 +52,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Quêm mật khẩu"
+            android:text="Quên mật khẩu"
             android:id="@+id/txtQuenMatKhau"
             android:textColor="@color/mauxanh"
             android:layout_marginRight="15dp"

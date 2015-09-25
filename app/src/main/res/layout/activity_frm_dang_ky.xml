@@ -38,6 +38,7 @@
                 android:gravity="bottom"
                 android:layout_marginTop="45dp"
                 android:layout_marginLeft="30dp"/>
+
 </RelativeLayout>
         <EditText
             android:id="@+id/full_name"
@@ -50,12 +51,13 @@
             android:maxLines="1"
             android:inputType="text"
             android:hint="Nhập Họ và Tên(*)"/>
+
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="left"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
@@ -79,7 +81,22 @@
             android:inputType="textEmailAddress"
             android:hint="Email(*)"
             />
-
+        <TextView
+            android:id="@+id/erroEmail1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng nhập email"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
+        <TextView
+            android:id="@+id/erroEmail2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Email đã được đăng ký hoặc không đúng định dạng abc@mail.com"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -111,12 +128,28 @@
             android:inputType="textPassword"
             android:hint="Nhập mật khẩu(*)"
             />
+        <TextView
+            android:id="@+id/errorpass1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng nhập mật khẩu"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
+        <TextView
+            android:id="@+id/errorpass2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Mật khẩu phải có ít nhất 6 ký tự"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="left"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -142,6 +175,13 @@
             android:inputType="textPassword"
             android:hint="Xác nhận mật khẩu (*)"
             />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Nhập lại mật khẩu phải trùng khớp với mật khẩu đang ký"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
     </LinearLayout>
     <!--<LinearLayout-->
     <!--android:layout_width="wrap_content"-->
@@ -293,7 +333,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="left"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -319,12 +359,26 @@
             android:inputType="number"
             android:hint="Nhập số điện thoại (*)"
             />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng nhập số điện thoại"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại yêu cầu phải có ít nhất 10 ký tự"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_gravity="left"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
@@ -344,6 +398,13 @@
             android:maxLines="2"
             android:inputType="text"
             android:hint="Nhập địa chỉ(*)"/>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng nhập địa chỉ"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
 
     </LinearLayout>
     <LinearLayout
@@ -494,7 +555,7 @@
             android:gravity="center"
             android:textSize="30dp"
             android:textColor="@color/actionbar_text"
-            android:background="@color/mauxanh"
+            android:background="@color/mauxam"
             android:enabled="false"
             />
         <!--<Button-->

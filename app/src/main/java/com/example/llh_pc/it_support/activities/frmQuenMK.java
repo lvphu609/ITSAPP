@@ -41,7 +41,18 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
 
-        //btnSend.setTextColor(Color.WHITE);
+        initFlags();
+
+        initControl();
+
+        setEventForControl();
+
+        getData();
+
+        setData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        btnSend.setTextColor(getResources().getColor(R.color.actionbar_text));
         edtMail = (EditText)findViewById(R.id.edtMail);
         edtMail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,18 +80,6 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 }
             }
         });
-
-
-        initFlags();
-
-        initControl();
-
-        setEventForControl();
-
-        getData();
-
-        setData();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
    /* @Override
@@ -108,7 +107,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void initControl() {
-        EditText edtMail = (EditText)findViewById(R.id.edtMail);
+        edtMail = (EditText)findViewById(R.id.edtMail);
         views.add((View)edtMail);
         btnSend = (Button)findViewById(R.id.btnSendMail);
     }

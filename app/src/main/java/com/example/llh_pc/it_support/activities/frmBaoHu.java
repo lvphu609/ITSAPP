@@ -1,8 +1,5 @@
 package com.example.llh_pc.it_support.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,21 +16,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.PostAdapter;
-import com.example.llh_pc.it_support.fragments.DetailFragment;
-import com.example.llh_pc.it_support.models.Account;
-import com.example.llh_pc.it_support.models.GetAccount;
-import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.models.JsonParses.PostParse;
 import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
-import com.example.llh_pc.it_support.utils.CommonFunction;
 import com.example.llh_pc.it_support.utils.Events.eventListPostTitle;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
@@ -207,12 +198,12 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 }).show();
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_frm_bao_hu, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

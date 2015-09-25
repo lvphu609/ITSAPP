@@ -1,16 +1,9 @@
 package com.example.llh_pc.it_support.utils.Events;
 
 import android.content.Context;
-import android.content.Intent;
-import android.view.View;
-import android.widget.AdapterView;
 
-import com.example.llh_pc.it_support.activities.Profile;
-import com.example.llh_pc.it_support.activities.frmChildPost;
 import com.example.llh_pc.it_support.models.GetAccount;
 import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
-import com.example.llh_pc.it_support.models.JsonParses.PostParse;
-import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;

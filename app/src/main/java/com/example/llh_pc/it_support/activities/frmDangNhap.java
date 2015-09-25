@@ -52,23 +52,13 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         /*-------Button fogot password---------*/
         final Intent intent1 = new Intent(this, frmQuenMK.class);
-        /*Button btn = (Button)findViewById(R.id.btnLink);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent1);
-            }
-        });*/
-        TextView txtQuenMK = (TextView)findViewById(R.id.txtQuenMatKhau);
+              TextView txtQuenMK = (TextView)findViewById(R.id.txtQuenMatKhau);
         txtQuenMK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(intent1);
             }
         });
-
-
-
 
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -84,7 +74,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 }
             }
         });
-
         editor.putInt("check", 1);
         editor.commit();
 
@@ -92,14 +81,10 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
-
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
-
             @Override
             public void afterTextChanged(Editable s) {
                 if(s.toString().isEmpty() )
@@ -114,26 +99,21 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                     if(E+P == 2)
                     {
                         btnLogin.setEnabled(true);
-                        btnLogin.setBackgroundColor(0x0099ff);
+                        btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                         btnLogin.invalidate();
                     }
                 }
             }
         });
 
-
-
-
         edtPass = (EditText) findViewById(R.id.edtMatKhau);
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -158,15 +138,10 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         });
 
         initFlags();
-
         initControl();
-
         setEventForControl();
-
         getData();
-
         setData();
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }

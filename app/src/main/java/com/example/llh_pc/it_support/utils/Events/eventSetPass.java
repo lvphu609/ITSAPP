@@ -31,8 +31,7 @@ public class eventSetPass implements View.OnClickListener {
     private String mail;
     private String url_resetpass = Def.API_BASE_LINK + Def.API_ResetPass + Def.API_FORMAT_JSON;
 
-    public eventSetPass(Context current, ArrayList<View> viewArrayList, String mail)
-    {
+    public eventSetPass(Context current, ArrayList<View> viewArrayList, String mail) {
         this.context = current;
         this.views = viewArrayList;
         this.mail = mail;
@@ -51,17 +50,38 @@ public class eventSetPass implements View.OnClickListener {
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addParam(Account.CODE_RESET_PASSWORD, code);
             restClient.addParam(Account.PASSWORD, CommonFunction.md5(pass));
-            restClient.addParam(Account.CONFIRM_PASSWORD,CommonFunction.md5(apass));
+            restClient.addParam(Account.CONFIRM_PASSWORD, CommonFunction.md5(apass));
             restClient.addParam(Account.EMAIL, mail);
             restClient.execute(RequestMethod.POST);
-            if(!pass.equals(apass))
-            {
+
+            if (pass.length() <= 6) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Vui lòng nhập lại mật khẩu.");
+                textView.setText("Mật khẩu phải có ít nhất 6 kí tự.");
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+ /*==>*/           } else if (!pass.equals(apass)) {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.popup_validation, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setView(promptsView);
+                final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                textView.setText(" Nhập lại mật khẩu không trùng khớp với mật khẩu đã đăng ký.");
                 // set dialog message
                 alertDialogBuilder
                         .setCancelable(false)
@@ -86,11 +106,10 @@ public class eventSetPass implements View.OnClickListener {
                     //save values into sharePreference
                     Intent intent = new Intent(context, frmDK_DN.class);
                     context.startActivity(intent);
-                }else
-                {
+                } else {
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.popup_validation, null);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
                     alertDialogBuilder.setView(promptsView);
                     final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
                     textView.setText("Mã xác thực không hợp lệ");
@@ -110,8 +129,7 @@ public class eventSetPass implements View.OnClickListener {
                     alertDialog.show();
                 }
             }
-        }catch (Exception ex)
-        {
+        } catch (Exception ex) {
 
         }
     }
