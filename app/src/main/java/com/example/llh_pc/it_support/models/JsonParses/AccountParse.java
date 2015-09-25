@@ -1,7 +1,5 @@
 package com.example.llh_pc.it_support.models.JsonParses;
 
-import com.example.llh_pc.it_support.models.GetAccount;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -81,7 +79,7 @@ public class AccountParse {
         private String address;
 
         @SerializedName("account_type")
-        private String account_type;
+        private ArrayList<String> account_type;
 
         public String getId() {return id;}
         public void setId(String id) {this.id=id;}
@@ -97,8 +95,8 @@ public class AccountParse {
         public void setAddress(String address) {
             this.address = address;
         }
-        public String getAccount_type(){return account_type;}
-        public void setAccount_type(String account_type){this.account_type = account_type;}
+        public ArrayList<String> getAccount_type(){return account_type;}
+        public void setAccount_type(ArrayList<String> account_type){this.account_type = account_type;}
     }
 
 }

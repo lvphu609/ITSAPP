@@ -50,34 +50,37 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class frmDangKy extends ActionBarActivity {
 
     AccountDAL accdal;
     TextView txtDate;
     //avatar
-    Bitmap thumbnail,bm;
-    public static String temp,accType,checkedbox;
+    Bitmap thumbnail, bm;
+    public static String temp, accType, checkedbox;
     ArrayList<Integer> list = new ArrayList<>();
     private Button btDate, dangkyok;
-    boolean fullnameflag =false ;
-    boolean emailflag =false;
-    boolean passwordflag =false;
-    boolean confirmpasswordflag =false;
-    boolean phoneflag =false;
-    boolean addressflag=false;
-    boolean selectedImageflag =false;
+    boolean checkErrorLineEmail = false;
+    boolean fullnameflag = false;
+    boolean emailflag = false;
+    boolean passwordflag = false;
+    boolean confirmpasswordflag = false;
+    boolean phoneflag = false;
+    boolean addressflag = false;
+    boolean selectedImageflag = false;
     boolean checkAccountType = false;
-//checkboxboolen
+    //checkboxboolen
     boolean checkPCInvisible = false;
-    boolean checkLaptopInvisible =false;
-    boolean checkMayinInvisible =false;
-    boolean checkMayPhotoInvisible =false;
-    boolean checkScanInvisible =false;
-    boolean checkfaxInvisible =false;
+    boolean checkLaptopInvisible = false;
+    boolean checkMayinInvisible = false;
+    boolean checkMayPhotoInvisible = false;
+    boolean checkScanInvisible = false;
+    boolean checkfaxInvisible = false;
+    boolean inVaild =false;
 
-
-    public  ArrayList<View> listEditText = new ArrayList<>();
+    public ArrayList<View> listEditText = new ArrayList<>();
     //API
 //    private Context context;
 //    private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
@@ -86,15 +89,15 @@ public class frmDangKy extends ActionBarActivity {
 
 
     //Camera
-    public   final static int REQUEST_CAMERA = 1;
-    public final static int SELECT_FILE =2;
+    public final static int REQUEST_CAMERA = 1;
+    public final static int SELECT_FILE = 2;
     Calendar cal;
     public Uri mImageUri;
     ImageButton bntImage;
     Bitmap originImage;
-    CheckBox prefCheckBox,provider,user,checkPC,Mayin,scan,fax,Laptop,photocopy;
-    TextView prefEditText,cbPC,cbLaptop,cbPhoto,cbScan,cbFax,cbMayin,chuyenmon;
-    public static EditText Ifullname,Iemail,Ipassword,Iconfirmpassword,Iphone,Idia_chi;
+    CheckBox prefCheckBox, provider, user, checkPC, Mayin, scan, fax, Laptop, photocopy;
+    TextView prefEditText, cbPC, cbLaptop, cbPhoto, cbScan, cbFax, cbMayin, chuyenmon, errorline1, errorline2;
+    public static EditText Ifullname, Iemail, Ipassword, Iconfirmpassword, Iphone, Idia_chi;
     ArrayList<DateTimePicker> arrDate = new ArrayList<DateTimePicker>();
     ArrayAdapter<DateTimePicker> adapter = null;
     String arr[] = {
@@ -146,17 +149,18 @@ public class frmDangKy extends ActionBarActivity {
         });
 
 
-
-        dangkyok= (Button) findViewById(R.id.dangkyok);
+        dangkyok = (Button) findViewById(R.id.dangkyok);
         //Edittext
 
         Ifullname = (EditText) findViewById(R.id.full_name);
         Iemail = (EditText) findViewById(R.id.email);
         Ipassword = (EditText) findViewById(R.id.password);
         Iconfirmpassword = (EditText) findViewById(R.id.confirmPassword);
-        Iphone =(EditText) findViewById(R.id.phone);
+        Iphone = (EditText) findViewById(R.id.phone);
         Idia_chi = (EditText) findViewById(R.id.dia_chi);
-
+        //ErrorLine
+        errorline1 = (TextView) findViewById(R.id.erroEmail1);
+        errorline2 = (TextView) findViewById(R.id.erroEmail2);
 
         //cb
         cbPC = (TextView) findViewById(R.id.cbPC);
@@ -169,23 +173,34 @@ public class frmDangKy extends ActionBarActivity {
         //set value
 
 
-        listEditText.add((View)Ifullname);
-        listEditText.add((View)Iemail);
+        listEditText.add((View) Ifullname);
+        listEditText.add((View) Iemail);
         listEditText.add((View) Ipassword);
         listEditText.add((View) Iconfirmpassword);
-        listEditText.add((View)Iphone);
+        listEditText.add((View) Iphone);
         listEditText.add((View) Idia_chi);
         //Sumit Đăng ký
         dangkyok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (inVaild ==false)
+                {   checkErrorLineEmail =false;
+                    ErrorLine();
+
+                }
+
+                boolean allInformationtrue = false;
                 try {
 
                     accdal.getSignUp(Iemail.getText().toString(), md5(Ipassword.getText().toString()), md5(Iconfirmpassword.getText().toString()), Ifullname.getText().toString(), Iphone.getText().toString(), Idia_chi.getText().toString(), temp, checkedbox);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                startActivity(DN);
+                if (inVaild ==true) {
+                    startActivity(DN);
+                    Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -206,15 +221,12 @@ public class frmDangKy extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().matches("") )
-                {
+                if (s.toString().matches("")) {
                     fullnameflag = false;
                     setDongyEnble();
 
-                }
-                else
-                {
-                    fullnameflag =true;
+                } else {
+                    fullnameflag = true;
                     setDongyEnble();
                 }
 
@@ -233,16 +245,26 @@ public class frmDangKy extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().matches("") )
+
+                if (s.toString().matches(""))
                 {
-                    emailflag =false;
+
+                    validate(s.toString());
+                    checkErrorLineEmail=false;
+                    emailflag = false;
                     setDongyEnble();
+
+
                 }
-                else
-                {
-                    emailflag =true;
+//
+                else {
+
+                    inVaild =false;
+                    emailflag = true;
                     setDongyEnble();
+                    validate(s.toString());
                 }
+
             }
         });
         Ipassword.addTextChangedListener(new TextWatcher() {
@@ -258,13 +280,11 @@ public class frmDangKy extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ( s.toString().matches("") ) {
+                if (s.toString().matches("")) {
                     passwordflag = false;
                     setDongyEnble();
-                }
-                else
-                {
-                    passwordflag=true;
+                } else {
+                    passwordflag = true;
                     setDongyEnble();
                 }
             }
@@ -284,15 +304,14 @@ public class frmDangKy extends ActionBarActivity {
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
                     confirmpasswordflag = false;
+
                     setDongyEnble();
-                }
-                else if (s.toString().matches(Ipassword.getText().toString()))
-                {
-                    confirmpasswordflag =true;
+                } else if (s.toString().matches(Ipassword.getText().toString())) {
+
+                    confirmpasswordflag = true;
                     setDongyEnble();
-                }
-                else {
-                    confirmpasswordflag =false;
+                } else {
+                    confirmpasswordflag = false;
                     setDongyEnble();
                 }
             }
@@ -310,13 +329,11 @@ public class frmDangKy extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().matches("") )
-                {
-                    phoneflag =false;
+                if (s.toString().matches("")) {
+                    phoneflag = false;
                     setDongyEnble();
-                }
-                else {
-                    phoneflag =true;
+                } else {
+                    phoneflag = true;
                     setDongyEnble();
                 }
             }
@@ -334,7 +351,7 @@ public class frmDangKy extends ActionBarActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if ( s.toString().matches("") ) {
+                if (s.toString().matches("")) {
                     addressflag = false;
                     setDongyEnble();
 
@@ -347,22 +364,21 @@ public class frmDangKy extends ActionBarActivity {
         });
 
 
-
         //CheckBox
-        prefCheckBox = (CheckBox)findViewById(R.id.user);
-        prefEditText = (TextView)findViewById(R.id.prefEditText);
+        prefCheckBox = (CheckBox) findViewById(R.id.user);
+        prefEditText = (TextView) findViewById(R.id.prefEditText);
         provider = (CheckBox) findViewById(R.id.provider);
         provider.setOnCheckedChangeListener(listener);
         user = (CheckBox) findViewById(R.id.user);
         user.setOnCheckedChangeListener(listener);
 
         //Popup
-        checkPC =(CheckBox) findViewById(R.id.PC);
-        Laptop =(CheckBox) findViewById(R.id.Laptop);
-        scan =(CheckBox) findViewById(R.id.scan);
-        fax =(CheckBox) findViewById(R.id.fax);
-        photocopy =(CheckBox) findViewById(R.id.photocopy);
-        Mayin =(CheckBox) findViewById(R.id.Mayin);
+        checkPC = (CheckBox) findViewById(R.id.PC);
+        Laptop = (CheckBox) findViewById(R.id.Laptop);
+        scan = (CheckBox) findViewById(R.id.scan);
+        fax = (CheckBox) findViewById(R.id.fax);
+        photocopy = (CheckBox) findViewById(R.id.photocopy);
+        Mayin = (CheckBox) findViewById(R.id.Mayin);
 
         loadPref();
 
@@ -496,7 +512,7 @@ public class frmDangKy extends ActionBarActivity {
 //        return resizedBitmap;
 //    }
 
-    private void loadPref(){
+    private void loadPref() {
         SharedPreferences mySharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         boolean my_checkbox_preference = mySharedPreferences.getBoolean("checkbox_preference", false);
@@ -506,6 +522,7 @@ public class frmDangKy extends ActionBarActivity {
         prefEditText.setText(my_edittext_preference);
 
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
@@ -529,14 +546,14 @@ public class frmDangKy extends ActionBarActivity {
                     e.printStackTrace();
                 }
                 bntImage.setImageBitmap(thumbnail);
-                selectedImageflag =true;
+                selectedImageflag = true;
                 setDongyEnble();
                 BitMapToString(thumbnail);
 
 
             } else if (requestCode == SELECT_FILE) {
                 Uri selectedImageUri = data.getData();
-                String[] projection = { MediaStore.MediaColumns.DATA };
+                String[] projection = {MediaStore.MediaColumns.DATA};
                 Cursor cursor = managedQuery(selectedImageUri, projection, null, null,
                         null);
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
@@ -555,7 +572,7 @@ public class frmDangKy extends ActionBarActivity {
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
                 bntImage.setImageBitmap(bm);
-                selectedImageflag =true;
+                selectedImageflag = true;
                 setDongyEnble();
                 BitMapToString(bm);
 
@@ -563,26 +580,24 @@ public class frmDangKy extends ActionBarActivity {
         }
 
     }
+
     private CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if(isChecked){
+            if (isChecked) {
 
-                switch (buttonView.getId())
-                {
-                    case
-                            R.id.user:
+                switch (buttonView.getId()) {
+                    case R.id.user:
                         user.setChecked(true);
                         provider.setChecked(false);
                         checkedbox = "[1]";
-                        checkAccountType =true;
+                        checkAccountType = true;
                         setDongyEnble();
                         break;
-                    case
-                            R.id.provider:
+                    case R.id.provider:
                         provider.setChecked(true);
                         user.setChecked(false);
-                        checkAccountType =true;
+                        checkAccountType = true;
                         setDongyEnble();
                         showPopUp();
 
@@ -599,15 +614,12 @@ public class frmDangKy extends ActionBarActivity {
 //                    provider.setChecked(false);
 //                }
 
-            }
-            else
-            {
-                checkAccountType =false;
+            } else {
+                checkAccountType = false;
                 setDongyEnble();
 
             }
-            if (checkAccountType ==false)
-            {
+            if (checkAccountType == false) {
                 cbPC.setVisibility(View.GONE);
                 cbLaptop.setVisibility(View.GONE);
                 cbMayin.setVisibility(View.GONE);
@@ -619,6 +631,7 @@ public class frmDangKy extends ActionBarActivity {
             }
         }
     };
+
     private void showPopUp() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
@@ -641,18 +654,16 @@ public class frmDangKy extends ActionBarActivity {
                         CheckBox scan = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.scan);
 
 
+                        if (pc.isChecked()) {
+                            if (!list.contains(3)) {
+                                list.add(3);
+                                cbPC.setVisibility(View.VISIBLE);
+                                checkPCInvisible = true;
 
-                            if (pc.isChecked()) {
-                                if (!list.contains(3)) {
-                                    list.add(3);
-                                    cbPC.setVisibility(View.VISIBLE);
-                                    checkPCInvisible =true;
-
-                                }
                             }
-                            else if (list.contains(3)){
-                                checkPCInvisible =false;
-                                cbPC.setVisibility(View.GONE);
+                        } else if (list.contains(3)) {
+                            checkPCInvisible = false;
+                            cbPC.setVisibility(View.GONE);
 //                                 for (int i = 0 ; i <= list.size();i++)
 //                                 {
 //                                     if(list.contains(3))
@@ -661,91 +672,79 @@ public class frmDangKy extends ActionBarActivity {
 //                                     }
 //                                 }
 
-                            }
-                            if (Laptop.isChecked()) {
-                                if (!list.contains(4)) {
-                                    list.add(4);
-                                    cbLaptop.setVisibility(View.VISIBLE);
-                                    checkLaptopInvisible =true;
-
-                                }
-                            }
-                            else if (list.contains(4)){
-                                checkLaptopInvisible=false;
-                                cbLaptop.setVisibility(View.GONE);
-
-
-                            }
-                            if (mayin.isChecked()) {
-                                if (!list.contains(5)) {
-                                    list.add(5);
-                                    checkMayinInvisible =true;
-                                    cbMayin.setVisibility(View.VISIBLE);
-
-                                }
-                            }
-                            else if (list.contains(5)){
-                                checkMayinInvisible =false;
-                                cbMayin.setVisibility(View.GONE);
-
-
-
-                            }
-                            if (photo.isChecked()) {
-                                if (!list.contains(6)) {
-                                    list.add(6);
-                                    checkMayPhotoInvisible =true;
-                                    cbPhoto.setVisibility(View.VISIBLE);
-
-                                }
-                            }
-                            else if (list.contains(6)){
-                                checkMayPhotoInvisible=false;
-                                cbPhoto.setVisibility(View.GONE);
-
-
-
-                            }
-                            if (scan.isChecked()) {
-                                if (!list.contains(7)) {
-                                    list.add(7);
-                                    checkScanInvisible =true;
-                                    cbScan.setVisibility(View.VISIBLE);
-
-                                }
-                            }
-                            else if (list.contains(7)){
-                                checkScanInvisible=false;
-                                cbScan.setVisibility(View.GONE);
-
-
-
-                            }
-                            if (mayfax.isChecked()) {
-                                if (!list.contains(8)) {
-                                    list.add(8);
-                                    checkfaxInvisible =true;
-                                    cbFax.setVisibility(View.VISIBLE);
-
-                                }
-                            }
-                            else if (list.contains(8)) {
-                                checkfaxInvisible =false;
-                                cbFax.setVisibility(View.GONE);
-
-
-
-                            }
-                            // checkedbox.joi = String.join(",", list);
-                            checkedbox = TextUtils.join(",", list);
-                            checkedbox = "[" + checkedbox;
-                            checkedbox = checkedbox + "]";
-                        if (checkPCInvisible ==true|| checkLaptopInvisible ==true||checkMayinInvisible ==true||checkMayPhotoInvisible ==true||checkfaxInvisible==true||checkScanInvisible ==true)
-                        {
-                            chuyenmon.setVisibility(View.VISIBLE);
                         }
-                       else if (checkPCInvisible ==false&& checkLaptopInvisible ==false&&checkMayinInvisible ==false&&checkMayPhotoInvisible ==false&&checkfaxInvisible==false&&checkScanInvisible ==false)
-                        {
+                        if (Laptop.isChecked()) {
+                            if (!list.contains(4)) {
+                                list.add(4);
+                                cbLaptop.setVisibility(View.VISIBLE);
+                                checkLaptopInvisible = true;
+
+                            }
+                        } else if (list.contains(4)) {
+                            checkLaptopInvisible = false;
+                            cbLaptop.setVisibility(View.GONE);
+
+
+                        }
+                        if (mayin.isChecked()) {
+                            if (!list.contains(5)) {
+                                list.add(5);
+                                checkMayinInvisible = true;
+                                cbMayin.setVisibility(View.VISIBLE);
+
+                            }
+                        } else if (list.contains(5)) {
+                            checkMayinInvisible = false;
+                            cbMayin.setVisibility(View.GONE);
+
+
+                        }
+                        if (photo.isChecked()) {
+                            if (!list.contains(6)) {
+                                list.add(6);
+                                checkMayPhotoInvisible = true;
+                                cbPhoto.setVisibility(View.VISIBLE);
+
+                            }
+                        } else if (list.contains(6)) {
+                            checkMayPhotoInvisible = false;
+                            cbPhoto.setVisibility(View.GONE);
+
+
+                        }
+                        if (scan.isChecked()) {
+                            if (!list.contains(7)) {
+                                list.add(7);
+                                checkScanInvisible = true;
+                                cbScan.setVisibility(View.VISIBLE);
+
+                            }
+                        } else if (list.contains(7)) {
+                            checkScanInvisible = false;
+                            cbScan.setVisibility(View.GONE);
+
+
+                        }
+                        if (mayfax.isChecked()) {
+                            if (!list.contains(8)) {
+                                list.add(8);
+                                checkfaxInvisible = true;
+                                cbFax.setVisibility(View.VISIBLE);
+
+                            }
+                        } else if (list.contains(8)) {
+                            checkfaxInvisible = false;
+                            cbFax.setVisibility(View.GONE);
+
+
+                        }
+                        // checkedbox.joi = String.join(",", list);
+                        checkedbox = TextUtils.join(",", list);
+                        checkedbox = "[" + checkedbox;
+                        checkedbox = checkedbox + "]";
+                        if (checkPCInvisible == true || checkLaptopInvisible == true || checkMayinInvisible == true || checkMayPhotoInvisible == true || checkfaxInvisible == true || checkScanInvisible == true) {
+                            chuyenmon.setVisibility(View.VISIBLE);
+                        } else if (checkPCInvisible == false && checkLaptopInvisible == false && checkMayinInvisible == false && checkMayPhotoInvisible == false && checkfaxInvisible == false && checkScanInvisible == false) {
                             chuyenmon.setVisibility(View.INVISIBLE);
                         }
                     }
@@ -803,17 +802,16 @@ public class frmDangKy extends ActionBarActivity {
 //        }
 //    };
     public void setDongyEnble() {
-        if (fullnameflag ==true &&emailflag ==true &&passwordflag ==true&&confirmpasswordflag==true&& phoneflag==true&&addressflag==true && selectedImageflag ==true &&checkAccountType ==true) {
+        if (fullnameflag == true && emailflag == true && passwordflag == true && confirmpasswordflag == true && phoneflag == true && addressflag == true && selectedImageflag == true && checkAccountType == true) {
             dangkyok.setEnabled(true);
-        }
-        else
-        {
+        } else {
             dangkyok.setEnabled(false);
         }
 
     }
+
     private void selectImage() {
-        final CharSequence[] items = { "Chụp ảnh", "Chọn từ thư viện", "Hủy" };
+        final CharSequence[] items = {"Chụp ảnh", "Chọn từ thư viện", "Hủy"};
         AlertDialog.Builder builder = new AlertDialog.Builder(frmDangKy.this);
         builder.setTitle("Tùy chọn");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -837,25 +835,28 @@ public class frmDangKy extends ActionBarActivity {
         });
         builder.show();
     }
+
     //Convert Image to String
-    public String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream ByteStream=new  ByteArrayOutputStream();
+    public String BitMapToString(Bitmap bitmap) {
+        ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, ByteStream);
-        byte [] b=ByteStream.toByteArray();
-        temp= Base64.encodeToString(b, Base64.DEFAULT);
+        byte[] b = ByteStream.toByteArray();
+        temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
+
     //Convert String to Image
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap=BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+    public Bitmap StringToBitMap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        }catch(Exception e){
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }
     }
+
     //pawword to change md5
     public static String md5(String input) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
@@ -864,9 +865,9 @@ public class frmDangKy extends ActionBarActivity {
         byte byteData[] = md.digest();
 
         StringBuffer hexString = new StringBuffer();
-        for (int i=0;i<byteData.length;i++) {
-            String hex=Integer.toHexString(0xff & byteData[i]);
-            if(hex.length()==1) hexString.append('0');
+        for (int i = 0; i < byteData.length; i++) {
+            String hex = Integer.toHexString(0xff & byteData[i]);
+            if (hex.length() == 1) hexString.append('0');
             hexString.append(hex);
         }
         return hexString.toString();
@@ -920,5 +921,28 @@ public class frmDangKy extends ActionBarActivity {
 //            return new Result<String>(ResultStatus.FALSE, e.getMessage());
 //        }
 //    }
+    public void ErrorLine() {
+        if (checkErrorLineEmail == false) {
+            errorline2.setVisibility(View.VISIBLE);
 
+        } else if (checkErrorLineEmail ==true) {
+            errorline2.setVisibility(View.GONE);
+        }
+
+    }
+    public  boolean validate(String hex) {
+
+
+        String emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@"
+                + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\."
+                + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+";
+        Pattern p = Pattern.compile(emailPattern);
+        Matcher m = p.matcher(hex);
+        if (m.matches()) {
+            inVaild = true;
+            checkErrorLineEmail = true;
+            ErrorLine();
+        }
+        return inVaild;
+    }
 }

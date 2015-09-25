@@ -147,6 +147,7 @@ public class AccountDAL {
             }
             else{
                 return new Result<String>(ResultStatus.FALSE,context.getResources().getString(R.string.msg_can_not_connect_to_network));
+
             }
         }
         catch(Exception e){
