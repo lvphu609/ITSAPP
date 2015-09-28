@@ -24,18 +24,36 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtCode"
             android:hint="Nhập mã xác thực"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtMaXT"
+            android:textColor="@color/maudo"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtPassword"
             android:hint="Mật khẩu mới"
             android:inputType="textPassword"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtMatKhau"
+            android:textColor="@color/maudo"
+            />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtAPass"
             android:hint="Nhập lại mật khẩu"
             android:inputType="textPassword"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtNhapMK"
+            android:textColor="@color/maudo"
+            />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"

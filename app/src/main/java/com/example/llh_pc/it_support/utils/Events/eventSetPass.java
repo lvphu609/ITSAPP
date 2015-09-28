@@ -54,7 +54,7 @@ public class eventSetPass implements View.OnClickListener {
             restClient.addParam(Account.EMAIL, mail);
             restClient.execute(RequestMethod.POST);
 
-            if (pass.length() <= 6) {
+            if (pass.length() < 6) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);

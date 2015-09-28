@@ -15,9 +15,6 @@ public class AccountParse {
         @SerializedName("message")
         private String message;
 
-//        @SerializedName("results")
-//        private ArrayList<GetAccount> results;
-
         @SerializedName("results")
         private DKResults results;
 

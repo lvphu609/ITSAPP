@@ -49,10 +49,9 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-
         /*-------Button fogot password---------*/
         final Intent intent1 = new Intent(this, frmQuenMK.class);
-              TextView txtQuenMK = (TextView)findViewById(R.id.txtQuenMatKhau);
+              final TextView txtQuenMK = (TextView)findViewById(R.id.txtQuenMatKhau);
         txtQuenMK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,6 +76,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         editor.putInt("check", 1);
         editor.commit();
 
+        final TextView tvEmail = (TextView)findViewById(R.id.txtEmail);
         edtUserName = (EditText) findViewById(R.id.edtTenDangNhap);
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,6 +92,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                     E = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    tvEmail.setText("Vui lòng nhập email.");
                 }
                 else
                 {
@@ -101,11 +102,13 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                         btnLogin.setEnabled(true);
                         btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                         btnLogin.invalidate();
+                        tvEmail.setText("");
                     }
                 }
             }
         });
 
+        final TextView tvMatKhau = (TextView)findViewById(R.id.txtMatKhau);
         edtPass = (EditText) findViewById(R.id.edtMatKhau);
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -123,6 +126,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                     P = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    tvMatKhau.setText("Vui lòng nhập mật khẩu.");
                 }
                 else
                 {
@@ -132,7 +136,9 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                         btnLogin.setEnabled(true);
                         btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                         btnLogin.invalidate();
+                        tvMatKhau.setText("");
                     }
+                    tvMatKhau.setText("");
                 }
             }
         });
@@ -143,7 +149,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         getData();
         setData();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 
@@ -195,7 +200,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
     @Override
     public void getData(String... params) {
-
 
     }
 
