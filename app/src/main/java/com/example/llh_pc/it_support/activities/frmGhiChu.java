@@ -54,47 +54,36 @@ public class frmGhiChu extends AppCompatActivity {
                     restClient.addParam("location_lat", y);
                     restClient.addParam("location_lng", x);
                     try {
-                    restClient.execute(RequestMethod.POST);
+                        restClient.execute(RequestMethod.POST);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                     if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                            String jsonObject = restClient.getResponse();
-                            Gson gson = new Gson();
-                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
-                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                                Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
-                                frmGhiChu.this.startActivity(intent);
-                            }
+                        String jsonObject = restClient.getResponse();
+                        Gson gson = new Gson();
+                        PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
+                        if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                            Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
+                            frmGhiChu.this.startActivity(intent);
                         }
-
                     }
-                else {
+
+                } else {
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                   startActivity(intent);
+                    startActivity(intent);
                 }
 
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_ghi_chu, menu);
-        return true;
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

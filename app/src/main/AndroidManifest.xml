@@ -92,6 +92,14 @@
             android:name=".activities.frmGhiChuPost"
             android:label="@string/title_activity_frm_ghi_chu_post" >
         </activity>
+        <activity
+            android:name=".adapters.LoadPostAdapter"
+            android:label="@string/title_activity_load_post_adapter" >
+        </activity>
+        <activity
+            android:name=".activities.frmChiTietPost"
+            android:label="@string/title_activity_frm_chi_tiet_post" >
+        </activity>
     </application>
 
 </manifest>

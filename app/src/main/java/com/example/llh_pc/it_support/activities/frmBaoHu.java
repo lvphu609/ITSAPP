@@ -48,7 +48,6 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
     ArrayAdapter<String> adapter1;
     private OnClickListener dialogClickListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,18 +56,20 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("staylogin",1);
+        editor.commit();
 
+<<<<<<< HEAD
         String text;
         menu = new String[]{"Thông tin tài khoản","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
+=======
+        menu = new String[]{"NAME","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
+>>>>>>> 5a40d655cf08f5623b3360701b466fa799c3fe16
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
-
         adapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,menu);
-
-        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
-        String name = sharedPreference.getString("token", "YourName");
-        int abc = sharedPreference.getInt("check", 1);
-
         dList.setAdapter(adapter1);
         dList.setSelector(android.R.color.holo_blue_dark);
         dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +78,6 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
             public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
                 if (position == 7) {
                     try {
-                    ;
                         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
                         String token = sharedPreference.getString("token", "token");
                         RestClient restClient = new RestClient(url_logout);
@@ -94,6 +94,7 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putInt("check", 1);
                                 editor.putString("token", "Hai");
+                                editor.putInt("staylogin", 0);
                                 editor.commit();
                                 Intent intent = new Intent(frmBaoHu.this, frmDK_DN.class);
                                 startActivity(intent);
@@ -109,12 +110,6 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 }
             }
         });
-
-
-
-
-
-
         try
         {
             RestClient restClient = new RestClient(url_get_my_notifications);
@@ -128,27 +123,14 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
                 {
                     array_post = getListPostJson.getResults();
-
                     adapter = new PostAdapter(frmBaoHu.this, R.layout.activity_post_adapter, array_post);
-
                 }
             }
-
-
-
         }catch (Exception ex){}
-
-
-
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-
         initFlags();
         initControl();
         setEventForControl();
         getData();
-        //finish();
-
     }
 
     @Override
@@ -198,24 +180,8 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 }).show();
     }
 
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_bao_hu, menu);
-        return true;
-    }*/
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void initFlags() {

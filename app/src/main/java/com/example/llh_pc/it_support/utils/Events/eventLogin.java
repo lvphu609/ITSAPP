@@ -97,8 +97,30 @@ public class eventLogin implements View.OnClickListener {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
-            } else if (edtPassword.getText().length() >= 6) {
-                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                editor.putInt("check", 1);
+            } else if (edtPassword.getText().length() < 6)
+            {
+                LayoutInflater li = LayoutInflater.from(context);
+                View promptsView = li.inflate(R.layout.popup_validation, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                alertDialogBuilder.setView(promptsView);
+                final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+                textView.setText("Mật khẩu phải có ít nhất 6 kí tự.");
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+                editor.putInt("check", 1);
+            }else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                     String jsonObject = restClient.getResponse();
                     Gson gson = new Gson();
                     LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
@@ -135,29 +157,6 @@ public class eventLogin implements View.OnClickListener {
                         editor.putInt("check", 1);
                     }
                 }
-            } else {
-                LayoutInflater li = LayoutInflater.from(context);
-                View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-                alertDialogBuilder.setView(promptsView);
-                final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Mật khẩu ");
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
-                editor.putInt("check", 1);
-            }
-
         } catch (Exception ex) {
 
         }

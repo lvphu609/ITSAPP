@@ -18,23 +18,46 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = sharedPreference.getString("token", null);
         int check = sharedPreference.getInt("check", 1);
-        if(check == 2) {
-            Thread t = new Thread() {
-                public void run() {
-                    try {
-                        sleep(2000);
-                        finish();
-                        Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
-
-                        startActivity(cv);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+        int staylogin = sharedPreference.getInt("staylogin", 0);
+        if(staylogin == 1)
+        {
+            if(check == 2) {
+                Thread t = new Thread() {
+                    public void run() {
+                        try {
+                            sleep(2000);
+                            finish();
+                            Intent cv = new Intent(MainActivity.this, frmBaoHu.class);
+                            //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                            startActivity(cv);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                }
-            };
-            t.start();
-        }else {
+                };
+                t.start();
+            }else {
+                Thread t = new Thread() {
+                    public void run() {
+                        try {
+
+                            sleep(2000);
+                            finish();
+                            Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                            //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                            startActivity(cv);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                t.start();
+            }
+
+        }
+       else {
             Thread t = new Thread() {
                 public void run() {
                     try {
@@ -51,16 +74,6 @@ public class MainActivity extends AppCompatActivity {
             };
             t.start();
         }
-
-
-        /*intent = new Intent(this, frmDK_DN.class);
-        Button btnDangNhap = (Button)findViewById(R.id.btnLogin);
-        btnDangNhap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(intent);
-            }
-        });*/
     }
 
     @Override

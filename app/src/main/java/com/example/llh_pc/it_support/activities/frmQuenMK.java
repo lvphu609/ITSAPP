@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.utils.Events.eventForgotPass;
@@ -27,6 +28,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
     private Button btnSend;
     private ArrayList<View> views = new ArrayList<>();
     private EditText edtMail;
+    private TextView tvMatKhau;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +73,11 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 {
                     btnSend.setEnabled(false);
                     btnSend.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    tvMatKhau.setText("Vui lòng nhập email.");
                 }
                 else
                 {
+                    tvMatKhau.setText("");
                     btnSend.setEnabled(true);
                     btnSend.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     btnSend.invalidate();
@@ -110,6 +114,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
         edtMail = (EditText)findViewById(R.id.edtMail);
         views.add((View)edtMail);
         btnSend = (Button)findViewById(R.id.btnSendMail);
+        tvMatKhau = (TextView)findViewById(R.id.txtEmail);
     }
 
     @Override

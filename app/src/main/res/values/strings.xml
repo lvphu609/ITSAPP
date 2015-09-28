@@ -25,7 +25,7 @@
     <string name="title_activity_custom_drawer_adapter">CustomDrawerAdapter</string>
     <string name="title_activity_frm_thong_bao">frmThongBao</string>
     <string name="title_activity_frm_tim_kiem">frmTimKiem</string>
-    <string name="title_activity_frm_luu_tru">frmLuuTru</string>
+    <string name="title_activity_frm_luu_tru">Lưu trữu</string>
     <string name="title_activity_frm_tab_host">frmTabHost</string>
     <string name="title_checkbox_preference">Hồ sơ cá nhân</string>
     <string name="title_activity_profile">Thông tin tài khoản</string>
@@ -33,4 +33,6 @@
 
     <string name="frmGhiChu_edtNote"><font size="9dp">Viết ghi chú ở đây.(Có thể bỏ trống)</font></string>
     <string name="title_activity_frm_ghi_chu_post">frmGhiChuPost</string>
+    <string name="title_activity_load_post_adapter">LoadPostAdapter</string>
+    <string name="title_activity_frm_chi_tiet_post">frmChiTietPost</string>
 </resources>

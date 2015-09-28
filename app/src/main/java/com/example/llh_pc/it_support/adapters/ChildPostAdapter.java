@@ -44,7 +44,6 @@ public class ChildPostAdapter extends ArrayAdapter<Post> {
             convertView = inflater.inflate(R.layout.activity_post_adapter, parent, false);
             holder = new PostHolder();
             holder.tvName = (TextView)convertView.findViewById(R.id.tvName);
-
             convertView.setTag(holder);
         }
         else
@@ -54,7 +53,7 @@ public class ChildPostAdapter extends ArrayAdapter<Post> {
         final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
         imgLoader.DisplayImage(data.get(position).getAvatar(), icon_post);
         holder.tvName.setText(rowItem.getName());
-        return convertView;
+         return convertView;
     }
     static class PostHolder
     {
