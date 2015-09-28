@@ -59,7 +59,7 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         }
 
         String text;
-        menu = new String[]{"NAME","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
+        menu = new String[]{"Thông tin tài khoản","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
 

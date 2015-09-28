@@ -763,7 +763,7 @@ public class frmDangKy extends ActionBarActivity {
         }
     };
 
-    private void showPopUp() {
+    public   void showPopUp() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
@@ -884,6 +884,7 @@ public class frmDangKy extends ActionBarActivity {
         // Remember, create doesn't show the dialog
         AlertDialog helpDialog = helpBuilder.create();
         helpDialog.show();
+
     }
 
     //    private CompoundButton.OnCheckedChangeListener checkpopup = new CompoundButton.OnCheckedChangeListener() {

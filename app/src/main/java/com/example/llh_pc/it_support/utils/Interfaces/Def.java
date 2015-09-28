@@ -31,6 +31,7 @@ public interface Def {
     public static final String API_CREATE = "accounts/create/";
 
     public static final String API_CREATESubPost = "posts/create/";
+    public static final String API_ChangePassword = "accounts/change_password";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
     public static final String REPONSE_CHECKEMAIL="true";
