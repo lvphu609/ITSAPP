@@ -120,11 +120,13 @@
             android:singleLine="false"
             android:maxLines="1"
             android:inputType="textPassword"
+            android:text="**********"
             android:enabled="false"
+
             />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:id="@+id/changepass"
                 android:text="Thay đổi mật khẩu"
                 android:layout_marginLeft="10dp"
@@ -225,6 +227,7 @@
         android:layout_marginTop="10dp"
 
         >
+
         <TextView
             android:id="@+id/viewchuyenmon"
         android:layout_width="wrap_content"
@@ -241,6 +244,7 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
             />
         <Button
             android:id="@+id/bntLaptpo"
@@ -251,6 +255,7 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
 
             />
         <Button
@@ -262,6 +267,7 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
             />
         <Button
             android:id="@+id/bntMayScan"
@@ -272,6 +278,7 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
             />
         <Button
             android:id="@+id/photocopy"
@@ -282,6 +289,7 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
             />
         <Button
             android:id="@+id/bntMayfax"
@@ -292,8 +300,8 @@
             android:textSize="10dp"
             android:enabled="false"
             android:background="@null"
+            android:textColor="@color/mauxam"
             />
-
 
     </LinearLayout>
     <!--<LinearLayout-->
@@ -341,6 +349,8 @@
             android:textStyle="bold"
             android:visibility="visible"
             android:editable="true"
+            android:background="@color/mauxanh"
+            android:textColor="@color/actionbar_text"
             />
             <Button
                 android:id="@+id/OKProfile"
@@ -353,6 +363,8 @@
                 android:textStyle="bold"
                 android:visibility="invisible"
                 android:enabled="false"
+                android:background="@color/mauxanh"
+                android:textColor="@color/actionbar_text"
 
                 />
         </RelativeLayout>

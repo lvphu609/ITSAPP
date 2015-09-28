@@ -61,7 +61,12 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         editor.putInt("staylogin",1);
         editor.commit();
 
+<<<<<<< HEAD
+        String text;
+        menu = new String[]{"Thông tin tài khoản","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
+=======
         menu = new String[]{"NAME","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
+>>>>>>> 5a40d655cf08f5623b3360701b466fa799c3fe16
         dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         dList = (ListView) findViewById(R.id.left_drawer);
         adapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,menu);
