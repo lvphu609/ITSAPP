@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.utils.Events.eventSetPass;
@@ -26,6 +27,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
     private Button btnSetPass;
     private String mail;
     private int A,B,C = 0;
+    private TextView tvMaXN, tvMatKhau, tvNhapMK;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,15 +70,18 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
+                    tvMaXN.setText("Vui lòng nhập mã xác thực.");
                     A = 0;
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
                 } else {
                     A = 1;
                     if (A + B + C == 3) {
+                        tvMaXN.setText("");
                         btnSetPass.setEnabled(true);
                         btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     }
+
                 }
             }
         });
@@ -95,12 +100,15 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
+                    tvMatKhau.setText("Vui lòng nhập mật khẩu mới.");
                     B = 0;
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
+
                 } else {
                     B = 1;
                     if (A + B + C == 3) {
+                        tvMatKhau.setText("");
                         btnSetPass.setEnabled(true);
                         btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     }
@@ -124,12 +132,14 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
                     C = 0;
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    tvNhapMK.setText("Vui lòng nhập lại mật khẩu.");
                 } else {
                     C = 1;
                     if (A + B + C == 3) {
                         btnSetPass.setEnabled(true);
                         btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     }
+                    tvNhapMK.setText("");
                 }
             }
         });
@@ -160,6 +170,9 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
 
     @Override
     public void initControl() {
+        tvMaXN = (TextView)findViewById(R.id.txtMaXT);
+        tvMatKhau = (TextView)findViewById(R.id.txtMatKhau);
+        tvNhapMK = (TextView)findViewById(R.id.txtNhapMK);
         edtCode = (EditText)findViewById(R.id.edtCode);
         edtPass = (EditText)findViewById(R.id.edtPassword);
         edtAPass = (EditText)findViewById(R.id.edtAPass);

@@ -15,18 +15,19 @@ import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.models.Post;
+import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 
 import java.util.List;
 
-public class ChildPostAdapter extends ArrayAdapter<Post> {
+public class LoadPostAdapter extends ArrayAdapter<PostDetail> {
 
     private ImageLoader imgLoader;
     Context context;
     int layoutResourceId;
-    List<Post> data = null;
+    List<PostDetail> data = null;
 
-    public ChildPostAdapter(Context context, int resource, List<Post> objects) {
+    public LoadPostAdapter(Context context, int resource, List<PostDetail> objects) {
         super(context, resource, objects);
         this.layoutResourceId = resource;
         this.context = context;
@@ -37,13 +38,14 @@ public class ChildPostAdapter extends ArrayAdapter<Post> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         PostHolder holder = null;
-        Post rowItem = getItem(position);
+        PostDetail rowItem = getItem(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if(convertView == null)
         {
-            convertView = inflater.inflate(R.layout.activity_post_adapter, parent, false);
+            convertView = inflater.inflate(R.layout.activity_load_post_adapter, parent, false);
             holder = new PostHolder();
             holder.tvName = (TextView)convertView.findViewById(R.id.tvName);
+            holder.tvlocation_name = (TextView)convertView.findViewById(R.id.tvlocation_name);
             convertView.setTag(holder);
         }
         else
@@ -53,10 +55,11 @@ public class ChildPostAdapter extends ArrayAdapter<Post> {
         final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
         imgLoader.DisplayImage(data.get(position).getAvatar(), icon_post);
         holder.tvName.setText(rowItem.getName());
-         return convertView;
+        holder.tvlocation_name.setText(rowItem.getLocation_name());
+        return convertView;
     }
     static class PostHolder
     {
-        TextView tvName;
+        TextView tvName,tvlocation_name;
     }
 }

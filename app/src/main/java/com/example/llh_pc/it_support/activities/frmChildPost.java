@@ -62,9 +62,6 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
                     adapter = new ChildPostAdapter(frmChildPost.this,R.layout.activity_child_post_adapter,array_post);
                 }
             }
-
-
-
         }catch (Exception ex){}
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -93,14 +90,11 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
                 finish();
                 return true;
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void initFlags() {
-
     }
 
     @Override
@@ -116,11 +110,9 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
 
     @Override
     public void getData(String... params) {
-
     }
 
     @Override
     public void setData() {
-
     }
 }

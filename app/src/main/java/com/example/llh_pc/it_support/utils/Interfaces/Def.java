@@ -29,8 +29,14 @@ public interface Def {
     public static final String API_Logout = "accounts/logout/";
     //create account
     public static final String API_CREATE = "accounts/create/";
-
+    //create post
     public static final String API_CREATESubPost = "posts/create/";
+    //load post
+    public static final String API_LoadPost = "/posts/get_my_posts/";
+
+
+
+
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
     public static final String REPONSE_CHECKEMAIL="true";
