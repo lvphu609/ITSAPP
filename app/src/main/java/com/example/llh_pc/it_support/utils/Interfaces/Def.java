@@ -34,6 +34,12 @@ public interface Def {
     public static final String API_ChangePassword = "accounts/change_password";
     //load post
     public static final String API_LoadPost = "/posts/get_my_posts/";
+    //loadpostdetail
+    public static final String API_Loadpostdetail = "posts/get_post_detail_by_id/";
+
+
+
+
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
     public static final String REPONSE_CHECKEMAIL="true";

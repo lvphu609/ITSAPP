@@ -2,17 +2,38 @@ package com.example.llh_pc.it_support.activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 
-public class frmChiTietPost extends ActionBarActivity {
+public class frmChiTietPost extends AppCompatActivity {
 
+    TextView tvType,tvLocation_Name,tvNote,tvName,tvPhone,tvaddress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_chi_tiet_post);
+
+        tvType = (TextView)findViewById(R.id.tvTypePost);
+        tvLocation_Name = (TextView)findViewById(R.id.tvLocation);
+        tvNote = (TextView)findViewById(R.id.tvNote);
+        tvName = (TextView)findViewById(R.id.tvName);
+        tvPhone = (TextView)findViewById(R.id.tvPhone_number);
+        tvaddress = (TextView)findViewById(R.id.tvaddress);
+
+        Bundle extras = getIntent().getExtras();
+        tvType.setText(extras.getString("loaibaohong"));
+        tvLocation_Name.setText(extras.getString("diachi"));
+        tvNote.setText(extras.getString("ghichu"));
+        tvName.setText(extras.getString("hoten"));
+        tvPhone.setText(extras.getString("dienthoai"));
+        tvaddress.setText(extras.getString("diachinha"));
+
     }
 
     @Override

@@ -48,7 +48,7 @@ public class evenSubPostType implements AdapterView.OnItemClickListener {
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Post p = arrayListPost.get(STT);
+        Post p = arrayListPost.get(position);
         String idPost = p.getId();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
