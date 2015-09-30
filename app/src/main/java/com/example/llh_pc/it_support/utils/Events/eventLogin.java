@@ -133,6 +133,7 @@ public class eventLogin implements View.OnClickListener {
                         editor.putString("id", id);
                         editor.commit();
                         Intent intent = new Intent(context, frmTabHost.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         context.startActivity(intent);
                     } else {
                         LayoutInflater li = LayoutInflater.from(context);

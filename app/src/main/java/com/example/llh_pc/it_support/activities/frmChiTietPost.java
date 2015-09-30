@@ -1,14 +1,18 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 
 public class frmChiTietPost extends AppCompatActivity {
@@ -31,17 +35,22 @@ public class frmChiTietPost extends AppCompatActivity {
         tvLocation_Name.setText(extras.getString("diachi"));
         tvNote.setText(extras.getString("ghichu"));
         tvName.setText(extras.getString("hoten"));
+        tvName.setTextColor(getResources().getColor(R.color.mauxanh));
         tvPhone.setText(extras.getString("dienthoai"));
+        tvPhone.setTextColor(getResources().getColor(R.color.mauxanh));
         tvaddress.setText(extras.getString("diachinha"));
+
+        LinearLayout one = (LinearLayout) findViewById(R.id.lnProvider);
+        one.setVisibility(View.VISIBLE);
 
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_frm_chi_tiet_post, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
