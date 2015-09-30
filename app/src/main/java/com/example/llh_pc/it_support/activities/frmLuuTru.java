@@ -61,7 +61,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
                     array_post = getListPostJson.getResults();
                     int count = array_post.size();
                     JSONArray array = new JSONArray(array_post);
-
                     for (int i=0; i< count; i++) {
                         JSONObject jObj = array.getJSONObject(i);
                         String id = jObj.getString("id");
@@ -123,7 +122,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void setEventForControl() {
-        lstPost.setOnItemClickListener(new eventDetailPost());
+        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this,listdetail ));
     }
 
     @Override

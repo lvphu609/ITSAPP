@@ -100,7 +100,8 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }                if (position == 0) {
+                }
+                if (position == 0) {
                     Intent profile = new Intent(frmBaoHu.this, Profile.class);
                     startActivity(profile);
                 }
