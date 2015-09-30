@@ -93,7 +93,7 @@
             android:label="@string/title_activity_frm_ghi_chu_post" >
         </activity>
         <activity
-            android:name=".adapters.LoadPostAdapter"
+            android:name="adapters.LoadPostAdapter"
             android:label="@string/title_activity_load_post_adapter" >
         </activity>
         <activity

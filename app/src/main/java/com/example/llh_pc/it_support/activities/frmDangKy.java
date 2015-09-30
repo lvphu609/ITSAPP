@@ -17,6 +17,7 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -50,6 +51,7 @@ import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -65,7 +67,7 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class frmDangKy extends ActionBarActivity {
+public class frmDangKy extends AppCompatActivity implements InnoFunctionListener {
     private boolean is_network = false;
     TextView errorname;
     AccountDAL accdal;
@@ -734,23 +736,20 @@ public class frmDangKy extends ActionBarActivity {
 
                 }
 
-
-//                if( checkPCInvisible ==true|| checkLaptopInvisible ==true||checkMayinInvisible ==true||checkMayPhotoInvisible ==true||checkfaxInvisible==true||checkScanInvisible ==true)
-//                {
-//
-//                    provider.setChecked(true);
-//                }
-//                else if (checkPCInvisible ==false)
-//                {
-//                    provider.setChecked(false);
-//                }
-
-            } else {
+            }
+            else {
                 checkAccountType = false;
                 setDongyEnble();
-
             }
+
             if (checkAccountType == false) {
+
+                checkfaxInvisible =false;
+                checkPCInvisible =false;
+                checkLaptopInvisible=false;
+                checkMayinInvisible=false;
+                checkMayPhotoInvisible=false;
+                checkScanInvisible=false;
                 cbPC.setVisibility(View.GONE);
                 cbLaptop.setVisibility(View.GONE);
                 cbMayin.setVisibility(View.GONE);
@@ -772,114 +771,112 @@ public class frmDangKy extends ActionBarActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
         helpBuilder.setView(checkboxLayout);
+        helpBuilder.setCancelable(false).
+           setPositiveButton("OK",
+                   new DialogInterface.OnClickListener() {
 
-        helpBuilder.setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
-
-                    public void onClick(DialogInterface dialog, int which) {
-                        CheckBox pc = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.PC);
-                        CheckBox Laptop = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Laptop);
-                        CheckBox photo = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.photocopy);
-                        CheckBox mayin = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Mayin);
-                        CheckBox mayfax = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.fax);
-                        CheckBox scan = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.scan);
-
-
-                        if (pc.isChecked()) {
-                            if (!list.contains(3)) {
-                                list.add(3);
-                                cbPC.setVisibility(View.VISIBLE);
-                                checkPCInvisible = true;
-
-                            }
-                        } else if (list.contains(3)) {
-                            checkPCInvisible = false;
-                            cbPC.setVisibility(View.GONE);
-//                                 for (int i = 0 ; i <= list.size();i++)
-//                                 {
-//                                     if(list.contains(3))
-//                                     {
-//                                         list.remove(i);
-//                                     }
-//                                 }
-
-                        }
-                        if (Laptop.isChecked()) {
-                            if (!list.contains(4)) {
-                                list.add(4);
-                                cbLaptop.setVisibility(View.VISIBLE);
-                                checkLaptopInvisible = true;
-
-                            }
-                        } else if (list.contains(4)) {
-                            checkLaptopInvisible = false;
-                            cbLaptop.setVisibility(View.GONE);
+                       public void onClick(DialogInterface dialog, int which) {
+                           CheckBox pc = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.PC);
+                           CheckBox Laptop = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Laptop);
+                           CheckBox photo = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.photocopy);
+                           CheckBox mayin = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Mayin);
+                           CheckBox mayfax = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.fax);
+                           CheckBox scan = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.scan);
 
 
-                        }
-                        if (mayin.isChecked()) {
-                            if (!list.contains(5)) {
-                                list.add(5);
-                                checkMayinInvisible = true;
-                                cbMayin.setVisibility(View.VISIBLE);
+                           if (pc.isChecked()) {
+                               if (!list.contains(3)) {
+                                   list.add(3);
+                                   cbPC.setVisibility(View.VISIBLE);
+                                   checkPCInvisible = true;
 
-                            }
-                        } else if (list.contains(5)) {
-                            checkMayinInvisible = false;
-                            cbMayin.setVisibility(View.GONE);
+                               }
+                           } else if (list.contains(3)) {
+                               checkPCInvisible = false;
+                               cbPC.setVisibility(View.GONE);
+//
 
+                           }
+                           if (Laptop.isChecked()) {
+                               if (!list.contains(4)) {
+                                   list.add(4);
+                                   cbLaptop.setVisibility(View.VISIBLE);
+                                   checkLaptopInvisible = true;
 
-                        }
-                        if (photo.isChecked()) {
-                            if (!list.contains(6)) {
-                                list.add(6);
-                                checkMayPhotoInvisible = true;
-                                cbPhoto.setVisibility(View.VISIBLE);
-
-                            }
-                        } else if (list.contains(6)) {
-                            checkMayPhotoInvisible = false;
-                            cbPhoto.setVisibility(View.GONE);
-
-
-                        }
-                        if (scan.isChecked()) {
-                            if (!list.contains(7)) {
-                                list.add(7);
-                                checkScanInvisible = true;
-                                cbScan.setVisibility(View.VISIBLE);
-
-                            }
-                        } else if (list.contains(7)) {
-                            checkScanInvisible = false;
-                            cbScan.setVisibility(View.GONE);
+                               }
+                           } else if (list.contains(4)) {
+                               checkLaptopInvisible = false;
+                               cbLaptop.setVisibility(View.GONE);
 
 
-                        }
-                        if (mayfax.isChecked()) {
-                            if (!list.contains(8)) {
-                                list.add(8);
-                                checkfaxInvisible = true;
-                                cbFax.setVisibility(View.VISIBLE);
+                           }
+                           if (mayin.isChecked()) {
+                               if (!list.contains(5)) {
+                                   list.add(5);
+                                   checkMayinInvisible = true;
+                                   cbMayin.setVisibility(View.VISIBLE);
 
-                            }
-                        } else if (list.contains(8)) {
-                            checkfaxInvisible = false;
-                            cbFax.setVisibility(View.GONE);
+                               }
+                           } else if (list.contains(5)) {
+                               checkMayinInvisible = false;
+                               cbMayin.setVisibility(View.GONE);
 
 
-                        }
-                        // checkedbox.joi = String.join(",", list);
-                        checkedbox = TextUtils.join(",", list);
-                        checkedbox = "[" + checkedbox;
-                        checkedbox = checkedbox + "]";
-                        if (checkPCInvisible == true || checkLaptopInvisible == true || checkMayinInvisible == true || checkMayPhotoInvisible == true || checkfaxInvisible == true || checkScanInvisible == true) {
-                            chuyenmon.setVisibility(View.VISIBLE);
-                        } else if (checkPCInvisible == false && checkLaptopInvisible == false && checkMayinInvisible == false && checkMayPhotoInvisible == false && checkfaxInvisible == false && checkScanInvisible == false) {
-                            chuyenmon.setVisibility(View.INVISIBLE);
-                        }
-                    }
-                });
+                           }
+                           if (photo.isChecked()) {
+                               if (!list.contains(6)) {
+                                   list.add(6);
+                                   checkMayPhotoInvisible = true;
+                                   cbPhoto.setVisibility(View.VISIBLE);
+
+                               }
+                           } else if (list.contains(6)) {
+                               checkMayPhotoInvisible = false;
+                               cbPhoto.setVisibility(View.GONE);
+
+
+                           }
+                           if (scan.isChecked()) {
+                               if (!list.contains(7)) {
+                                   list.add(7);
+                                   checkScanInvisible = true;
+                                   cbScan.setVisibility(View.VISIBLE);
+
+                               }
+                           } else if (list.contains(7)) {
+                               checkScanInvisible = false;
+                               cbScan.setVisibility(View.GONE);
+
+
+                           }
+                           if (mayfax.isChecked()) {
+                               if (!list.contains(8)) {
+                                   list.add(8);
+                                   checkfaxInvisible = true;
+                                   cbFax.setVisibility(View.VISIBLE);
+
+                               }
+                           } else if (list.contains(8)) {
+                               checkfaxInvisible = false;
+                               cbFax.setVisibility(View.GONE);
+
+
+                           }
+                           // checkedbox.joi = String.join(",", list);
+                           checkedbox = TextUtils.join(",", list);
+                           checkedbox = "[" + checkedbox;
+                           checkedbox = checkedbox + "]";
+                           if (checkPCInvisible == true || checkLaptopInvisible == true || checkMayinInvisible == true || checkMayPhotoInvisible == true || checkfaxInvisible == true || checkScanInvisible == true) {
+                               chuyenmon.setVisibility(View.VISIBLE);
+                           } else if (checkPCInvisible == false && checkLaptopInvisible == false && checkMayinInvisible == false && checkMayPhotoInvisible == false && checkfaxInvisible == false && checkScanInvisible == false) {
+                               chuyenmon.setVisibility(View.INVISIBLE);
+                               provider.setChecked(false);
+                           }
+
+                       }
+                   });
+
+
 
         // Remember, create doesn't show the dialog
         AlertDialog helpDialog = helpBuilder.create();
@@ -1013,54 +1010,7 @@ public class frmDangKy extends ActionBarActivity {
         return hexString.toString();
     }//--end md5
 
-    //call API
-//    public Result<String> getSignUp (){
-//        try{
-//
-//            if(!is_network){
-//                return new Result<String>(ResultStatus.FALSE,context.getResources().getString(R.string.msg_can_not_connect_to_network));
-//            }
-//            RestClient restClient = new RestClient(url_login);
-//            String P = Ipassword.getText().toString();
-//            String CP= Iconfirmpassword.getText().toString();
-//
-//            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-//            restClient.addParam(Account.EMAIL, Iemail.getText().toString());
-//            restClient.addParam(Account.PASSWORD, md5(P));
-//            restClient.addParam(Account.CONFIRM_PASSWORD,md5(CP));
-//            restClient.addParam(Account.FULL_NAME,Ifullname.getText().toString());
-//            restClient.addParam(Account.PHONE_NUMBER,Iphone.getText().toString());
-//            restClient.addParam(Account.ADDRESS,Idia_chi.getText().toString());
-//            restClient.execute(RequestMethod.POST);
-//
-//            //if response success
-//            if(restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS){
-//                String jsonObject = restClient.getResponse();
-//                Gson gson = new Gson();
-//                LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
-//
-//                //if result from response success
-//                if(getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-//
-//                    //save values into sharePreference
-//                    share_preference.setUserId(getLoginJson.getResults().getAccount_id());
-//                    share_preference.setToken(getLoginJson.getResults().getAccess_token());
-//
-//                    return new Result<String>(ResultStatus.TRUE, getLoginJson.getResults().getAccess_token());
-//                }
-//                else{
-//                    return new Result<String>(ResultStatus.FALSE, null, getLoginJson.getMessage());
-//                }
-//            }
-//            else{
-//                return new Result<String>(ResultStatus.FALSE,context.getResources().getString(R.string.msg_can_not_connect_to_network));
-//            }
-//        }
-//        catch(Exception e){
-//            Log.e(Def.ERROR, e.getMessage());
-//            return new Result<String>(ResultStatus.FALSE, e.getMessage());
-//        }
-//    }
+
     public void ErrorLine() {
         if (checkErrorLineEmail == false) {
             errorline2.setVisibility(View.VISIBLE);
@@ -1132,5 +1082,30 @@ public class frmDangKy extends ActionBarActivity {
         else if(selectedImageflag == false){}
         else if(checkAccountType == false){}
         else {return;}
+    }
+
+    @Override
+    public void initFlags() {
+
+    }
+
+    @Override
+    public void initControl() {
+
+    }
+
+    @Override
+    public void setEventForControl() {
+
+    }
+
+    @Override
+    public void getData(String... params) {
+
+    }
+
+    @Override
+    public void setData() {
+
     }
 }

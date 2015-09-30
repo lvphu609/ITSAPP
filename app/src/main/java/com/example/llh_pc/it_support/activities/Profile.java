@@ -17,6 +17,7 @@ import android.os.Environment;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -29,6 +30,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -64,7 +66,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class Profile  extends AppCompatActivity implements InnoFunctionListener {
+public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener {
     ImageButton bntImage;
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -76,7 +78,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener 
     LinearLayout ll;
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
-    String email, full_name, avatar, phone, address, acctye,checkedbox,temp,arrayList;
+    String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
     TextView user, provier, chuyenmon, resultText;
     Bitmap avatar1;
     ImageButton setavatar;
@@ -85,10 +87,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener 
     ImageLoader imageload;
     Bitmap thumbnail, bm;
     ArrayList<Integer> list = new ArrayList<>();
+    int x;
+    public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
+    int pccheck = 0;
+    private AlertDialog helpDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
 
         bntImage = (ImageButton) findViewById(R.id.bntImage);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
@@ -121,19 +129,20 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener 
         checkAcctype();
         editProfile();
         changeAcctype();
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-//    @Override
+    //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_profile, menu);
 //        return true;
 //    }
-public void onBackPressed() {
-    final Intent intent = new Intent(this, frmBaoHu.class);
-    startActivity(intent);
-}
+    public void onBackPressed() {
+        final Intent intent = new Intent(this, frmBaoHu.class);
+        startActivity(intent);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -211,20 +220,14 @@ public void onBackPressed() {
                 Gson gson = new Gson();
                 AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
                 if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-//
                     email = getAccountJson.getDKresults().getEmail().toString();
                     full_name = getAccountJson.getDKresults().getFull_name().toString();
                     phone = getAccountJson.getDKresults().getPhone_number().toString();
                     address = getAccountJson.getDKresults().getAddress().toString();
-//                     acctye = getAccountJson.getDKresults().getAccount_type().toString();
                     arr = getAccountJson.getDKresults().getAccount_type();
                     avatar = getAccountJson.getDKresults().getAvatar().toString();
-//                     avatar1 = StringToBitMap(avatar);
-//                    arrayListAccount = getAccountJson.getResults();
-//                    for(GetAccount str: arrayListAccount){
-//                        String email = str.getEmail();
-//                        String ho_ten = str.getFull_name();
-//                    }
+//                    checkboxAcctype();
+
                 }
             }
 
@@ -260,6 +263,7 @@ public void onBackPressed() {
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
                 editProfile.setEnabled(false);
                 editProfile.setVisibility(View.INVISIBLE);
@@ -329,7 +333,7 @@ public void onBackPressed() {
                 SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
                 String token = sharedPreference.getString("token", "YourName");
                 String id = sharedPreference.getString("id", "");
-                ChangeEditProfile(id,token,efullname.getText().toString(),ephone.getText().toString(),eadress.getText().toString(),temp,checkedbox);
+                ChangeEditProfile(id, token, efullname.getText().toString(), ephone.getText().toString(), eadress.getText().toString(), temp, checkedbox);
                 Toast.makeText(getBaseContext(), "Đổi thông tin tài khoản thành công", Toast.LENGTH_SHORT).show();
             }
         });
@@ -359,7 +363,6 @@ public void onBackPressed() {
 
         for (int i = 0; i < arr.size(); i++) {
 
-
             if (arr.get(i).equals("1")) {
                 user.setVisibility(View.VISIBLE);
                 chuyenmon.setVisibility(View.INVISIBLE);
@@ -368,6 +371,7 @@ public void onBackPressed() {
                 provier.setVisibility(View.VISIBLE);
                 chuyenmon.setVisibility(View.VISIBLE);
                 if (arr.get(i).equals("3")) {
+
                     pc.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("4")) {
                     laptop.setVisibility(View.VISIBLE);
@@ -380,11 +384,50 @@ public void onBackPressed() {
                 } else if (arr.get(i).equals("8")) {
                     mayfax.setVisibility(View.VISIBLE);
                 } else {
+                    pc.setVisibility(View.GONE);
+                    laptop.setVisibility(View.GONE);
+                    mayin.setVisibility(View.GONE);
+                    photocopy.setVisibility(View.GONE);
+                    scan.setVisibility(View.GONE);
+                    mayfax.setVisibility(View.GONE);
                 }
             }
 
 
         }
+    }
+
+    public void checkboxAcctype() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences.Editor saveAcc = sharedPreferences.edit();
+
+        for (int i = 0; i < arr.size(); i++) {
+            if (arr.get(i).equals("3")) {
+                saveAcc.putInt("save", 3);
+                saveAcc.commit();
+            }
+            if (arr.get(i).equals("4")) {
+                saveAcc.putInt("save", 4);
+                saveAcc.commit();
+            }
+            if (arr.get(i).equals("5")) {
+                saveAcc.putInt("save", 5);
+                saveAcc.commit();
+            }
+            if (arr.get(i).equals("6")) {
+                saveAcc.putInt("save", 6);
+                saveAcc.commit();
+            }
+            if (arr.get(i).equals("7")) {
+                saveAcc.putInt("save", 7);
+                saveAcc.commit();
+            }
+            if (arr.get(i).equals("8")) {
+                saveAcc.putInt("save", 8);
+                saveAcc.commit();
+            }
+        }
+
     }
 
     public void checkEditAcctype() {
@@ -409,21 +452,27 @@ public void onBackPressed() {
                 provier.setVisibility(View.VISIBLE);
                 chuyenmon.setVisibility(View.VISIBLE);
                 if (arr.get(i).equals("3")) {
+
                     pc.setEnabled(true);
                     pc.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else if (arr.get(i).equals("4")) {
+
                     laptop.setEnabled(true);
                     laptop.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else if (arr.get(i).equals("5")) {
+
                     mayin.setEnabled(true);
                     mayin.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else if (arr.get(i).equals("6")) {
+
                     photocopy.setEnabled(true);
                     photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else if (arr.get(i).equals("7")) {
+
                     scan.setEnabled(true);
                     scan.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else if (arr.get(i).equals("8")) {
+
                     mayfax.setEnabled(true);
                     mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
                 } else {
@@ -553,6 +602,7 @@ public void onBackPressed() {
             pc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                     showPopUp();
 
                 }
@@ -600,26 +650,38 @@ public void onBackPressed() {
         }
     }
 
-    public   void showPopUp() {
+    public void showPopUp() {
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
         helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
-
         LayoutInflater inflater = getLayoutInflater();
-        final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
+        final View checkboxLayout = inflater.inflate(R.layout.populayoutprofile, null);
         helpBuilder.setView(checkboxLayout);
 
-        helpBuilder.setPositiveButton("OK",
+        cbpc = (CheckBox) checkboxLayout.findViewById(R.id.PC);
+        cbLaptop = (CheckBox) checkboxLayout.findViewById(R.id.Laptop);
+        cbphoto = (CheckBox) checkboxLayout.findViewById(R.id.photocopy);
+        cbmayin = (CheckBox) checkboxLayout.findViewById(R.id.Mayin);
+        cbmayfax = (CheckBox) checkboxLayout.findViewById(R.id.fax);
+        cbscan = (CheckBox) checkboxLayout.findViewById(R.id.scan);
+
+        /**
+         * set event
+         */
+        cbpc.setOnCheckedChangeListener(this);
+        cbLaptop.setOnCheckedChangeListener(this);
+        cbphoto.setOnCheckedChangeListener(this);
+        cbmayin.setOnCheckedChangeListener(this);
+        cbmayfax.setOnCheckedChangeListener(this);
+        cbscan.setOnCheckedChangeListener(this);
+        helpBuilder.setCancelable(false).setPositiveButton("OK",
                 new DialogInterface.OnClickListener() {
 
                     public void onClick(DialogInterface dialog, int which) {
-                        CheckBox cbpc = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.PC);
-                        CheckBox cbLaptop = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Laptop);
-                        CheckBox cbphoto = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.photocopy);
-                        CheckBox cbmayin = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Mayin);
-                        CheckBox cbmayfax = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.fax);
-                        CheckBox cbscan = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.scan);
+
+
+
                         user = (TextView) findViewById(R.id.enableUser);
                         provier = (TextView) findViewById(R.id.enableProvider);
                         pc = (Button) findViewById(R.id.bntPC);
@@ -629,123 +691,141 @@ public void onBackPressed() {
                         mayfax = (Button) findViewById(R.id.bntMayfax);
                         mayin = (Button) findViewById(R.id.bntMayin);
                         chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
-//                        boolean isChecked = getBooleanFromPreferences("isChecked");
-//                        cbpc.setChecked(isChecked);
-//                        cbLaptop.setChecked(isChecked);
-//                        cbphoto.setChecked(isChecked);
-//                        cbmayfax.setChecked(isChecked);
-//                        cbscan.setChecked(isChecked);
-//                        cbmayin.setChecked(isChecked);
+                        list.clear();
 
 
-                        for(int i =0; i< arr.size();i++)
+
+
+                        if (cbpc.isChecked()) {
+
+                            list.remove((Integer) 3);
+                            if (!list.contains(3) || !arrayList.equals("3")) {
+                                list.remove((Integer) 3);
+                                list.add(3);
+                                pc.setVisibility(View.VISIBLE);
+                                pc.setEnabled(true);
+                                pc.setTextColor(getResources().getColor(R.color.mauxanh));
+
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+
+                            }
+
+
+                        } else
+
                         {
-                           arrayList= arr.get(i);
+
+                            list.remove((Integer) 3);
+                            pc.setVisibility(View.GONE);
 
                         }
 
-                            if (cbpc.isChecked()) {
-                                if (!list.contains(3)|| !arrayList.equals("3")) {
-                                    list.remove((Integer) 3);
-                                    list.add(3);
-                                    pc.setVisibility(View.VISIBLE);
-                                    pc.setEnabled(true);
-                                    pc.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+                        if (cbLaptop.isChecked()) {
 
-                                }
-
-
-                            } else  {
-                               list.remove((Integer) 3);
-                                pc.setVisibility(View.GONE);
-//
-
-                            }
-                            if (cbLaptop.isChecked()) {
-                                if (!list.contains(4)|| !arrayList.equals("4")) {
-                                    list.remove((Integer) 4);
-                                    list.add(4);
-                                    laptop.setVisibility(View.VISIBLE);
-                                    laptop.setEnabled(true);
-                                    laptop.setTextColor(getResources().getColor(R.color.mauxanh));
-
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-
-                                }
-
-
-                            } else  {
-
+                            list.remove((Integer) 4);
+                            if (!list.contains(4) || !arrayList.equals("4")) {
                                 list.remove((Integer) 4);
-                                laptop.setVisibility(View.GONE);
+                                list.add(4);
+                                laptop.setVisibility(View.VISIBLE);
+                                laptop.setEnabled(true);
+                                laptop.setTextColor(getResources().getColor(R.color.mauxanh));
 
-
-                            }
-                            if (cbmayin.isChecked()) {
-                                if (!list.contains(5)|| !arrayList.equals("5")) {
-                                    list.remove((Integer) 5);
-                                    list.add(5);
-                                    mayin.setVisibility(View.VISIBLE);
-                                    mayin.setEnabled(true);
-                                    mayin.setTextColor(getResources().getColor(R.color.mauxanh));
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-                                }
-                            } else {
+                            }
+                        } else
 
+                        {
+                            list.remove((Integer) 4);
+                            laptop.setVisibility(View.GONE);
+
+                        }
+
+                        if (cbmayin.isChecked())
+
+                        {
+                            list.remove((Integer) 5);
+                            if (!list.contains(5) || !arrayList.equals("5")) {
                                 list.remove((Integer) 5);
-                                mayin.setVisibility(View.GONE);
-
+                                list.add(5);
+                                mayin.setVisibility(View.VISIBLE);
+                                mayin.setEnabled(true);
+                                mayin.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
                             }
-                            if (cbphoto.isChecked()) {
-                                if (!list.contains(6)|| !arrayList.equals("6")) {
-                                    list.remove((Integer) 6);
-                                    list.add(6);
-                                    photocopy.setVisibility(View.VISIBLE);
-                                    photocopy.setEnabled(true);
-                                    photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-                                }
-                            } else {
+                        } else
 
+                        {
+                            list.remove((Integer) 5);
+                            mayin.setVisibility(View.GONE);
+
+                        }
+
+                        if (cbphoto.isChecked())
+
+                        {
+                            list.remove((Integer) 6);
+                            if (!list.contains(6) || !arrayList.equals("6")) {
                                 list.remove((Integer) 6);
-                                photocopy.setVisibility(View.GONE);
+                                list.add(6);
+                                photocopy.setVisibility(View.VISIBLE);
+                                photocopy.setEnabled(true);
+                                photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
 
                             }
-                            if (cbscan.isChecked()) {
-                                if (!list.contains(7)|| !arrayList.equals("7")) {
-                                    list.remove((Integer) 7);
-                                    list.add(7);
-                                    scan.setVisibility(View.VISIBLE);
-                                    scan.setEnabled(true);
-                                    scan.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-                                }
-                            } else  {
+                        } else
 
+                        {
+
+                            list.remove((Integer) 6);
+                            photocopy.setVisibility(View.GONE);
+
+                        }
+
+                        if (cbscan.isChecked())
+
+                        {
+                            list.remove((Integer) 7);
+                            if (!list.contains(7) || !arrayList.equals("7")) {
                                 list.remove((Integer) 7);
-                                scan.setVisibility(View.GONE);
-
+                                list.add(7);
+                                scan.setVisibility(View.VISIBLE);
+                                scan.setEnabled(true);
+                                scan.setTextColor(getResources().getColor(R.color.mauxanh));
 
                             }
-                            if (cbmayfax.isChecked()) {
-                                if (!list.contains(8)|| !arrayList.equals("8")) {
-                                    list.remove((Integer) 8);
-                                    list.add(8);
-                                    mayfax.setVisibility(View.VISIBLE);
-                                    mayfax.setEnabled(true);
-                                    mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-                                }
-                            } else  {
+                        } else
 
+                        {
+                            list.remove((Integer) 7);
+                            scan.setVisibility(View.GONE);
+
+                        }
+
+                        if (cbmayfax.isChecked())
+
+                        {
+                            list.remove((Integer) 8);
+                            if (!list.contains(8) || !arrayList.equals("8")) {
                                 list.remove((Integer) 8);
-                                mayfax.setVisibility(View.GONE);
-
+                                list.add(8);
+                                mayfax.setVisibility(View.VISIBLE);
+                                mayfax.setEnabled(true);
+                                mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
                             }
+                        } else
+
+                        {
+
+                            list.remove((Integer) 8);
+                            mayfax.setVisibility(View.GONE);
+
+
+                        }
 
 
                         // checkedbox.joi = String.join(",", list);
@@ -757,38 +837,49 @@ public void onBackPressed() {
                 });
 
         // Remember, create doesn't show the dialog
-        AlertDialog helpDialog = helpBuilder.create();
-    helpDialog.show();
 
+
+        helpDialog = helpBuilder.create();
+        helpDialog.show();
+        helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+        /*if (pccheck==true) {
+            helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+        } else {
+
+        }*/
     }
-public void  ChangeEditProfile (String id,String token,String full_name,String phone,String address,String avatar,String accountType) {
-
-    try {
 
 
-        RestClient restClient = new RestClient(url_editprofile);
-        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-        restClient.addParam("id", id);
-        restClient.addHeader("token", token);
-        restClient.addParam(Account.FULL_NAME, full_name);
-        restClient.addParam(Account.PHONE_NUMBER,phone);
-        restClient.addParam(Account.ADDRESS,address);
-        restClient.addParam(Account.ACCOUNT_TYPE,accountType);
-        restClient.addParam(Account.AVATAR,avatar);
-        restClient.execute(RequestMethod.POST);
-        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-            String jsonObject = restClient.getResponse();
-            Gson gson = new Gson();
-            AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
-            if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+    public void ChangeEditProfile(String id, String token, String full_name, String phone, String address, String avatar, String accountType) {
 
+        try {
+
+
+            RestClient restClient = new RestClient(url_editprofile);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addParam("id", id);
+            restClient.addHeader("token", token);
+            restClient.addParam(Account.FULL_NAME, full_name);
+            restClient.addParam(Account.PHONE_NUMBER, phone);
+            restClient.addParam(Account.ADDRESS, address);
+            restClient.addParam(Account.ACCOUNT_TYPE, accountType);
+            restClient.addParam(Account.AVATAR, avatar);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
+                if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+
+
+                }
             }
+
+
+        } catch (Exception ex) {
         }
-
-
-    } catch (Exception ex) {
     }
-}
+
     private void selectImage() {
 
         final CharSequence[] items = {"Chụp ảnh", "Chọn từ thư viện", "Hủy"};
@@ -817,6 +908,7 @@ public void  ChangeEditProfile (String id,String token,String full_name,String p
         });
         builder.show();
     }
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
@@ -869,6 +961,7 @@ public void  ChangeEditProfile (String id,String token,String full_name,String p
             }
         }
     }
+
     public String BitMapToString(Bitmap bitmap) {
         ByteArrayOutputStream ByteStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, ByteStream);
@@ -900,5 +993,27 @@ public void  ChangeEditProfile (String id,String token,String full_name,String p
     @Override
     public void setData() {
 
+    }
+
+    public void checkBoxEnable()
+    {
+
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+        if(isChecked){
+            ++pccheck;
+        }
+        else{
+            --pccheck;
+        }
+
+        if (helpDialog != null && pccheck>0) {
+            helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+        } else {
+            helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+        }
     }
 }

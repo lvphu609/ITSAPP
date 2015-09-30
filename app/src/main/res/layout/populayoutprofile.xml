@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <CheckBox android:id="@+id/PC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PC"
+
+
+
+        ></CheckBox>
+    <CheckBox android:id="@+id/Laptop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Laptop"
+
+        ></CheckBox>
+    <CheckBox android:id="@+id/Mayin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Máy in"
+
+        ></CheckBox>
+    <CheckBox android:id="@+id/photocopy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Máy Photocopy"
+
+        ></CheckBox>
+    <CheckBox android:id="@+id/scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Máy scan"
+
+        ></CheckBox>
+    <CheckBox android:id="@+id/fax"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Máy fax"
+
+        ></CheckBox>
+    <!--<Button-->
+        <!--android:id="@+id/buttonok"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:gravity="center"-->
+        <!--android:text="OK"-->
+        <!--android:textColor="@color/actionbar_text"-->
+        <!--android:textSize="10dp"/>-->
+</LinearLayout>
