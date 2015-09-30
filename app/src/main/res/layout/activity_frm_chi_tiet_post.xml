@@ -1,11 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_weight="2">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -15,7 +17,7 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:textStyle="bold"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="25dp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,7 +26,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loại báo hỏng: "/>
+                android:text="Loại báo hỏng: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,11 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingLeft="25dp">
+            android:paddingLeft="25dp" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Địa chỉ: "/>
+                android:text="Địa chỉ: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -56,68 +62,182 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ghi chú: "/>
+                android:text="Ghi chú: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tvNote"
                 android:text="abc"/>
         </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Xem chỉ dẫn trên bảng đồ"
+            android:gravity="center"
+            android:textColor="@color/mauxanh"
+            android:paddingLeft="25dp"
+            />
     </LinearLayout>
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Thông tin người tạo báo hỏng"
-        android:background="@color/mauxam"
-        android:textColor="@color/actionbar_text"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textStyle="bold"
-        android:paddingLeft="10dp"/>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="25dp">
+        android:orientation="vertical"
+        android:layout_weight="2">
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin người tạo báo hỏng"
+            android:background="@color/mauxam"
+            android:textColor="@color/actionbar_text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textStyle="bold"
+            android:paddingLeft="25dp"/>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Họ tên: "/>
-        <TextView
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ tên: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvName"
+                android:text="abc"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvName"
-            android:text="abc"/>
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại: "
+                android:textColor="@color/mauden"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvPhone_number"
+                android:text="abc"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvaddress"
+                android:text="abc"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="25dp">
+        android:orientation="vertical"
+        android:id="@+id/lnProvider"
+        android:layout_weight="6">
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin người chấp nhận báo hỏng"
+            android:background="@color/mauxam"
+            android:textColor="@color/actionbar_text"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textStyle="bold"
+            android:paddingLeft="25dp"/>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Số điện thoại: "/>
-        <TextView
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thời gian chấp nhận: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvThoiGian"
+                android:text="abc"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvPhone_number"
-            android:text="abc"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="25dp">
-        <TextView
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ tên: "
+                android:textColor="@color/mauden"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvHoTem"
+                android:text="abc"
+                android:textColor="@color/mauxanh"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Địa chỉ: "/>
-        <TextView
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvSoDienThoai"
+                android:textColor="@color/mauxanh"
+                android:text="0123456789"/>
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tvaddress"
-            android:text="abc"/>
+            android:orientation="horizontal"
+            android:paddingLeft="25dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating: "
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems = "40"
+                android:singleLine="false"
+                android:maxLines="1"
+                android:inputType="textPassword"
+                android:text="**********"
+                android:enabled="false"
+                />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

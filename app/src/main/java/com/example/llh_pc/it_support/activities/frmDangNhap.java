@@ -104,6 +104,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                         btnLogin.invalidate();
                         tvEmail.setText("");
                     }
+                    tvEmail.setText("");
                 }
             }
         });
