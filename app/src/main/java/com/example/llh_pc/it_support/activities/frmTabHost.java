@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.FragmentTransaction;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +44,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private ImageLoader imageload = new ImageLoader(frmTabHost.this);
     private TextView tvName;
     private String fullname, avatar;
-
+    tabHostProfile tab_host_profile;
     TextView tv;
     private FragmentTabHost mTabHost;
 
@@ -65,6 +66,12 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
         editor.commit();
+
+
+
+
+
+
 
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
@@ -128,10 +135,10 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
                                                     if (tab.getCurrentTab() == 0) {
                                                         toolbar.setTitle("Báo hỏng");
-                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //1st tab selected
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
                                                     } else
                                                         toolbar.setTitle("Thông báo");
-                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //2nd tab selected
+                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
                                                 }
                                             });
 
