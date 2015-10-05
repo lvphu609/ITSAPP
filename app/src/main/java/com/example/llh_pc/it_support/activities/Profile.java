@@ -18,6 +18,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -36,6 +37,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +68,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener {
     ImageButton bntImage;
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -79,7 +83,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
-    TextView user, provier, chuyenmon, resultText;
+    TextView user, provier, chuyenmon, resultText,rateText;
+    RatingBar rateBar;
     Bitmap avatar1;
     ImageButton setavatar;
     EditText eemail, efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
@@ -87,25 +92,28 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     ImageLoader imageload;
     Bitmap thumbnail, bm;
     ArrayList<Integer> list = new ArrayList<>();
+    View[] v;
     int x;
     public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
     int pccheck = 0;
     private AlertDialog helpDialog;
-
+    private CircleImageView c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-
-        bntImage = (ImageButton) findViewById(R.id.bntImage);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
-        params.height = 300;
-        params.width = 300;
-        bntImage.setLayoutParams(params);
-        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
+//        bntImage = (ImageButton) findViewById(R.id.bntImage);
+//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
+//        params.height = 300;
+//        params.width = 300;
+//        bntImage.setLayoutParams(params);
+//        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
         photocopy = (Button) findViewById(R.id.photocopy);
-//
+        rateBar =(RatingBar) findViewById(R.id.ratingBar);
+        rateText = (TextView) findViewById(R.id.rateText);
+        ll = (LinearLayout) findViewById(R.id.ll);
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
                 .detectDiskWrites()
@@ -116,7 +124,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         accdal = new AccountDAL(getBaseContext());
         imageload = new ImageLoader(getBaseContext());
-
+        c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
+        c.setOnClickListener(this);
 
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
         String name = sharedPreference.getString("token", "YourName");
@@ -128,8 +137,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         setProfile();
         checkAcctype();
         editProfile();
-        changeAcctype();
 
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -140,14 +149,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 //        return true;
 //    }
     public void onBackPressed() {
-        final Intent intent = new Intent(this, frmBaoHu.class);
+        final Intent intent = new Intent(this, frmTabHost.class);
         startActivity(intent);
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), frmBaoHu.class);
+        Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
         startActivityForResult(myIntent, 0);
+
 
         return true;
     }
@@ -159,7 +170,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         LinearLayout.LayoutParams params;
         LinearLayout newLL = new LinearLayout(mContext);
-        newLL.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
+        newLL.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT));
         newLL.setGravity(Gravity.LEFT);
         newLL.setOrientation(LinearLayout.HORIZONTAL);
@@ -172,16 +183,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             LL.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
             LL.setLayoutParams(new ListView.LayoutParams(
                     LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-            //my old code
-            //TV = new TextView(mContext);
-            //TV.setText(textArray[i]);
-            //TV.setTextSize(size);  <<<< SET TEXT SIZE
-            //TV.measure(0, 0);
+
             views[i].measure(0, 0);
             params = new LinearLayout.LayoutParams(views[i].getMeasuredWidth(),
                     LinearLayout.LayoutParams.WRAP_CONTENT);
-            //params.setMargins(5, 0, 5, 0);  // YOU CAN USE THIS
-            //LL.addView(TV, params);
             LL.addView(views[i], params);
             LL.measure(0, 0);
             widthSoFar += views[i].getMeasuredWidth();// YOU MAY NEED TO ADD THE MARGINS
@@ -190,7 +195,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 newLL = new LinearLayout(mContext);
                 newLL.setLayoutParams(new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.FILL_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT));
                 newLL.setOrientation(LinearLayout.HORIZONTAL);
                 newLL.setGravity(Gravity.LEFT);
@@ -243,14 +248,17 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         eadress = (EditText) findViewById(R.id.dia_chi);
         ephone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
-        setavatar = (ImageButton) findViewById(R.id.bntImage);
-        imageload.DisplayImage(avatar, setavatar);
+//        setavatar = (ImageButton) findViewById(R.id.profile_image);
+        imageload.DisplayImage(avatar, c);
 
         eemail.setText(email);
         efullname.setText(full_name);
         eadress.setText(address);
         ephone.setText(phone);
 //        password.setText("********");
+
+
+
 
 
     }
@@ -264,7 +272,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             @Override
             public void onClick(View v) {
 
-
+                changeAcctype();
                 editProfile.setEnabled(false);
                 editProfile.setVisibility(View.INVISIBLE);
                 OK.setEnabled(true);
@@ -281,14 +289,22 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 scan.setEnabled(true);
                 mayfax.setEnabled(true);
                 mayin.setEnabled(true);
-                bntImage.setEnabled(true);
-                bntImage.setClickable(true);
-                bntImage.setOnClickListener(new View.OnClickListener() {
+                c.setEnabled(true);
+                c.setClickable(true);
+                c.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         selectImage();
                     }
                 });
+//                bntImage.setEnabled(true);
+//                bntImage.setClickable(true);
+//                bntImage.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        selectImage();
+//                    }
+//                });
                 checkEditAcctype();
                 changePass.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -305,9 +321,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             @Override
             public void onClick(View v) {
                 OK.getResources().getColor(R.color.actionbar_text);
-
-                bntImage.setEnabled(false);
-                bntImage.setClickable(false);
+                    c.setEnabled(false);
+                    c.setClickable(false);
+//                bntImage.setEnabled(false);
+//                bntImage.setClickable(false);
                 editProfile.setEnabled(true);
                 editProfile.setVisibility(View.VISIBLE);
                 OK.setEnabled(false);
@@ -365,11 +382,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             if (arr.get(i).equals("1")) {
                 user.setVisibility(View.VISIBLE);
+                provier.setVisibility(View.GONE);
                 chuyenmon.setVisibility(View.INVISIBLE);
+                rateBar.setVisibility(View.GONE);
+                rateText.setVisibility(View.GONE);
             } else {
                 user.setVisibility(View.GONE);
                 provier.setVisibility(View.VISIBLE);
                 chuyenmon.setVisibility(View.VISIBLE);
+                rateBar.setVisibility(View.VISIBLE);
+                rateText.setVisibility(View.VISIBLE);
                 if (arr.get(i).equals("3")) {
 
                     pc.setVisibility(View.VISIBLE);
@@ -446,6 +468,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             if (arr.get(i).equals("1")) {
                 user.setVisibility(View.VISIBLE);
+                provier.setVisibility(View.GONE);
                 chuyenmon.setVisibility(View.INVISIBLE);
             } else {
                 user.setVisibility(View.GONE);
@@ -681,7 +704,6 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     public void onClick(DialogInterface dialog, int which) {
 
 
-
                         user = (TextView) findViewById(R.id.enableUser);
                         provier = (TextView) findViewById(R.id.enableProvider);
                         pc = (Button) findViewById(R.id.bntPC);
@@ -692,8 +714,6 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         mayin = (Button) findViewById(R.id.bntMayin);
                         chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
                         list.clear();
-
-
 
 
                         if (cbpc.isChecked()) {
@@ -931,7 +951,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                bntImage.setImageBitmap(thumbnail);
+                c.setImageBitmap(thumbnail);
+//                bntImage.setImageBitmap(thumbnail);
                 BitMapToString(thumbnail);
 
 
@@ -955,7 +976,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
-                bntImage.setImageBitmap(bm);
+                c.setImageBitmap(bm);
+//                bntImage.setImageBitmap(bm);
                 BitMapToString(bm);
 
             }
@@ -1015,5 +1037,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         } else {
             helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
