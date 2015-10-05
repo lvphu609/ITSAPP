@@ -46,26 +46,23 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
     TextView tv;
     private FragmentTabHost mTabHost;
+    private SharedPreferences sharedPreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
         final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            fullname = extras.getString("fullname");
-            avatar = extras.getString("avatar");
-            TextView tv = (TextView) findViewById(R.id.textView);
-            tv.setText(fullname);
-        }
-        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
         check = sharedPreference.getInt("check", 1);
+        fullname = sharedPreference.getString("fullname", null);
+        avatar = sharedPreference.getString("avatar", null);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
         editor.commit();
-
+        TextView tvView  = (TextView)findViewById(R.id.textView);
+        tvView.setText(fullname);
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
@@ -158,8 +155,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         de.hdodenhof.circleimageview.CircleImageView c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
         imageload.DisplayImage(avatar, c);
         c.setOnClickListener(this);
-
-
     }
 
     @Override
