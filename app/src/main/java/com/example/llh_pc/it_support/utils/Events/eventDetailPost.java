@@ -45,7 +45,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         PostDetail p = arrayListPost.get(position);
-        String idPost = p.getId();
+        String idPost = p.getPost_type_id();
         try {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
             String token = sharedPreference.getString("token", "token");

@@ -36,8 +36,8 @@ public interface Def {
     public static final String API_LoadPost = "/posts/get_my_posts/";
     //loadpostdetail
     public static final String API_Loadpostdetail = "posts/get_post_detail_by_id/";
-
-
+    //delete/post
+    public static final String API_DeletePost= "posts/delete/";
 
 
 
