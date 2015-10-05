@@ -21,7 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="-4dp"
             android:layout_weight="0"
-            android:background="@color/mauxam"/>
+            android:background="@color/mauxam"
+            />
     </LinearLayout>
 
 </TabHost>

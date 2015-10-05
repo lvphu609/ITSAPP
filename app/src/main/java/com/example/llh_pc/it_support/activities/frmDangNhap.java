@@ -25,6 +25,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.utils.Events.eventLogin;
 import com.example.llh_pc.it_support.utils.Events.eventStayLgoin;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
@@ -34,7 +35,9 @@ import java.util.ArrayList;
 public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener{
 
     private Intent intent;
-    private EditText edtUserName,edtPass;
+    public static EditText edtUserName,edtPass;
+    frmDangKy frmDK = new frmDangKy();
+    AccountDAL accdal;
     private Button btnLogin;
     private ArrayList<View> views = new ArrayList<>();
     private CheckBox cbSave;
@@ -45,7 +48,15 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         setContentView(R.layout.activity_frm_dang_nhap);
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setTextColor(getResources().getColor(R.color.actionbar_text));
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+        StrictMode.enableDefaults();
 
+         accdal = new AccountDAL(getBaseContext());
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -58,10 +69,16 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 startActivity(intent1);
             }
         });
-
         if (Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
+        }
+        if(frmDK.dangkythanhcong ==true)
+        {
+            btnLogin.setEnabled(true);
+            btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+            btnLogin.invalidate();
+
         }
         cbSave = (CheckBox)findViewById(R.id.cbLuuTK);
         cbSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,9 +95,18 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         final TextView tvEmail = (TextView)findViewById(R.id.txtEmail);
         edtUserName = (EditText) findViewById(R.id.edtTenDangNhap);
+        if(frmDK.dangkythanhcong == true)
+        {
+            edtUserName.setText(accdal.applyEmail.toString());
+        }
+        else
+        {
+            frmDK.dangkythanhcong =false;
+        }
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {

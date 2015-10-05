@@ -71,6 +71,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     private boolean is_network = false;
     TextView errorname;
     AccountDAL accdal;
+    frmDangNhap frmDN;
     TextView txtDate;
     private Context context;
     boolean emailTontai =false;
@@ -97,7 +98,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     boolean checkfaxInvisible = false;
     boolean inVaild = false;
     boolean checkpasswordtrue = false;
+    public static boolean dangkythanhcong =false;
     public ArrayList<View> listEditText = new ArrayList<>();
+
     //API
 //    private Context context;
 //    private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
@@ -137,6 +140,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         StrictMode.enableDefaults();
         final Intent DN = new Intent(this, frmDangNhap.class);
         accdal = new AccountDAL(getBaseContext());
+        frmDN = new frmDangNhap();
         //ImageButton
         bntImage = (ImageButton) findViewById(R.id.bntImage);
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bntImage.getLayoutParams();
@@ -228,6 +232,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
 
                     startActivity(DN);
+                    dangkythanhcong =true;
                     Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
 
                 }

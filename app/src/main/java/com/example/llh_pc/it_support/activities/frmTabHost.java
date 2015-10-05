@@ -4,57 +4,70 @@ import android.app.TabActivity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTabHost;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TabHost;
-
+import android.widget.TextView;
+import com.example.llh_pc.it_support.activities.TabBaoHu;
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmBaoHu;
 import com.example.llh_pc.it_support.activities.frmLuuTru;
 import com.example.llh_pc.it_support.activities.frmThongBao;
 import com.example.llh_pc.it_support.activities.frmTimKiem;
 
-public class frmTabHost  extends TabActivity {
+import org.w3c.dom.Text;
 
+public class frmTabHost  extends TabActivity {
+    TextView tv;
+    private FragmentTabHost mTabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
-
         final TabHost tab=(TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
+
         Resources ressources = getResources();
         TabHost tabHost = getTabHost();
 
         Intent intentAndroid = new Intent().setClass(this, frmBaoHu.class);
         TabHost.TabSpec tabSpecAndroid = tabHost
                 .newTabSpec("Android")
-                .setIndicator("Báo hỏng", ressources.getDrawable(R.drawable.icon))
+                .setIndicator("",ressources.getDrawable(R.drawable.ic_baohong))
                 .setContent(intentAndroid);
+
 
         // Apple tab
         Intent intentApple = new Intent().setClass(this, frmThongBao.class);
         TabHost.TabSpec tabSpecApple = tabHost
                 .newTabSpec("Apple")
-                .setIndicator("Thông báo", ressources.getDrawable(R.drawable.ic_action_about))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_thongbao))
                 .setContent(intentApple);
 
         // Windows tab
         Intent intentWindows = new Intent().setClass(this, frmTimKiem.class);
         TabHost.TabSpec tabSpecWindows = tabHost
                 .newTabSpec("Windows")
-                .setIndicator("Tìm kiếm", ressources.getDrawable(R.drawable.ic_action_camera))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_timkiem))
                 .setContent(intentWindows);
 
         // Blackberry tab
         Intent intentBerry = new Intent().setClass(this, frmLuuTru.class);
         TabHost.TabSpec tabSpecBerry = tabHost
                 .newTabSpec("Berry")
-                .setIndicator("Lưu trữ", ressources.getDrawable(R.drawable.ic_action_email))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_luutru))
                 .setContent(intentBerry);
+
+        //Profile tab
+
+
 
         // add all tabs
         tabHost.addTab(tabSpecAndroid);
@@ -62,18 +75,26 @@ public class frmTabHost  extends TabActivity {
         tabHost.addTab(tabSpecWindows);
         tabHost.addTab(tabSpecBerry);
 
+
+
+
         //set Windows tab as default (zero based)
         tabHost.setCurrentTab(0);
         tab.setOnTabChangedListener(new
                                             TabHost.OnTabChangeListener() {
                                                 public void onTabChanged(String arg0) {
-                                                    for (int i = 0; i < tab.getTabWidget().getChildCount(); i++)
+                                                    for (int i = 0; i < tab.getTabWidget().getChildCount(); i++) {
                                                         tab.getTabWidget().getChildAt(i).setBackgroundColor(0x00FF00); //unselected
+                                                         tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+                                                        tv.setTextColor(getResources().getColor(R.color.actionbar_text));
+                                                    }
 
-                                                    if (tab.getCurrentTab() == 0)
-                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //1st tab selected
+                                                    if (tab.getTabWidget().getChildCount() == 0)
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
+
                                                     else
-                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //2nd tab selected
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
+
                                                 }
                                             });
     }
@@ -92,4 +113,5 @@ public class frmTabHost  extends TabActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

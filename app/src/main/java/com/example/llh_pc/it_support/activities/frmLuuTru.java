@@ -53,6 +53,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
             restClient.execute(RequestMethod.POST);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
             {
+
                 String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
                 ViewPostParse getListPostJson = gson.fromJson(jsonObject, ViewPostParse.class);
