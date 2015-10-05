@@ -67,7 +67,9 @@ import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class frmDangKy extends AppCompatActivity implements InnoFunctionListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class frmDangKy extends AppCompatActivity implements InnoFunctionListener, View.OnClickListener {
     private boolean is_network = false;
     TextView errorname;
     AccountDAL accdal;
@@ -125,6 +127,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             "Nam",
             "Nữ"};
     ArrayList<Integer> arrayListCheck = new ArrayList<Integer>();
+    private CircleImageView c;
 
 
     @Override
@@ -142,12 +145,21 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         accdal = new AccountDAL(getBaseContext());
         frmDN = new frmDangNhap();
         //ImageButton
-        bntImage = (ImageButton) findViewById(R.id.bntImage);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bntImage.getLayoutParams();
-        params.height = 300;
-        params.width = 300;
-        bntImage.setLayoutParams(params);
-        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
+//        bntImage = (ImageButton) findViewById(R.id.bntImage);
+        //jvcjknkxcv
+         c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
+         c.setOnClickListener(this);
+        
+        //jkbvjkjkcbvmkl
+        
+        
+        
+        
+//        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bntImage.getLayoutParams();
+//        params.height = 300;
+//        params.width = 300;
+//        bntImage.setLayoutParams(params);
+//        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
         //Pick Date & Gender
 //        Spinner spin = (Spinner) findViewById(R.id.spinner1);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arr);
@@ -157,17 +169,17 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 //        getDefautInfor();
 //        addEventFormWidgets();
         //Avatar
-        bntImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getBaseContext(), "Chup hinh nao", Toast.LENGTH_SHORT).show();
-//                loadImageFromCamera();
-//                grabImage();
-//                getResizedBitmap(originImage, 20, 20);
-                selectImage();
-
-            }
-        });
+//        bntImage.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getBaseContext(), "Chup hinh nao", Toast.LENGTH_SHORT).show();
+////                loadImageFromCamera();
+////                grabImage();
+////                getResizedBitmap(originImage, 20, 20);
+////                selectImage();
+//
+//            }
+//        });
         //actionBar
 //        ActionBar actionBar = getActionBar();
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
@@ -683,7 +695,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                bntImage.setImageBitmap(thumbnail);
+                c.setImageBitmap(thumbnail);
+//                bntImage.setImageBitmap(thumbnail);
                 selectedImageflag = true;
                 setDongyEnble();
                 BitMapToString(thumbnail);
@@ -697,7 +710,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
                 cursor.moveToFirst();
                 String selectedImagePath = cursor.getString(column_index);
-                ;
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
                 BitmapFactory.decodeFile(selectedImagePath, options);
@@ -709,12 +721,11 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
-                bntImage.setImageBitmap(bm);
+                c.setImageBitmap(bm);
+                //bntImage.setImageBitmap(bm);
                 selectedImageflag = true;
                 setDongyEnble();
                 BitMapToString(bm);
-
-
             }
         }
 
@@ -1113,5 +1124,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void setData() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        selectImage();
     }
 }
