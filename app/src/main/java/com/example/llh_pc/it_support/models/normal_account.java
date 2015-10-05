@@ -2,6 +2,8 @@ package com.example.llh_pc.it_support.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by LLH-PC on 9/29/2015.
  */
@@ -37,7 +39,7 @@ public class normal_account {
     public String reg_id;
 
     @SerializedName("account_type")
-    public String account_type;
+    public ArrayList<String> account_type;
 
     public String getId() {
         return id;
@@ -119,11 +121,11 @@ public class normal_account {
         this.reg_id = reg_id;
     }
 
-    public String getAccount_type() {
+    public ArrayList<String> getAccount_type() {
         return account_type;
     }
 
-    public void setAccount_type(String account_type) {
+    public void setAccount_type(ArrayList<String> account_type) {
         this.account_type = account_type;
     }
 }

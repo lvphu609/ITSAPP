@@ -37,6 +37,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             StrictMode.setThreadPolicy(policy);
         }
         ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         actionBar.setDisplayHomeAsUpEnabled(false);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {

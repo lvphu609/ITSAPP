@@ -170,6 +170,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         });
         //actionBar
 //        ActionBar actionBar = getActionBar();
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         dangkyok = (Button) findViewById(R.id.dangkyok);

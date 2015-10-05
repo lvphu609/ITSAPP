@@ -57,6 +57,9 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         StrictMode.enableDefaults();
 
          accdal = new AccountDAL(getBaseContext());
+
+
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -108,23 +111,21 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().isEmpty() )
-                {
+                if (s.toString().isEmpty()) {
                     E = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
                     tvEmail.setText("Vui lòng nhập email.");
-                }
-                else
-                {
+                } else {
                     E = 1;
-                    if(E+P == 2)
-                    {
+                    if (E + P == 2) {
                         btnLogin.setEnabled(true);
                         btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                         btnLogin.invalidate();
@@ -148,18 +149,14 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.toString().isEmpty() )
-                {
+                if (s.toString().isEmpty()) {
                     P = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
                     tvMatKhau.setText("Vui lòng nhập mật khẩu.");
-                }
-                else
-                {
-                    P =1;
-                    if(E+P == 2)
-                    {
+                } else {
+                    P = 1;
+                    if (E + P == 2) {
                         btnLogin.setEnabled(true);
                         btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                         btnLogin.invalidate();
@@ -169,16 +166,22 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 }
             }
         });
-
         initFlags();
         initControl();
         setEventForControl();
         getData();
         setData();
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*phần quên mật khẩu*/
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            boolean value = extras.getBoolean("checkboxFW");
+            edtUserName.setText(extras.getString("EmailFW"));
+            cbSave.setChecked(true);
+        }
+        /*-----------------*/
     }
-
-
 
     @Override
     public void onBackPressed() {
@@ -186,13 +189,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         startActivity(intent);
     }
 
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_dang_nhap, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

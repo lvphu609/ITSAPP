@@ -135,7 +135,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         checkAcctype();
         editProfile();
 
-
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

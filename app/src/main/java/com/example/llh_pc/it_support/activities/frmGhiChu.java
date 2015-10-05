@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.models.JsonParses.PostParse;
@@ -64,6 +65,7 @@ public class frmGhiChu extends AppCompatActivity {
                         PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
                         if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                             Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
+                            Toast.makeText(frmGhiChu.this, "Tạo post thành công.", Toast.LENGTH_LONG).show();
                             frmGhiChu.this.startActivity(intent);
                         }
                     }
@@ -75,6 +77,7 @@ public class frmGhiChu extends AppCompatActivity {
 
             }
         });
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -85,7 +88,6 @@ public class frmGhiChu extends AppCompatActivity {
                 finish();
                 return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

@@ -32,6 +32,7 @@
             android:layout_gravity="center"
             android:src="@drawable/avatar"
             android:scaleType="fitCenter"
+
             />
             <TextView
                 android:id="@+id/chonanh"

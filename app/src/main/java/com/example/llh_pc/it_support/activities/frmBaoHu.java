@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.example.llh_pc.it_support.R;
@@ -36,7 +39,6 @@ import static android.content.DialogInterface.*;
 
 public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener {
     public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_PostTile + Def.API_FORMAT_JSON;
-    //progfile
     private boolean is_network = false;
     private ArrayList<Post> array_post = new ArrayList<>();
     private PostAdapter adapter;
@@ -58,60 +60,6 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        check = sharedPreference.getInt("check", 1);
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("staylogin",1);
-        editor.commit();
-
-        String text;
-        menu = new String[]{"Thông tin tài khoản","Android","Windows","Linux","Raspberry Pi","WordPress","Videos","Đăng xuất"};
-        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        dList = (ListView) findViewById(R.id.left_drawer);
-        adapter1 = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,menu);
-        dList.setAdapter(adapter1);
-        dList.setSelector(android.R.color.holo_blue_dark);
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-                if (position == 7) {
-                    try {
-                        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
-                        String token = sharedPreference.getString("token", "token");
-                        RestClient restClient = new RestClient(url_logout);
-                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                        restClient.addHeader("token", token);
-                        restClient.execute(RequestMethod.POST);
-                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                            String jsonObject = restClient.getResponse();
-                            Gson gson = new Gson();
-                            LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
-                            //if result from response success
-                            if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("check", 1);
-                                editor.putString("token", "Hai");
-                                editor.putInt("staylogin", 0);
-                                editor.commit();
-                                Intent intent = new Intent(frmBaoHu.this, frmDK_DN.class);
-                                startActivity(intent);
-                            }
-                        }
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (position == 0) {
-                    Intent profile = new Intent(frmBaoHu.this, Profile.class);
-                    startActivity(profile);
-                }
-            }
-        });
         try
         {
             RestClient restClient = new RestClient(url_get_my_notifications);

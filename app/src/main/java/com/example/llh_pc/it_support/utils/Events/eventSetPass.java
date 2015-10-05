@@ -3,14 +3,18 @@ package com.example.llh_pc.it_support.utils.Events;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmDK_DN;
+import com.example.llh_pc.it_support.activities.frmDangNhap;
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -63,6 +67,7 @@ public class eventSetPass implements View.OnClickListener {
                 textView.setText("Mật khẩu phải có ít nhất 6 kí tự.");
                 // set dialog message
                 alertDialogBuilder
+                        .setTitle("IT Support")
                         .setCancelable(false)
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
@@ -84,6 +89,7 @@ public class eventSetPass implements View.OnClickListener {
                 textView.setText(" Nhập lại mật khẩu không trùng khớp với mật khẩu đã đăng ký.");
                 // set dialog message
                 alertDialogBuilder
+                        .setTitle("IT Support")
                         .setCancelable(false)
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
@@ -104,7 +110,11 @@ public class eventSetPass implements View.OnClickListener {
                 //if result from response success
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     //save values into sharePreference
-                    Intent intent = new Intent(context, frmDK_DN.class);
+                    Intent intent = new Intent(context, frmDangNhap.class);
+                    intent.putExtra("checkboxFW",true);
+                    intent.putExtra("EmailFW",mail);
+                    Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(context, "", Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 } else {
                     LayoutInflater li = LayoutInflater.from(context);
@@ -115,14 +125,13 @@ public class eventSetPass implements View.OnClickListener {
                     textView.setText("Mã xác thực không hợp lệ");
                     // set dialog message
                     alertDialogBuilder
+                            .setTitle("IT Support")
                             .setCancelable(false)
                             .setPositiveButton("OK",
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
-
                                         }
                                     });
-
                     // create alert dialog
                     AlertDialog alertDialog = alertDialogBuilder.create();
                     // show it
