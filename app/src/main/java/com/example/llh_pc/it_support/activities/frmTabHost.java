@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.support.v4.app.FragmentTabHost;
 
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,7 +14,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TabHost;
@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.example.llh_pc.it_support.R;
 
 
-import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
@@ -45,15 +44,19 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private TextView tvName;
     private String fullname, avatar;
 
+    TextView tv;
+    private FragmentTabHost mTabHost;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
+        final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             fullname = extras.getString("fullname");
             avatar = extras.getString("avatar");
-            TextView tv= (TextView)findViewById(R.id.textView);
+            TextView tv = (TextView) findViewById(R.id.textView);
             tv.setText(fullname);
         }
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
@@ -64,55 +67,71 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         editor.commit();
 
         initNavigation(savedInstanceState);
-        final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
+        //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
+
         Resources ressources = getResources();
         TabHost tabHost = getTabHost();
 
         Intent intentAndroid = new Intent().setClass(this, frmBaoHu.class);
         TabHost.TabSpec tabSpecAndroid = tabHost
                 .newTabSpec("Android")
-                .setIndicator("Báo hỏng", ressources.getDrawable(R.drawable.icon))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_baohong))
                 .setContent(intentAndroid);
+
+
         // Apple tab
         Intent intentApple = new Intent().setClass(this, frmThongBao.class);
         TabHost.TabSpec tabSpecApple = tabHost
                 .newTabSpec("Apple")
-                .setIndicator("Thông báo", ressources.getDrawable(R.drawable.ic_action_about))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_thongbao))
                 .setContent(intentApple);
         // Windows tab
         Intent intentWindows = new Intent().setClass(this, frmTimKiem.class);
         TabHost.TabSpec tabSpecWindows = tabHost
                 .newTabSpec("Windows")
-                .setIndicator("Tìm kiếm", ressources.getDrawable(R.drawable.ic_action_camera))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_timkiem))
                 .setContent(intentWindows);
         // Blackberry tab
         Intent intentBerry = new Intent().setClass(this, frmLuuTru.class);
         TabHost.TabSpec tabSpecBerry = tabHost
                 .newTabSpec("Berry")
-                .setIndicator("Lưu trữ", ressources.getDrawable(R.drawable.ic_action_email))
+                .setIndicator("", ressources.getDrawable(R.drawable.ic_luutru))
                 .setContent(intentBerry);
+
+        //Profile tab
+
+
         // add all tabs
         tabHost.addTab(tabSpecAndroid);
         tabHost.addTab(tabSpecApple);
         tabHost.addTab(tabSpecWindows);
         tabHost.addTab(tabSpecBerry);
 
+
         //set Windows tab as default (zero based)
         tabHost.setCurrentTab(0);
         tab.setOnTabChangedListener(new
                                             TabHost.OnTabChangeListener() {
                                                 public void onTabChanged(String arg0) {
-                                                    for (int i = 0; i < tab.getTabWidget().getChildCount(); i++)
+                                                    for (int i = 0; i < tab.getTabWidget().getChildCount(); i++) {
                                                         tab.getTabWidget().getChildAt(i).setBackgroundColor(0x00FF00); //unselected
+                                                        tv = (TextView) tab.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+                                                        tv.setTextColor(getResources().getColor(R.color.actionbar_text));
+                                                    }
+
+                                                    if (tab.getTabWidget().getChildCount() == 0)
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
+
+                                                    else
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
 
                                                     if (tab.getCurrentTab() == 0) {
                                                         toolbar.setTitle("Báo hỏng");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //1st tab selected
-                                                    }
-                                                    else
+                                                    } else
                                                         toolbar.setTitle("Thông báo");
-                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //2nd tab selected
+                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //2nd tab selected
                                                 }
                                             });
 
@@ -136,12 +155,13 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         mDrawerToggle.syncState();
         selectedItem = savedInstanceState == null ? R.id.nav_item_1 : savedInstanceState.getInt("selectedItem");
         /*set text and image*/
-        de.hdodenhof.circleimageview.CircleImageView c= (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
-        imageload.DisplayImage(avatar,c );
+        de.hdodenhof.circleimageview.CircleImageView c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
+        imageload.DisplayImage(avatar, c);
         c.setOnClickListener(this);
 
 
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -221,4 +241,5 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         Intent profile = new Intent(frmTabHost.this, Profile.class);
         startActivity(profile);
     }
+
 }

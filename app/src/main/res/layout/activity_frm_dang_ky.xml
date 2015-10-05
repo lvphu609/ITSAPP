@@ -30,8 +30,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:src="@drawable/icon"
-            android:scaleType="fitCenter"/>
+            android:src="@drawable/avatar"
+            android:scaleType="fitCenter"
+
+            />
             <TextView
                 android:id="@+id/chonanh"
                 android:layout_width="wrap_content"
@@ -471,13 +473,14 @@
 
                 />
             <CheckBox
+
                 android:id="@+id/provider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Người cung cấp dịch vụ"
                 android:textSize="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"></CheckBox>
+                android:layout_marginTop="20dp"></CheckBox>
             <!--<ListView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->

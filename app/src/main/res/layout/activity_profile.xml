@@ -46,7 +46,6 @@
             android:layout_gravity="center"
             android:ems="30"
             android:singleLine="false"
-            android:maxLines="1"
             android:inputType="text"
             android:enabled="false"
             />
@@ -56,12 +55,15 @@
             android:orientation="horizontal"
             android:layout_gravity="center">
         <TextView
+            android:id="@+id/rateText"
             android:layout_marginLeft="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rating:"
             android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:visibility="visible"/>
+
         <RatingBar
 
             android:layout_marginLeft="10dp"
@@ -71,6 +73,7 @@
             android:numStars="5"
             android:stepSize="0.5"
             android:rating="2.0"
+            android:visibility="visible"
             style="?android:attr/ratingBarStyleSmall"/>
         </LinearLayout>
     </LinearLayout>
@@ -98,7 +101,6 @@
             android:layout_gravity="center"
             android:ems="40"
             android:singleLine="false"
-            android:maxLines="1"
             android:enabled="false"
             />
 
@@ -126,7 +128,6 @@
             android:layout_height="wrap_content"
             android:ems = "40"
             android:singleLine="false"
-            android:maxLines="1"
             android:inputType="textPassword"
             android:text="**********"
             android:enabled="false"
@@ -164,7 +165,6 @@
             android:layout_height="wrap_content"
             android:ems = "40"
             android:singleLine="false"
-            android:maxLines="1"
             android:inputType="number"
             android:enabled="false"
             />
@@ -189,7 +189,6 @@
             android:layout_height="wrap_content"
             android:ems="40"
             android:singleLine="false"
-            android:maxLines="2"
             android:inputType="text"
             android:enabled="false"
             />
@@ -227,7 +226,7 @@
     </LinearLayout>
     <LinearLayout
         android:id="@+id/ll"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="10dp"
