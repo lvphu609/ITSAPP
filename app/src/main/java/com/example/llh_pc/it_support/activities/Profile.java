@@ -68,7 +68,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
-public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener {
     ImageButton bntImage;
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -95,18 +97,18 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
     int pccheck = 0;
     private AlertDialog helpDialog;
-
+    private CircleImageView c;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        bntImage = (ImageButton) findViewById(R.id.bntImage);
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
-        params.height = 300;
-        params.width = 300;
-        bntImage.setLayoutParams(params);
-        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
+//        bntImage = (ImageButton) findViewById(R.id.bntImage);
+//        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
+//        params.height = 300;
+//        params.width = 300;
+//        bntImage.setLayoutParams(params);
+//        bntImage.setScaleType(ImageView.ScaleType.FIT_XY);
         photocopy = (Button) findViewById(R.id.photocopy);
         rateBar =(RatingBar) findViewById(R.id.ratingBar);
         rateText = (TextView) findViewById(R.id.rateText);
@@ -122,7 +124,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         accdal = new AccountDAL(getBaseContext());
         imageload = new ImageLoader(getBaseContext());
-
+        c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
+        c.setOnClickListener(this);
 
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
         String name = sharedPreference.getString("token", "YourName");
@@ -245,8 +248,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         eadress = (EditText) findViewById(R.id.dia_chi);
         ephone = (EditText) findViewById(R.id.phone);
         password = (EditText) findViewById(R.id.password);
-        setavatar = (ImageButton) findViewById(R.id.bntImage);
-        imageload.DisplayImage(avatar, setavatar);
+//        setavatar = (ImageButton) findViewById(R.id.profile_image);
+        imageload.DisplayImage(avatar, c);
 
         eemail.setText(email);
         efullname.setText(full_name);
@@ -286,14 +289,22 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 scan.setEnabled(true);
                 mayfax.setEnabled(true);
                 mayin.setEnabled(true);
-                bntImage.setEnabled(true);
-                bntImage.setClickable(true);
-                bntImage.setOnClickListener(new View.OnClickListener() {
+                c.setEnabled(true);
+                c.setClickable(true);
+                c.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         selectImage();
                     }
                 });
+//                bntImage.setEnabled(true);
+//                bntImage.setClickable(true);
+//                bntImage.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        selectImage();
+//                    }
+//                });
                 checkEditAcctype();
                 changePass.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -310,9 +321,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             @Override
             public void onClick(View v) {
                 OK.getResources().getColor(R.color.actionbar_text);
-
-                bntImage.setEnabled(false);
-                bntImage.setClickable(false);
+                    c.setEnabled(false);
+                    c.setClickable(false);
+//                bntImage.setEnabled(false);
+//                bntImage.setClickable(false);
                 editProfile.setEnabled(true);
                 editProfile.setVisibility(View.VISIBLE);
                 OK.setEnabled(false);
@@ -939,7 +951,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                bntImage.setImageBitmap(thumbnail);
+                c.setImageBitmap(thumbnail);
+//                bntImage.setImageBitmap(thumbnail);
                 BitMapToString(thumbnail);
 
 
@@ -963,7 +976,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
-                bntImage.setImageBitmap(bm);
+                c.setImageBitmap(bm);
+//                bntImage.setImageBitmap(bm);
                 BitMapToString(bm);
 
             }
@@ -1025,4 +1039,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         }
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }

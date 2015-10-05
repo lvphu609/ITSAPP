@@ -25,15 +25,25 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center">
-        <ImageButton
+       <!-- <ImageButton
             android:id="@+id/bntImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/avatar"
             android:scaleType="fitCenter"
+            android:background="@drawable/draw_shape"/>
+-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/profile_image"
+        android:layout_width="60dp"
+        android:layout_height="71dp"
+        android:src="@drawable/avatar"
+        android:layout_weight="0.10" />
 
-            />
             <TextView
                 android:id="@+id/chonanh"
                 android:layout_width="wrap_content"
@@ -41,10 +51,11 @@
                 android:text="Chọn ảnh (*)"
                 android:gravity="bottom"
                 android:textSize="11dp"
-                android:layout_marginTop="81dp"
-                android:layout_marginLeft="21dp"
+                android:layout_marginTop="75dp"
+                android:layout_marginLeft="0dp"
                 android:textColor="@color/mauden"
                 android:visibility="visible"/>
+
 </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -71,7 +82,6 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="20dp"
                 android:visibility="gone"/>
-
         </RelativeLayout>
 
 
