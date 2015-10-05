@@ -34,20 +34,7 @@ public class Main2Activity extends TabActivity implements InnoFunctionListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle("TabActivity");
-
-        TabHost tabHost = getTabHost();
-        LayoutInflater.from(this).inflate(R.layout.activity_main,
-                tabHost.getTabContentView(), true);
-        tabHost.addTab(tabHost.newTabSpec("tabi").
-                setIndicator("tabi").
-                setContent(R.id.view1));
-        tabHost.addTab(tabHost.newTabSpec("tab3").
-                setIndicator("tab2").
-                setContent(R.id.view2));
-        tabHost.addTab(tabHost.newTabSpec("tab3").
-                setIndicator("tab3").
-                setContent(R.id.view3));
+        setContentView(R.layout.activity_main2);
     }
 
     @Override

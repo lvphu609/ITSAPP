@@ -8,6 +8,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.llh_pc.it_support.activities.frmDangNhap">
+
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
@@ -35,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <EditText
+          <EditText
             android:id="@+id/edtMatKhau"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,10 +51,12 @@
     </LinearLayout>
     <CheckBox
         android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/cbLuuTK"
-        android:text="Duy trì đăng nhập"/>
+        android:text="Duy trì đăng nhập"
+        android:button="@drawable/drb_checklogin"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"

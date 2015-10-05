@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.content.Intent;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -69,7 +70,7 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
         initControl();
         setEventForControl();
         getData();
-
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -80,17 +81,16 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
         return true;
     }*/
 
+   @Override
+   public void onBackPressed() {
+       final Intent intent = new Intent(this, frmTabHost.class);
+       startActivity(intent);
+   }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+        Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
 
     @Override

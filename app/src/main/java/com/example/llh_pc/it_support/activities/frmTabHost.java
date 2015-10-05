@@ -2,29 +2,69 @@ package com.example.llh_pc.it_support.activities;
 
 import android.app.TabActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
-import android.support.v7.app.ActionBarActivity;
+
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TabHost;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
-import com.example.llh_pc.it_support.activities.frmBaoHu;
-import com.example.llh_pc.it_support.activities.frmLuuTru;
-import com.example.llh_pc.it_support.activities.frmThongBao;
-import com.example.llh_pc.it_support.activities.frmTimKiem;
 
-public class frmTabHost  extends TabActivity {
+
+import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.restclients.RequestMethod;
+import com.example.llh_pc.it_support.restclients.Response;
+import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Images.ImageLoader;
+import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.google.gson.Gson;
+
+public class frmTabHost extends TabActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
+    private DrawerLayout drawerLayout;
+    private NavigationView navDrawer;
+    private ActionBarDrawerToggle drawerToggle;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private int selectedItem;
+    private String url_logout = Def.API_BASE_LINK + Def.API_Logout + Def.API_FORMAT_JSON;
+    private int check;
+    private Toolbar toolbar;
+    private ImageLoader imageload = new ImageLoader(frmTabHost.this);
+    private TextView tvName;
+    private String fullname, avatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            fullname = extras.getString("fullname");
+            avatar = extras.getString("avatar");
+            TextView tv= (TextView)findViewById(R.id.textView);
+            tv.setText(fullname);
+        }
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        check = sharedPreference.getInt("check", 1);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("staylogin", 1);
+        editor.commit();
 
-        final TabHost tab=(TabHost) findViewById(android.R.id.tabhost);
+        initNavigation(savedInstanceState);
+        final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
         Resources ressources = getResources();
         TabHost tabHost = getTabHost();
@@ -34,28 +74,24 @@ public class frmTabHost  extends TabActivity {
                 .newTabSpec("Android")
                 .setIndicator("Báo hỏng", ressources.getDrawable(R.drawable.icon))
                 .setContent(intentAndroid);
-
         // Apple tab
         Intent intentApple = new Intent().setClass(this, frmThongBao.class);
         TabHost.TabSpec tabSpecApple = tabHost
                 .newTabSpec("Apple")
                 .setIndicator("Thông báo", ressources.getDrawable(R.drawable.ic_action_about))
                 .setContent(intentApple);
-
         // Windows tab
         Intent intentWindows = new Intent().setClass(this, frmTimKiem.class);
         TabHost.TabSpec tabSpecWindows = tabHost
                 .newTabSpec("Windows")
                 .setIndicator("Tìm kiếm", ressources.getDrawable(R.drawable.ic_action_camera))
                 .setContent(intentWindows);
-
         // Blackberry tab
         Intent intentBerry = new Intent().setClass(this, frmLuuTru.class);
         TabHost.TabSpec tabSpecBerry = tabHost
                 .newTabSpec("Berry")
                 .setIndicator("Lưu trữ", ressources.getDrawable(R.drawable.ic_action_email))
                 .setContent(intentBerry);
-
         // add all tabs
         tabHost.addTab(tabSpecAndroid);
         tabHost.addTab(tabSpecApple);
@@ -70,14 +106,42 @@ public class frmTabHost  extends TabActivity {
                                                     for (int i = 0; i < tab.getTabWidget().getChildCount(); i++)
                                                         tab.getTabWidget().getChildAt(i).setBackgroundColor(0x00FF00); //unselected
 
-                                                    if (tab.getCurrentTab() == 0)
+                                                    if (tab.getCurrentTab() == 0) {
+                                                        toolbar.setTitle("Báo hỏng");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //1st tab selected
+                                                    }
                                                     else
+                                                        toolbar.setTitle("Thông báo");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(Color.GREEN); //2nd tab selected
                                                 }
                                             });
+
     }
 
+    private void initNavigation(Bundle savedInstanceState) {
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        navDrawer = (NavigationView) findViewById(R.id.menu_drawer);
+        //Set item listenner
+        //navDrawer.setNavigationItemSelectedListener(_context);
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.hello_world, R.string.hello_world);
+        navDrawer.setNavigationItemSelectedListener(this);
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
+        //Add toobar
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
+        toolbar.setTitle("Báo hỏng");
+        mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        //setActionBar(toolbar);
+        drawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerToggle.syncState();
+        selectedItem = savedInstanceState == null ? R.id.nav_item_1 : savedInstanceState.getInt("selectedItem");
+        /*set text and image*/
+        de.hdodenhof.circleimageview.CircleImageView c= (de.hdodenhof.circleimageview.CircleImageView)findViewById(R.id.profile_image);
+        imageload.DisplayImage(avatar,c );
+        c.setOnClickListener(this);
+
+
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -91,5 +155,70 @@ public class frmTabHost  extends TabActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        menuItem.setChecked(true);
+        selectedItem = menuItem.getItemId();
+
+        switch (selectedItem) {
+            case R.id.nav_item_1:
+                toolbar.setTitle("Báo hỏng");
+                break;
+            case R.id.nav_item_2:
+                toolbar.setTitle("Thông báo");
+                Toast.makeText(this, "Gift is clicked !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_item_3:
+                toolbar.setTitle("Tìm kiếm");
+                Toast.makeText(this, "Delete is clicked !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_item_4:
+                toolbar.setTitle("Lưu trữ");
+                Toast.makeText(this, "Favorite is clicked !", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.nav_item_5:
+                logout();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    private void logout() {
+        try {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
+            String token = sharedPreference.getString("token", "token");
+            RestClient restClient = new RestClient(url_logout);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
+                //if result from response success
+                if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("check", 1);
+                    editor.putString("token", "Hai");
+                    editor.putInt("staylogin", 0);
+                    editor.commit();
+                    Intent intent = new Intent(frmTabHost.this, frmDK_DN.class);
+                    startActivity(intent);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent profile = new Intent(frmTabHost.this, Profile.class);
+        startActivity(profile);
     }
 }

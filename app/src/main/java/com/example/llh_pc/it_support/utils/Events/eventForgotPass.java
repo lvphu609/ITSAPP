@@ -60,6 +60,7 @@ public class eventForgotPass implements View.OnClickListener {
                 textView.setText("Email không hợp lệ ");
                 // set dialog message
                 alertDialogBuilder
+                        .setTitle("IT Support")
                         .setCancelable(false)
                         .setPositiveButton("OK",
                                 new DialogInterface.OnClickListener() {
@@ -92,6 +93,7 @@ public class eventForgotPass implements View.OnClickListener {
                     textView.setText("Email không hợp lệ hoặc chưa đăng ký.");
                     // set dialog message
                     alertDialogBuilder
+                            .setTitle("IT Support")
                             .setCancelable(false)
                             .setPositiveButton("OK",
                                     new DialogInterface.OnClickListener() {

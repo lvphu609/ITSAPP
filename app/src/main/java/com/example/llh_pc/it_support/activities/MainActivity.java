@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             sleep(2000);
                             finish();
-                            Intent cv = new Intent(MainActivity.this, frmBaoHu.class);
+                            Intent cv = new Intent(MainActivity.this, frmTabHost.class);
                             //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(cv);
                         } catch (InterruptedException e) {
@@ -42,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
                 Thread t = new Thread() {
                     public void run() {
                         try {
-
                             sleep(2000);
                             finish();
                             Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 };
                 t.start();
             }
-
         }
        else {
             Thread t = new Thread() {

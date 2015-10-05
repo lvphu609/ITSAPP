@@ -35,4 +35,9 @@
     <string name="title_activity_frm_ghi_chu_post">frmGhiChuPost</string>
     <string name="title_activity_load_post_adapter">LoadPostAdapter</string>
     <string name="title_activity_frm_chi_tiet_post">Thông tin chi tiết</string>
+    <string name="title_activity_menu__left">Menu_Left</string>
+    <string name="title_activity_menu_left">MenuLeft</string>
+    <string name="title_activity_item_menu_left_apdapter">ItemMenuLeftApdapter</string>
+    <string name="title_activity_frm_provider_bao_hong">frmProviderBaoHong</string>
+    <string name="title_activity_provider_bao_hong">ProviderBaoHong</string>
 </resources>

@@ -50,7 +50,7 @@ public class UserPostDetail {
     public String status;
 
     @SerializedName("post_type")
-    public post_type post_type;//---note//
+    public post_type post_type;
 
     @SerializedName("normal_account")
     public normal_account normal_account;

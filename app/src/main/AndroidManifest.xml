@@ -15,9 +15,9 @@
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:launchMode="singleTask"
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:theme="@style/delete_title_bar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -78,9 +78,13 @@
             android:name=".activities.frmLuuTru"
             android:label="@string/title_activity_frm_luu_tru" >
         </activity>
+
+        <!-- hide keyboard adjustPan -->
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".activities.frmTabHost"
-            android:label="@string/title_activity_frm_tab_host" >
+            android:label="@string/title_activity_frm_tab_host"
+            android:theme="@style/delete_title_bar" >
         </activity>
         <activity
             android:name=".activities.Profile"
@@ -94,12 +98,16 @@
             android:label="@string/title_activity_frm_ghi_chu_post" >
         </activity>
         <activity
-            android:name="adapters.LoadPostAdapter"
-            android:label="@string/title_activity_load_post_adapter" >
-        </activity>
-        <activity
             android:name=".activities.frmChiTietPost"
             android:label="@string/title_activity_frm_chi_tiet_post" >
+        </activity>
+        <activity
+            android:name=".activities.Menu_Left"
+            android:label="@string/title_activity_menu__left" >
+        </activity>
+        <activity
+            android:name=".activities.frmProviderBaoHong"
+            android:label="@string/title_activity_frm_provider_bao_hong" >
         </activity>
     </application>
 
