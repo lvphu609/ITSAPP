@@ -24,7 +24,8 @@
                 android:paddingTop="15dp"
                 android:background="#00000000"
                 android:id="@+id/edSearch"
-                android:hint="Nhập thiết bị cần tìm"/>
+                android:hint="Nhập thiết bị cần tìm"
+                />
         </LinearLayout>
         <View
             android:layout_marginTop="10dp"
@@ -33,6 +34,7 @@
             android:background="@color/maubac"/>
         <ListView
             android:id="@+id/lsPost"
+            
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </ListView>

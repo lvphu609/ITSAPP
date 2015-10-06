@@ -68,13 +68,10 @@ public class eventLogin implements View.OnClickListener {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
             String name = sharedPreference.getString("storedName", "YourName");*/
 
-
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-
             EditText edtUserName = (EditText) views.get(0);
             EditText edtPassword = (EditText) views.get(1);
-
             CheckBox cbSave = (CheckBox) views.get(2);
             String U = edtUserName.getText().toString();
             String P = edtPassword.getText().toString();
@@ -100,7 +97,6 @@ public class eventLogin implements View.OnClickListener {
 
                                     }
                                 });
-
                 // create alert dialog
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
@@ -144,27 +140,14 @@ public class eventLogin implements View.OnClickListener {
                     /*--------------------------------------------------------*/
                     editor.putString("token", t);
                     editor.putString("id", id);
+                    editor.putString("avatar",avatar);
+                    editor.putString("fullname",full_name);
                     editor.commit();
-                    /*---------user----------*/
-                    if(account_type.equals("[1]"))
-                    {
-                        Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
-                        intent = new Intent(context, frmTabHost.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("avatar", avatar);
-                        intent.putExtra("fullname", full_name);
-                        context.startActivity(intent);
+                    Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
+                    intent = new Intent(context, frmTabHost.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(intent);
 
-                    }else
-                    /*---------provider----------*/
-                    {
-                        Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
-                        intent = new Intent(context, frmTabHost.class);
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        intent.putExtra("avatar", avatar);
-                        intent.putExtra("fullname", full_name);
-                        context.startActivity(intent);
-                    }
 
                 } else {
                     LayoutInflater li = LayoutInflater.from(context);
