@@ -57,7 +57,6 @@ public class eventSetPass implements View.OnClickListener {
             restClient.addParam(Account.CONFIRM_PASSWORD, CommonFunction.md5(apass));
             restClient.addParam(Account.EMAIL, mail);
             restClient.execute(RequestMethod.POST);
-
             if (pass.length() < 6) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
@@ -80,7 +79,7 @@ public class eventSetPass implements View.OnClickListener {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
- /*==>*/           } else if (!pass.equals(apass)) {
+ /*==>*/        } else if (!pass.equals(apass)) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
@@ -102,8 +101,7 @@ public class eventSetPass implements View.OnClickListener {
                 AlertDialog alertDialog = alertDialogBuilder.create();
                 // show it
                 alertDialog.show();
-            }
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+            } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
                 LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
@@ -113,7 +111,7 @@ public class eventSetPass implements View.OnClickListener {
                     Intent intent = new Intent(context, frmDangNhap.class);
                     intent.putExtra("checkboxFW",true);
                     intent.putExtra("EmailFW",mail);
-                    Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Cập nhật thành công.", Toast.LENGTH_LONG).show();
                     //Toast.makeText(context, "", Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 } else {

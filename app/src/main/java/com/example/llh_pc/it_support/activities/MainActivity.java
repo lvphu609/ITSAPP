@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
+import com.newrelic.agent.android.NewRelic;
 import com.example.llh_pc.it_support.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -17,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //-----install newselic-------\\
+        NewRelic.withApplicationToken(
+                "AAfc264dac549cbfb6e921fae2991f2cefa93a378e"
+        ).start(this.getApplication());
+        //-----------------------------\\
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
         String token = sharedPreference.getString("token", null);
         int check = sharedPreference.getInt("check", 1);
