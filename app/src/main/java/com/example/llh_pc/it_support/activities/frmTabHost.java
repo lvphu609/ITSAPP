@@ -86,7 +86,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_baohong))
                 .setContent(intentAndroid);
 
-
         // Apple tab
         Intent intentApple = new Intent().setClass(this, frmThongBao.class);
         TabHost.TabSpec tabSpecApple = tabHost
@@ -141,7 +140,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                     tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
                                                 }
                                             });
-
     }
 
     private void initNavigation(Bundle savedInstanceState) {
@@ -152,7 +150,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.hello_world, R.string.hello_world);
         navDrawer.setNavigationItemSelectedListener(this);
         drawerLayout.setDrawerListener(drawerToggle);
-        drawerToggle.syncState();
+        //drawerToggle.syncState();
         //Add toobar
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
         toolbar.setTitle("Báo hỏng");

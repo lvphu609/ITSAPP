@@ -18,7 +18,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
             <EditText
-                android:textColorHint="@color/mauxam"
+                android:textColorHint="@color/maubac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
@@ -30,7 +30,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/mauxam"/>
+            android:background="@color/maubac"/>
         <ListView
             android:id="@+id/lsPost"
             android:layout_width="match_parent"

@@ -113,7 +113,7 @@ public class eventSetPass implements View.OnClickListener {
                     Intent intent = new Intent(context, frmDangNhap.class);
                     intent.putExtra("checkboxFW",true);
                     intent.putExtra("EmailFW",mail);
-                    Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, "Cập nhật thành công.", Toast.LENGTH_LONG).show();
                     //Toast.makeText(context, "", Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 } else {
