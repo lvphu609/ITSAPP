@@ -66,12 +66,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         TextView tvView  = (TextView)findViewById(R.id.textView);
         tvView.setText(fullname);
 
-
-
-
-
-
-
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();

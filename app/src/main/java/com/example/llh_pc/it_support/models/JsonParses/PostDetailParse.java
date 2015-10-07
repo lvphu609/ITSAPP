@@ -10,6 +10,18 @@ import java.util.ArrayList;
  * Created by LLH-PC on 9/28/2015.
  */
 public class PostDetailParse {
+    @SerializedName("status")
+    private String status;
+
+    @SerializedName("message")
+    private String message;
+
+    @SerializedName("results")
+    private UserPostDetail results;
+
+    @SerializedName("validation")
+    private String validation;
+
     public String getStatus() {
         return status;
     }
@@ -41,17 +53,4 @@ public class PostDetailParse {
     public void setValidation(String validation) {
         this.validation = validation;
     }
-
-    @SerializedName("status")
-    private String status;
-
-    @SerializedName("message")
-    private String message;
-
-    @SerializedName("results")
-    private UserPostDetail results;
-
-    @SerializedName("validation")
-    private String validation;
-
 }
