@@ -81,10 +81,10 @@
 
         <!-- hide keyboard adjustPan -->
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".activities.frmTabHost"
             android:label="@string/title_activity_frm_tab_host"
-            android:theme="@style/delete_title_bar" >
+            android:theme="@style/delete_title_bar"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activities.Profile"
@@ -108,6 +108,10 @@
         <activity
             android:name=".activities.frmProviderBaoHong"
             android:label="@string/title_activity_frm_provider_bao_hong" >
+        </activity>
+        <activity
+            android:name=".activities.Profile1"
+            android:label="@string/title_profile1" >
         </activity>
     </application>
 
