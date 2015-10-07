@@ -14,8 +14,10 @@ import android.widget.ListView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.LoadPostAdapter;
+import com.example.llh_pc.it_support.models.JsonParses.LuuTruParse;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.JsonParses.ViewPostParse;
+import com.example.llh_pc.it_support.models.LuuTruModel;
 import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -31,18 +33,19 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener {
     String t;
     public static final String url_loadPost = Def.API_BASE_LINK + Def.API_LoadPost + Def.API_FORMAT_JSON;
     public static final String url_get= Def.API_BASE_LINK + Def.API_DeletePost + Def.API_FORMAT_JSON;
     private ListView lstPost;
-    private ArrayList<Object> array_post = new ArrayList<>();
     private LoadPostAdapter adapter;
-    private ArrayList<Post> list = new ArrayList<>();
-    private ArrayList<PostDetail> listdetail = new ArrayList<>();
     private String token,account_id;
-    private ArrayList<View> views = new ArrayList<>();
+    private ArrayList<LuuTruModel> postDetails;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,36 +63,22 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
             restClient.addParam("page", page);
             restClient.addParam("account_id", account_id);
             restClient.execute(RequestMethod.POST);
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                    restClient.getResponse() != null)
             {
-
                 String jsonObject = restClient.getResponse();
-                Gson gson = new Gson();
-                ViewPostParse getListPostJson = gson.fromJson(jsonObject, ViewPostParse.class);
-                if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
-                {
-                    array_post = getListPostJson.getResults();
-                    int count = array_post.size();
-                    JSONArray array = new JSONArray(array_post);
-                    for (int i=0; i< count; i++) {
-                        JSONObject jObj = array.getJSONObject(i);
-                        String id = jObj.getString("id");
-                        String location_name = jObj.getString("location_name");
-                        String t = jObj.getString("post_type");
-                        Post p = gson.fromJson(t, Post.class);
-                        PostDetail pd = gson.fromJson(t, PostDetail.class);
-                        pd.setLocation_name(location_name);
-                        pd.setPost_type_id(id);
-                        listdetail.add(pd);
-                    }
+                LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
 
+                if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                    luuTruParse.getResults();
+                    postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(luuTruParse.getResults()));
                 }
             }
         }catch (Exception ex){
              t = ex.toString();
         }
 
-        adapter = new LoadPostAdapter(frmLuuTru.this,R.layout.activity_load_post_adapter,listdetail);
+        adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
         initFlags();
         initControl();
         setEventForControl();
@@ -126,16 +115,15 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void initControl() {
         lstPost = (ListView)findViewById(R.id.lsPost);
-        views.add((View)lstPost);
         lstPost.setAdapter(adapter);
 
     }
 
     @Override
     public void setEventForControl() {
-        lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, listdetail, views));
-        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this,listdetail ));
-        //((BaseAdapter) lstPost.getAdapter()).notifyDataSetChanged();
+        lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, postDetails, adapter));
+        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this,postDetails));
+
     }
 
     @Override

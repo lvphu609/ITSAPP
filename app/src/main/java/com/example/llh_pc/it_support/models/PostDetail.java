@@ -25,6 +25,16 @@ public class PostDetail {
     @SerializedName("avatar")
     private String avatar;
 
+    private PostType post_type;
+
+    public PostType getPost_type() {
+        return post_type;
+    }
+
+    public void setPost_type(PostType post_type) {
+        this.post_type = post_type;
+    }
+
     public String getPost_type_id() {
         return post_type_id;
     }

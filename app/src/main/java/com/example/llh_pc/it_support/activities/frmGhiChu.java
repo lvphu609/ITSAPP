@@ -72,9 +72,9 @@ public class frmGhiChu extends AppCompatActivity {
                             Gson gson = new Gson();
                             PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
                             if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                                Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
                                 Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
-                                frmGhiChu.this.startActivity(intent);
+                                Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
+                                startActivity(intent);
                             }
                         }
 
