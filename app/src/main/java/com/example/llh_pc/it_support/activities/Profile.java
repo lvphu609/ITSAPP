@@ -20,7 +20,10 @@ import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
+import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
@@ -70,7 +73,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener {
+public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener,TextWatcher {
     ImageButton bntImage;
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -84,6 +87,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
     TextView user, provier, chuyenmon, resultText,rateText;
+    TextView validationname,validationphone,validationadess;
     RatingBar rateBar;
     Bitmap avatar1;
     ImageButton setavatar;
@@ -93,7 +97,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     Bitmap thumbnail, bm;
     ArrayList<Integer> list = new ArrayList<>();
     View[] v;
-    int x;
+    int x=1,y=1,z=1;
     public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
     int pccheck = 0;
     private AlertDialog helpDialog;
@@ -112,6 +116,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         photocopy = (Button) findViewById(R.id.photocopy);
         rateBar =(RatingBar) findViewById(R.id.ratingBar);
         rateText = (TextView) findViewById(R.id.rateText);
+        validationname = (TextView) findViewById(R.id.valaditionname);
+        validationphone=(TextView) findViewById(R.id.vadalitionphone);
+        validationadess=(TextView) findViewById(R.id.validationaddress);
+
         ll = (LinearLayout) findViewById(R.id.ll);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -149,14 +157,14 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 //        return true;
 //    }
     public void onBackPressed() {
-        final Intent intent = new Intent(this, frmTabHost.class);
+        final Intent intent = new Intent(this, Profile1.class);
         startActivity(intent);
 
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
+        Intent myIntent = new Intent(getApplicationContext(), Profile1.class);
         startActivityForResult(myIntent, 0);
 
 
@@ -268,14 +276,14 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         changePass = (Button) findViewById(R.id.changepass);
         editProfile = (Button) findViewById(R.id.editProfile);
         final EditText editpassword = (EditText) findViewById(R.id.password);
-        editProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+//        editProfile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 
                 changeAcctype();
                 editProfile.setEnabled(false);
                 editProfile.setVisibility(View.INVISIBLE);
-                OK.setEnabled(true);
+//                OK.setEnabled(true);
                 OK.setVisibility(View.VISIBLE);
                 changePass.setEnabled(true);
                 changePass.setVisibility(View.VISIBLE);
@@ -283,6 +291,90 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 efullname.setEnabled(true);
                 eadress.setEnabled(true);
                 ephone.setEnabled(true);
+        efullname.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                x=1;
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    validationname.setVisibility(View.VISIBLE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    x=0;
+                }
+                else
+                {
+                    validationname.setVisibility(View.GONE);
+                    x=1;
+                    setOKenable();
+                }
+
+            }
+        });
+        eadress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                y=1;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    validationadess.setVisibility(View.VISIBLE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    y=0;
+                }
+                else
+                {
+                    validationadess.setVisibility(View.GONE);
+                  y=1;
+                    setOKenable();
+                }
+            }
+        });
+        ephone.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                z=1;
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s.toString().isEmpty()){
+                    validationphone.setVisibility(View.VISIBLE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    z=0;
+                }
+                else
+                {
+                    validationphone.setVisibility(View.GONE);
+                    z=1;
+                    setOKenable();
+                }
+            }
+        });
+
                 pc.setEnabled(true);
                 laptop.setEnabled(true);
                 photocopy.setEnabled(true);
@@ -297,22 +389,14 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         selectImage();
                     }
                 });
-//                bntImage.setEnabled(true);
-//                bntImage.setClickable(true);
-//                bntImage.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        selectImage();
-//                    }
-//                });
                 checkEditAcctype();
                 changePass.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         showInputDialog();
 
-                    }
-                });
+//                    }
+//                });
 
 
             }
@@ -351,6 +435,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 String token = sharedPreference.getString("token", "YourName");
                 String id = sharedPreference.getString("id", "");
                 ChangeEditProfile(id, token, efullname.getText().toString(), ephone.getText().toString(), eadress.getText().toString(), temp, checkedbox);
+
+                Intent profile1 = new Intent(Profile.this, Profile1.class);
+                startActivity(profile1);
+
                 Toast.makeText(getBaseContext(), "Đổi thông tin tài khoản thành công", Toast.LENGTH_SHORT).show();
             }
         });
@@ -528,8 +616,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
                         String token = sharedPreference.getString("token", "YourName");
                         String id2 = sharedPreference.getString("id", "");
-                        String status = sharedPreference.getString("status", "");
                         changePassword(id2, token, passcu.getText().toString(), passmoi.getText().toString(), cfpassmoi.getText().toString());
+                        String status = sharedPreference.getString("status", "");
 
                         if (status.equals("success")) {
                             Toast.makeText(getBaseContext(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
@@ -566,10 +654,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             RestClient restClient = new RestClient(url_change_password);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addParam("id", id);
+            restClient.addHeader("token", token);
             restClient.addParam(Account.OLD_PASSWORD, md5(passcu));
             restClient.addParam(Account.NEW_PASSWORD, md5(passmoi));
             restClient.addParam(Account.CONFIRM_PASSWORD, md5(cfpassmoi));
-            restClient.addHeader("token", token);
             restClient.execute(RequestMethod.POST);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
 
@@ -1042,5 +1130,29 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+
+    }
+
+    public void setOKenable()
+    {
+        if(x==1&&y==1&&z==1) {
+            OK.setEnabled(true);
+            OK.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TabActivity;
 import android.content.Intent;
@@ -44,9 +45,10 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private ImageLoader imageload = new ImageLoader(frmTabHost.this);
     private TextView tvName;
     private String fullname, avatar;
-    tabHostProfile tab_host_profile;
     TextView tv;
     private FragmentTabHost mTabHost;
+    FragmentTransaction fragTrac;
+
     private SharedPreferences sharedPreference;
 
     @Override
@@ -62,7 +64,10 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
         editor.commit();
+//
+        ;
 
+//
         TextView tvView  = (TextView)findViewById(R.id.textView);
         tvView.setText(fullname);
 
@@ -234,8 +239,9 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
     @Override
     public void onClick(View v) {
-        Intent profile = new Intent(frmTabHost.this, Profile.class);
-        startActivity(profile);
+        Intent profile1 = new Intent(frmTabHost.this, Profile1.class);
+        startActivity(profile1);
     }
+
 
 }
