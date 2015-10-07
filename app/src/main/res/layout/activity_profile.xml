@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
+    android:id="@+id/rootProfile"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -61,6 +61,15 @@
             android:inputType="text"
             android:enabled="false"
             />
+        <TextView
+            android:id="@+id/valaditionname"
+            android:layout_marginLeft="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Họ và tên không được để trống."
+            android:textColor="@color/maudo"
+            android:visibility="gone"
+            />
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -100,12 +109,14 @@
         android:paddingRight="10dp"
         >
         <TextView
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email:"
             android:textSize="10dp"
             android:textStyle="bold"/>
+
         <EditText
             android:id="@+id/email"
             android:layout_width="fill_parent"
@@ -126,6 +137,7 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <TextView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Mật khẩu:"
@@ -166,20 +178,34 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
             <TextView
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại:"
                 android:textSize="10dp"
                 android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <EditText
             android:id="@+id/phone"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems = "40"
             android:singleLine="false"
             android:inputType="number"
             android:enabled="false"
             />
+        <TextView
+            android:id="@+id/vadalitionphone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại không được bỏ trống."
+            android:textColor="@color/maudo"
+            android:visibility="gone"
+            />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -190,20 +216,37 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <TextView
+            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Địa chỉ:"
             android:textSize="10dp"
             android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <EditText
             android:id="@+id/dia_chi"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="40"
             android:singleLine="false"
             android:inputType="text"
             android:enabled="false"
+            android:layout_marginLeft="10dp"
             />
+        <TextView
+            android:id="@+id/validationaddress"
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ không được bỏ trống."
+            android:textColor="@color/maudo"
+            android:visibility="gone"
+            />
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -366,7 +409,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:visibility="visible"
+            android:visibility="gone"
             android:editable="true"
             android:background="@color/mauxanh"
             android:textColor="@color/actionbar_text"
@@ -381,10 +424,9 @@
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:visibility="invisible"
-                android:enabled="false"
+                android:enabled="true"
                 android:background="@color/mauxanh"
                 android:textColor="@color/actionbar_text"
-
                 />
         </RelativeLayout>
     </LinearLayout>
