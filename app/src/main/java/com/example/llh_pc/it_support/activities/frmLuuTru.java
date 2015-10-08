@@ -1,7 +1,9 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.LoadPostAdapter;
@@ -44,13 +48,12 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     private LoadPostAdapter adapter;
     private String token,account_id;
     private ArrayList<LuuTruModel> postDetails;
-
-
+    TextView tv;
+    private TabHost mTabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_luu_tru);
-
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
         token = sharedPreference.getString("token", "YourName");
         account_id = sharedPreference.getString("id", "YourName");
@@ -83,6 +86,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         initControl();
         setEventForControl();
         getData();
+//        Tab
     }
 
    /* @Override
@@ -122,7 +126,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void setEventForControl() {
         lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, postDetails, adapter));
-        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this,postDetails));
+        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
 
     }
 
@@ -135,4 +139,5 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     public void setData() {
 
     }
+
 }

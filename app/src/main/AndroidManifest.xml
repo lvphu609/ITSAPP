@@ -110,7 +110,11 @@
             android:label="@string/title_activity_frm_provider_bao_hong" >
         </activity>
         <activity
-            android:name=".activities.Profile1"
+        android:name=".activities.Profile1"
+        android:label="@string/title_profile1" >
+    </activity>
+        <activity
+            android:name=".fragments.TabHostHoatDong"
             android:label="@string/title_profile1" >
         </activity>
     </application>
