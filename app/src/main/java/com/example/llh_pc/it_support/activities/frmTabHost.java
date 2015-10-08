@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TabActivity;
@@ -25,6 +26,7 @@ import android.widget.Toast;
 import com.example.llh_pc.it_support.R;
 
 
+import com.example.llh_pc.it_support.fragments.TabHostHoatDong;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
@@ -48,7 +50,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     TextView tv;
     private FragmentTabHost mTabHost;
     FragmentTransaction fragTrac;
-
+    public static int x;
     private SharedPreferences sharedPreference;
 
     @Override
@@ -97,7 +99,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_timkiem))
                 .setContent(intentWindows);
         // Blackberry tab
-        Intent intentBerry = new Intent().setClass(this, frmLuuTru.class);
+        Intent intentBerry = new Intent().setClass(this, TabHostHoatDong.class);
         TabHost.TabSpec tabSpecBerry = tabHost
                 .newTabSpec("Berry")
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_luutru))
@@ -115,6 +117,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
         //set Windows tab as default (zero based)
         tabHost.setCurrentTab(0);
+        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
         tab.setOnTabChangedListener(new
                                             TabHost.OnTabChangeListener() {
                                                 public void onTabChanged(String arg0) {
@@ -142,13 +145,15 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
     @Override
     protected void onResume() {
+
+        getTabHost().setCurrentTab(x);
         super.onResume();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        getTabHost().setCurrentTab(3);
+
     }
 
 
