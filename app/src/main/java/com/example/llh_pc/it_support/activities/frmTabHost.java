@@ -80,9 +80,9 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
-
-        Resources ressources = getResources();
         TabHost tabHost = getTabHost();
+        Resources ressources = getResources();
+
 
         Intent intentAndroid = new Intent().setClass(this, frmBaoHu.class);
         TabHost.TabSpec tabSpecAndroid = tabHost
@@ -137,7 +137,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
 
                                                     if (tab.getCurrentTab() == 0) {
-                                                        toolbar.setTitle("Báo hỏng");
+                                                        toolbar.setTitle("Báo h?ng");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
                                                     } else
                                                         toolbar.setTitle("Thông báo");
@@ -145,6 +145,19 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                 }
                                             });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        getTabHost().setCurrentTab(3);
+    }
+
+
 
     private void initNavigation(Bundle savedInstanceState) {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -157,7 +170,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         //drawerToggle.syncState();
         //Add toobar
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
-        toolbar.setTitle("Báo hỏng");
+        toolbar.setTitle("Báo h?ng");
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         //setActionBar(toolbar);
         drawerLayout.setDrawerListener(mDrawerToggle);
@@ -191,18 +204,18 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
         switch (selectedItem) {
             case R.id.nav_item_1:
-                toolbar.setTitle("Báo hỏng");
+                toolbar.setTitle("Báo h?ng");
                 break;
             case R.id.nav_item_2:
                 toolbar.setTitle("Thông báo");
                 Toast.makeText(this, "Gift is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_3:
-                toolbar.setTitle("Tìm kiếm");
+                toolbar.setTitle("Tìm ki?m");
                 Toast.makeText(this, "Delete is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_4:
-                toolbar.setTitle("Lưu trữ");
+                toolbar.setTitle("Luu tr?");
                 Toast.makeText(this, "Favorite is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_5:
