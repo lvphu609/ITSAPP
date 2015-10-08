@@ -5,7 +5,19 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by LLH-PC on 9/29/2015.
  */
-public class post_type {
+public class PostType {
+
+    @SerializedName("id")
+    public String id;
+
+    @SerializedName("name")
+    public String name;
+
+    @SerializedName("description")
+    public String description;
+
+    @SerializedName("avatar")
+    public String avatar;
 
     public String getId() {
         return id;
@@ -39,15 +51,5 @@ public class post_type {
         this.avatar = avatar;
     }
 
-    @SerializedName("id")
-    public String id;
 
-    @SerializedName("name")
-    public String name;
-
-    @SerializedName("description")
-    public String description;
-
-    @SerializedName("avatar")
-    public String avatar;
 }

@@ -89,7 +89,7 @@ public interface Def {
     public static final int AVATAR_HEIGHT = 120;
 
     //Fragment for activity
-    public static final String TAG_POST_TYPE = "post_type";
+    public static final String TAG_POST_TYPE = "PostType";
     public static final String TAG_POST_TYPE_DETAIL = "post_type_detail";
     public static final String TAG_MAP = "map";
     public static final String TAG_LIST = "list";

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by LLH-PC on 9/29/2015.
  */
-public class normal_account {
+public class Normal_account {
     @SerializedName("id")
     public String id;
 

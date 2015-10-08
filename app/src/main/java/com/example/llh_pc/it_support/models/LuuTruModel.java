@@ -1,14 +1,19 @@
 package com.example.llh_pc.it_support.models;
 
 import com.google.gson.annotations.SerializedName;
+import com.example.llh_pc.it_support.models.PostType;
+import java.util.ArrayList;
 
 /**
- * Created by LLH-PC on 9/29/2015.
+ * Created by LLH-PC on 10/7/2015.
  */
-public class UserPostDetail {
+public class LuuTruModel {
 
     @SerializedName("id")
     public String id;
+
+    @SerializedName("type_id")
+    public String type_id;
 
     @SerializedName("content")
     public String content;
@@ -49,14 +54,17 @@ public class UserPostDetail {
     @SerializedName("status")
     public String status;
 
+    public PostType getPostType() {
+        return post_type;
+    }
+
+    public void setPostType(PostType postType) {
+        post_type = postType;
+    }
+
     @SerializedName("post_type")
     public PostType post_type;
 
-    @SerializedName("normal_account")
-    public Normal_account normal_account;
-
-    @SerializedName("provider_account")
-    public String provider_account;
 
     public String getId() {
         return id;
@@ -64,6 +72,14 @@ public class UserPostDetail {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(String type_id) {
+        this.type_id = type_id;
     }
 
     public String getContent() {
@@ -168,29 +184,5 @@ public class UserPostDetail {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Normal_account getNormal_account() {
-        return normal_account;
-    }
-
-    public void setNormal_account(Normal_account normal_account) {
-        this.normal_account = normal_account;
-    }
-
-    public String getProvider_account() {
-        return provider_account;
-    }
-
-    public void setProvider_account(String provider_account) {
-        this.provider_account = provider_account;
-    }
-
-    public PostType getPost_type() {
-        return post_type;
-    }
-
-    public void setPost_type(PostType post_type) {
-        this.post_type = post_type;
     }
 }

@@ -8,11 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.llh_pc.it_support.activities.frmChiTietPost;
-import com.example.llh_pc.it_support.activities.frmDK_DN;
-import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
-import com.example.llh_pc.it_support.models.JsonParses.PostParse;
-import com.example.llh_pc.it_support.models.Post;
+import com.example.llh_pc.it_support.models.LuuTruModel;
 import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -21,11 +18,7 @@ import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.google.gson.Gson;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by LLH-PC on 9/27/2015.
@@ -34,18 +27,18 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
 
     public static final String url_get= Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
     private Context context;
-    private ArrayList<PostDetail> arrayListPost;
+    private ArrayList<LuuTruModel> arrayListPost;
     private PostDetail postDetail;
     private UserPostDetail uD;
-    public eventDetailPost(Context current,ArrayList<PostDetail> list )
+    public eventDetailPost(Context current,ArrayList<LuuTruModel> list )
     {
         this.context = current;
         this.arrayListPost = list;
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        PostDetail p = arrayListPost.get(position);
-        String idPost = p.getPost_type_id();
+        LuuTruModel p = arrayListPost.get(position);
+        String idPost = p.id;
         try {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
             String token = sharedPreference.getString("token", "token");
@@ -65,7 +58,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
                     String ghichu = uD.content;
                     String hoten = uD.normal_account.full_name;
                     String dienthoai= uD.normal_account.phone_number;
-                    String diachinha = uD.normal_account.address;
+                    String diachinha = uD.normal_account.getAddress();
                     Intent intent = new Intent(context, frmChiTietPost.class);
                     intent.putExtra( "loaibaohong", loaibaohong );
                     intent.putExtra( "diachi", diachi );
