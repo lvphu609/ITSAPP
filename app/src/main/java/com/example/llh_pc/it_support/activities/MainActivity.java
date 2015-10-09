@@ -13,7 +13,8 @@ import com.newrelic.agent.android.NewRelic;
 import com.example.llh_pc.it_support.R;
 
 public class MainActivity extends AppCompatActivity {
-
+    //private GCMClientManager pushClientManager;
+    String PROJECT_NUMBER = "<YOUR PROJECT NUMBER HERE>";
     private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             sleep(2000);
                             finish();
-                            Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+                            Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
                             //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(cv);
                         } catch (InterruptedException e) {

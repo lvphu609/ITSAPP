@@ -11,7 +11,9 @@ public interface Def {
     public static final String NEW_DATE_FORMAT = "hh:mm:ss dd/MM/yyyy";
 
     //Api url
+
 //    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
+
     public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
     public static final String API_FORMAT_JSON = "";
     public static final String API_LOGIN = "accounts/login/";
@@ -39,7 +41,8 @@ public interface Def {
     public static final String API_Loadpostdetail = "posts/get_post_detail_by_id/";
     //delete/post
     public static final String API_DeletePost= "posts/delete/";
-
+    //register tokenGCM
+    public static final String API_tokenGCM= "accounts/update_reg_id/";
 
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
