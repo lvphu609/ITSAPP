@@ -10,16 +10,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.activities.frmChildPost;
 import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChildPostAdapter extends ArrayAdapter<Post> {
+
 
     private ImageLoader imgLoader;
     Context context;
@@ -39,24 +43,23 @@ public class ChildPostAdapter extends ArrayAdapter<Post> {
         PostHolder holder = null;
         Post rowItem = getItem(position);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        if(convertView == null)
-        {
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.activity_post_adapter, parent, false);
             holder = new PostHolder();
-            holder.tvName = (TextView)convertView.findViewById(R.id.tvName);
+            holder.tvName = (TextView) convertView.findViewById(R.id.tvName);
             convertView.setTag(holder);
-        }
-        else
-        {
+        } else {
             holder = (PostHolder) convertView.getTag();
         }
-        final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
+        final ImageView icon_post = (ImageView) convertView.findViewById(R.id.imgIcon);
         imgLoader.DisplayImage(data.get(position).getAvatar(), icon_post);
         holder.tvName.setText(rowItem.getName());
-         return convertView;
+        return convertView;
     }
-    static class PostHolder
-    {
+
+    static class PostHolder {
         TextView tvName;
     }
+
+
 }
