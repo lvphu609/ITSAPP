@@ -32,9 +32,15 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="@color/maubac"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vui lòng chọn nhóm thuyết bị."
+            android:textStyle="bold"
+            android:textColor="@color/mauden"
+            android:layout_gravity="center"/>
         <ListView
             android:id="@+id/lsPost"
-            
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </ListView>

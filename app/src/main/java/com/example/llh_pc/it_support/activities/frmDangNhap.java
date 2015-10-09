@@ -1,20 +1,24 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,26 +26,35 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.datas.AccountDAL;
+import com.example.llh_pc.it_support.gcm.QuickstartPreferences;
+import com.example.llh_pc.it_support.gcm.RegistrationIntentService;
 import com.example.llh_pc.it_support.utils.Events.eventLogin;
 import com.example.llh_pc.it_support.utils.Events.eventStayLgoin;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
-public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener{
+public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener {
 
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final String TAG = "frmDangNhap";
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
     private Intent intent;
-    public static EditText edtUserName,edtPass;
+    public static EditText edtUserName, edtPass;
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
     private Button btnLogin;
     private ArrayList<View> views = new ArrayList<>();
     private CheckBox cbSave;
-    private int E,P  =0;
+    private int E, P = 0;
+    private static String tokenGCM;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +69,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 .build());
         StrictMode.enableDefaults();
 
-         accdal = new AccountDAL(getBaseContext());
-
+        accdal = new AccountDAL(getBaseContext());
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -65,7 +77,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         /*-------Button fogot password---------*/
         final Intent intent1 = new Intent(this, frmQuenMK.class);
-              final TextView txtQuenMK = (TextView)findViewById(R.id.txtQuenMatKhau);
+        final TextView txtQuenMK = (TextView) findViewById(R.id.txtQuenMatKhau);
         txtQuenMK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,14 +88,13 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        if(frmDK.dangkythanhcong ==true)
-        {
+        if (frmDK.dangkythanhcong == true) {
             btnLogin.setEnabled(true);
             btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
             btnLogin.invalidate();
 
         }
-        cbSave = (CheckBox)findViewById(R.id.cbLuuTK);
+        cbSave = (CheckBox) findViewById(R.id.cbLuuTK);
         cbSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -96,15 +107,12 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         editor.putInt("check", 1);
         editor.commit();
 
-        final TextView tvEmail = (TextView)findViewById(R.id.txtEmail);
+        final TextView tvEmail = (TextView) findViewById(R.id.txtEmail);
         edtUserName = (EditText) findViewById(R.id.edtTenDangNhap);
-        if(frmDK.dangkythanhcong == true)
-        {
+        if (frmDK.dangkythanhcong == true) {
             edtUserName.setText(accdal.applyEmail.toString());
-        }
-        else
-        {
-            frmDK.dangkythanhcong =false;
+        } else {
+            frmDK.dangkythanhcong = false;
         }
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -136,7 +144,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             }
         });
 
-        final TextView tvMatKhau = (TextView)findViewById(R.id.txtMatKhau);
+        final TextView tvMatKhau = (TextView) findViewById(R.id.txtMatKhau);
         edtPass = (EditText) findViewById(R.id.edtMatKhau);
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
@@ -181,6 +189,47 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             cbSave.setChecked(true);
         }
         /*-----------------*/
+
+       /* SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+        String name = sharedPreference.getString("tokenGCM", "YourName");
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }*/
+
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String t = intent.getExtras().getString("reg_token");
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("tokenGCM", t);
+                editor.commit();
+            }
+        };
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
+    }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
+        int resultCode = apiAvailability.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (apiAvailability.isUserResolvableError(resultCode)) {
+                apiAvailability.getErrorDialog(this, resultCode, PLAY_SERVICES_RESOLUTION_REQUEST)
+                        .show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -189,6 +238,18 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(QuickstartPreferences.REGISTRATION_COMPLETE));
+    }
+
+    @Override
+    protected void onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        super.onPause();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -207,11 +268,10 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     @Override
     public void initControl() {
         try {
-            views.add((View)edtUserName);
-            views.add((View)edtPass);
-            views.add((View)cbSave);
-        }catch (Exception ex)
-        {
+            views.add((View) edtUserName);
+            views.add((View) edtPass);
+            views.add((View) cbSave);
+        } catch (Exception ex) {
             System.out.print(ex.toString());
         }
     }

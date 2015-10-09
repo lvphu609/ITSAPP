@@ -37,6 +37,7 @@ public class eventLogin implements View.OnClickListener {
     SharedPreferences sharedpreferences;
     private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
     public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
+    private String url_tokenGCM = Def.API_BASE_LINK + Def.API_tokenGCM + Def.API_FORMAT_JSON;
     private Context context;
     private ArrayList<View> views;
     private String full_name;
@@ -49,14 +50,17 @@ public class eventLogin implements View.OnClickListener {
     private String phone, address;
     private ArrayList<String> arr;
     private String user_type;
+    private String token;
 
     public eventLogin(Context current, ArrayList<View> viewArrayList) {
         this.context = current;
         this.views = viewArrayList;
+
     }
 
     @Override
     public void onClick(View v) {
+
         try {
 
             /*save*//*
@@ -134,7 +138,7 @@ public class eventLogin implements View.OnClickListener {
                     String t = getLoginJson.getResults().getAccess_token();
                     String id = getLoginJson.getResults().getAccount_id();
                     String account_type = getLoginJson.getResults().getAccount_type();
-                    String token = getLoginJson.getResults().getAccess_token();
+                    token = getLoginJson.getResults().getAccess_token();
                     /*--------------------information accoun------------------*/
                     getAccount(id, token);
                     /*--------------------------------------------------------*/
@@ -144,6 +148,7 @@ public class eventLogin implements View.OnClickListener {
                     editor.putString("fullname",full_name);
                     editor.commit();
                     Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
+                    LoginGCM();
                     intent = new Intent(context, frmTabHost.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
@@ -173,11 +178,36 @@ public class eventLogin implements View.OnClickListener {
                     editor.putInt("check", 1);
                 }
             }
+            /*888888888888888888888888888888**/
         } catch (Exception ex) {
 
         }
     }
 
+    private void LoginGCM()
+    {
+        try{
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            String tokenGCM = sharedPreference.getString("tokenGCM", "YourName");
+            RestClient restClient = new RestClient(url_tokenGCM);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.addParam("reg_id", tokenGCM);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
+                if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                    String t = "fdsasfdsfd";
+                    return;
+                }
+            }
+        }catch (Exception ex)
+        {
+            String t = ex.toString();
+        }
+    }
     private void getAccount(String id, String token) {
         try {
             RestClient restClient = new RestClient(url_get_account_info_by_id);
