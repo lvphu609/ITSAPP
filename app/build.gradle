@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'newrelic'
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 21
     buildToolsVersion '22.0.1'
@@ -28,4 +28,6 @@ dependencies {
     compile 'com.android.support:design:22.2.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'com.newrelic.agent.android:android-agent:5.+'
+    compile "com.google.android.gms:play-services:8.1.0"
+    compile 'com.google.android.gms:play-services-gcm:8.1.0'
 }

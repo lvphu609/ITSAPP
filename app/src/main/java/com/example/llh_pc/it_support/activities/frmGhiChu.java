@@ -32,6 +32,7 @@ public class frmGhiChu extends AppCompatActivity {
     public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_CREATESubPost + Def.API_FORMAT_JSON;
     private GPSTracker gpsTracker;
     private boolean isGPS;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
