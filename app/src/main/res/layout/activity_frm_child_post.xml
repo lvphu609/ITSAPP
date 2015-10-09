@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
     tools:context="com.example.llh_pc.it_support.activities.frmBaoHu">
     <LinearLayout
@@ -47,3 +47,4 @@
         </ListView>
     </LinearLayout>
 </LinearLayout>
+

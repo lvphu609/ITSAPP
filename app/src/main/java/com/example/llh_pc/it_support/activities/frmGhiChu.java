@@ -74,8 +74,9 @@ public class frmGhiChu extends AppCompatActivity {
                             PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
                             if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                                 Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(frmGhiChu.this, frmLuuTru.class);
+                                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
                                 startActivity(intent);
+                                frmTabHost.x = 3;
                             }
                         }
 
