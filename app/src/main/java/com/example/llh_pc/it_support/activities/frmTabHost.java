@@ -93,7 +93,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_thongbao))
                 .setContent(intentApple);
         // Windows tab
-        Intent intentWindows = new Intent().setClass(this, frmTimKiem.class);
+        Intent intentWindows = new Intent().setClass(this, Search.class);
         TabHost.TabSpec tabSpecWindows = tabHost
                 .newTabSpec("Windows")
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_timkiem))
@@ -134,11 +134,21 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
 
                                                     if (tab.getCurrentTab() == 0) {
-                                                        toolbar.setTitle("Báo h?ng");
+                                                        toolbar.setTitle("Báo hỏng");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
-                                                    } else
+                                                    }
+                                                    else if ((tab.getCurrentTab() == 1)) {
                                                         toolbar.setTitle("Thông báo");
-                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //2nd tab selected
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                                                    }//2nd tab selected
+                                                    else if ((tab.getCurrentTab() == 2)) {
+                                                        toolbar.setTitle("Tìm Kiếm");
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                                                    }
+                                                    else if ((tab.getCurrentTab() == 3))
+                                                    {
+                                                        toolbar.setTitle("Lưu Trữ");
+                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));}
                                                 }
                                             });
     }
@@ -169,7 +179,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         //drawerToggle.syncState();
         //Add toobar
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.app_bar);
-        toolbar.setTitle("Báo h?ng");
+        toolbar.setTitle("Báo hỏng");
         mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
         //setActionBar(toolbar);
         drawerLayout.setDrawerListener(mDrawerToggle);
@@ -203,18 +213,18 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
 
         switch (selectedItem) {
             case R.id.nav_item_1:
-                toolbar.setTitle("Báo h?ng");
+                toolbar.setTitle("Báo hỏng");
                 break;
             case R.id.nav_item_2:
                 toolbar.setTitle("Thông báo");
                 Toast.makeText(this, "Gift is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_3:
-                toolbar.setTitle("Tìm ki?m");
+                toolbar.setTitle("Tìm kiếm");
                 Toast.makeText(this, "Delete is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_4:
-                toolbar.setTitle("Luu tr?");
+                toolbar.setTitle("Luu trữ");
                 Toast.makeText(this, "Favorite is clicked !", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.nav_item_5:

@@ -8,6 +8,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+
     <uses-permission android:name="android.permission.SET_DEBUG_APP"></uses-permission>
 
 
@@ -15,6 +18,7 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <!-- [END gcm_permission] -->
+
 
     <application
         android:allowBackup="true"
@@ -117,13 +121,23 @@
             android:label="@string/title_activity_frm_provider_bao_hong" >
         </activity>
         <activity
-        android:name=".activities.Profile1"
-        android:label="@string/title_profile1" >
-    </activity>
+            android:name=".activities.Profile1"
+            android:label="@string/title_profile1" >
+        </activity>
         <activity
             android:name=".fragments.TabHostHoatDong"
             android:label="@string/title_profile1" >
         </activity>
+
+        <activity
+            android:name=".activities.Search"
+            android:label="@string/title_activity_search" >
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
         <!-- [START gcm_receiver] -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"

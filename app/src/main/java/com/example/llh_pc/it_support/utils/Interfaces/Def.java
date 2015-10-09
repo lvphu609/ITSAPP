@@ -11,6 +11,9 @@ public interface Def {
     public static final String NEW_DATE_FORMAT = "hh:mm:ss dd/MM/yyyy";
 
     //Api url
+
+//    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
+
     public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
     public static final String API_FORMAT_JSON = "";
     public static final String API_LOGIN = "accounts/login/";

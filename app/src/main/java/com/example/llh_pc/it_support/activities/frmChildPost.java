@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Filter;
 import android.widget.ListView;
 
 import com.example.llh_pc.it_support.R;
@@ -29,8 +30,9 @@ import java.util.ArrayList;
 public class frmChildPost extends AppCompatActivity implements InnoFunctionListener {
     public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_SubPost + Def.API_FORMAT_JSON;
     private ListView lstPost;
-    private ArrayList<Post> array_post = new ArrayList<>();
-    private ChildPostAdapter adapter;
+    public static ArrayList<Post> array_post = new ArrayList<>();
+
+    public static  ChildPostAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
