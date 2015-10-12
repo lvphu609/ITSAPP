@@ -45,9 +45,9 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     public static final String url_loadPost = Def.API_BASE_LINK + Def.API_LoadPost + Def.API_FORMAT_JSON;
     public static final String url_get= Def.API_BASE_LINK + Def.API_DeletePost + Def.API_FORMAT_JSON;
     private ListView lstPost;
-    private LoadPostAdapter adapter;
+    public static LoadPostAdapter adapter;
     private String token,account_id;
-    private ArrayList<LuuTruModel> postDetails;
+    public static ArrayList<LuuTruModel> postDetails;
     TextView tv;
     private TabHost mTabHost;
     @Override

@@ -29,7 +29,8 @@
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/delete_title_bar" >
+            android:theme="@style/delete_title_bar"
+            android:windowSoftInputMode="stateHidden">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

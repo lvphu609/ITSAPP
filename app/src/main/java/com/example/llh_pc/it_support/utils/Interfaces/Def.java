@@ -12,9 +12,9 @@ public interface Def {
 
     //Api url
 
-//    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
+    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
 
-    public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
+//    public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
     public static final String API_FORMAT_JSON = "";
     public static final String API_LOGIN = "accounts/login/";
     public static final String API_GET_ACCOUNT_INFO_BY_ID ="accounts/get_account_info_by_id";
@@ -41,6 +41,7 @@ public interface Def {
     public static final String API_Loadpostdetail = "posts/get_post_detail_by_id/";
     //delete/post
     public static final String API_DeletePost= "posts/delete/";
+    public static final String API_Search = "posts/search/";
     //register tokenGCM
     public static final String API_tokenGCM= "accounts/update_reg_id/";
 
