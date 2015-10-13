@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmBaoHu;
+import com.example.llh_pc.it_support.activities.frmHoanThanh;
 import com.example.llh_pc.it_support.activities.frmLuuTru;
 import com.example.llh_pc.it_support.activities.frmTabHost;
 import com.example.llh_pc.it_support.activities.frmThongBao;
@@ -29,7 +30,6 @@ public class TabHostHoatDong extends TabActivity {
         TabHost tabHost = getTabHost();
         Resources ressources = getResources();
 
-
         Intent intentAndroid = new Intent().setClass(this,frmLuuTru.class);
         TabHost.TabSpec tabSpecAndroid = tabHost
                 .newTabSpec("Android")
@@ -37,7 +37,7 @@ public class TabHostHoatDong extends TabActivity {
                 .setContent(intentAndroid);
 
         // Apple tab
-        Intent intentApple = new Intent().setClass(this, frmThongBao.class);
+        Intent intentApple = new Intent().setClass(this, frmHoanThanh.class);
         TabHost.TabSpec tabSpecApple = tabHost
                 .newTabSpec("Apple")
                 .setIndicator("Hoàn Thành", ressources.getDrawable(R.drawable.ic_thongbao))
