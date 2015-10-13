@@ -76,7 +76,8 @@
         </activity>
         <activity
             android:name=".activities.frmDangKy"
-            android:label="@string/title_activity_frm_dang_ky" >
+            android:label="@string/title_activity_frm_dang_ky"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activities.frmThongBao"

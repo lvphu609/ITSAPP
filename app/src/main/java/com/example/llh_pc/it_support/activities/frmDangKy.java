@@ -10,6 +10,9 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -69,7 +72,7 @@ import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class frmDangKy extends AppCompatActivity implements InnoFunctionListener, View.OnClickListener {
+public class frmDangKy extends AppCompatActivity implements InnoFunctionListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private boolean is_network = false;
     TextView errorname;
     AccountDAL accdal;
@@ -102,7 +105,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     boolean checkpasswordtrue = false;
     public static boolean dangkythanhcong =false;
     public ArrayList<View> listEditText = new ArrayList<>();
-
+    Canvas canvas;
     //API
 //    private Context context;
 //    private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
@@ -118,7 +121,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     ImageButton bntImage;
     Bitmap originImage;
     CheckBox prefCheckBox, provider, user, checkPC, Mayin, scan, fax, Laptop, photocopy;
-    TextView prefEditText, cbPC, cbLaptop, cbPhoto, cbScan, cbFax, cbMayin, chuyenmon, errorline1, errorline2, errorpass1, errorpass2,errorcfpassword,errorphone1,errorphone2,erroraddress;
+    CheckBox mayin,mayfax,pc,Laptop1,scan1,photo;
+    TextView prefEditText, cbPC, cbLaptop, cbPhoto, cbScan, cbFax, cbMayin, chuyenmon, errorline1, errorline2, errorpass1, errorpass2,errorcfpassword,errorphone1,errorphone2,erroraddress,errorcfpassword2;
     public static EditText Ifullname, Iemail, Ipassword, Iconfirmpassword, Iphone, Idia_chi;
     ArrayList<DateTimePicker> arrDate = new ArrayList<DateTimePicker>();
     ArrayAdapter<DateTimePicker> adapter = null;
@@ -213,6 +217,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         errorpass2 = (TextView) findViewById(R.id.errorpass2);
         errorphone1 =(TextView) findViewById(R.id.errorphone1);
         errorphone2 =(TextView) findViewById(R.id.errorphone2);
+        errorcfpassword2 = (TextView)findViewById(R.id.cfpassword1);
         //set value
 
 
@@ -245,7 +250,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
 
                     startActivity(DN);
-                    dangkythanhcong =true;
+                    dangkythanhcong = true;
                     Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
 
                 }
@@ -290,6 +295,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } else {
                     fullnameflag = true;
                     setDongyEnble();
+                    errorname.setVisibility(View.GONE);
                 }
 
             }
@@ -392,6 +398,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (hasFocus == true) {
                 } else {
                     errorcfpassword.setVisibility(View.GONE);
+                    errorcfpassword2.setVisibility(View.GONE);
                 }
             }
         });
@@ -410,7 +417,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
                     confirmpasswordflag = false;
-
+                    errorcfpassword2.setVisibility(View.VISIBLE);
                     setDongyEnble();
                 } else if (s.toString().matches(Ipassword.getText().toString())) {
 
@@ -419,6 +426,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } else {
                     confirmpasswordflag = false;
                     setDongyEnble();
+                    errorcfpassword2.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -467,10 +476,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         Idia_chi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(hasFocus ==true)
-                {}
-                else
-                {
+                if (hasFocus == true) {
+                } else {
                     erroraddress.setVisibility(View.GONE);
                     erroraddress.setVisibility(View.GONE);
                 }
@@ -497,7 +504,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } else {
                     addressflag = true;
                     setDongyEnble();
-
+                    erroraddress.setVisibility(View.GONE);
                 }
             }
         });
@@ -505,7 +512,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
         //CheckBox
         prefCheckBox = (CheckBox) findViewById(R.id.user);
-        prefEditText = (TextView) findViewById(R.id.prefEditText);
+//        prefEditText = (TextView) findViewById(R.id.prefEditText);
         provider = (CheckBox) findViewById(R.id.provider);
         provider.setOnCheckedChangeListener(listener);
         user = (CheckBox) findViewById(R.id.user);
@@ -668,8 +675,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         boolean my_checkbox_preference = mySharedPreferences.getBoolean("checkbox_preference", false);
         prefCheckBox.setChecked(my_checkbox_preference);
 
-        String my_edittext_preference = mySharedPreferences.getString("edittext_preference", "");
-        prefEditText.setText(my_edittext_preference);
+//        String my_edittext_preference = mySharedPreferences.getString("edittext_preference", "");
+//        prefEditText.setText(my_edittext_preference);
 
     }
 
@@ -740,6 +747,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     case R.id.user:
                         user.setChecked(true);
                         provider.setChecked(false);
+                        user.setButtonDrawable(R.drawable.checked);
+                        provider.setButtonDrawable(R.drawable.check_white);
                         checkedbox = "[1]";
                         checkAccountType = true;
                         setDongyEnble();
@@ -747,6 +756,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     case R.id.provider:
                         provider.setChecked(true);
                         user.setChecked(false);
+                        provider.setButtonDrawable(R.drawable.checked);
+                        user.setButtonDrawable(R.drawable.check_white);
                         checkAccountType = true;
                         setDongyEnble();
                         showPopUp();
@@ -757,6 +768,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             else {
                 checkAccountType = false;
                 setDongyEnble();
+                user.setButtonDrawable(R.drawable.check_white);
+                provider.setButtonDrawable(R.drawable.check_white);
             }
 
             if (checkAccountType == false) {
@@ -781,24 +794,87 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
     public   void showPopUp() {
 
-        AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
         helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
 
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
         helpBuilder.setView(checkboxLayout);
+         pc = (CheckBox) checkboxLayout.findViewById(R.id.PC);
+         Laptop1 = (CheckBox) checkboxLayout.findViewById(R.id.Laptop);
+         photo = (CheckBox) checkboxLayout.findViewById(R.id.photocopy);
+         mayin = (CheckBox) checkboxLayout.findViewById(R.id.Mayin);
+         mayfax = (CheckBox) checkboxLayout.findViewById(R.id.fax);
+         scan1 = (CheckBox) checkboxLayout.findViewById(R.id.scan);
+
+        pc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    pc.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {pc.setButtonDrawable(R.drawable.check_white);}
+            }
+
+        });
+        Laptop1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    Laptop1.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {Laptop1.setButtonDrawable(R.drawable.check_white);}
+            }
+        });
+        photo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    photo.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {photo.setButtonDrawable(R.drawable.check_white);}
+            }
+        });
+        mayin.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    mayin.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {mayin.setButtonDrawable(R.drawable.check_white);}
+            }
+        });
+        mayfax.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    mayfax.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {mayfax.setButtonDrawable(R.drawable.check_white);}
+            }
+        });
+        scan1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    scan1.setButtonDrawable(R.drawable.checked);
+                }
+                else
+                {scan1.setButtonDrawable(R.drawable.check_white);}
+            }
+        });
         helpBuilder.setCancelable(false).
            setPositiveButton("OK",
                    new DialogInterface.OnClickListener() {
 
                        public void onClick(DialogInterface dialog, int which) {
-                           CheckBox pc = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.PC);
-                           CheckBox Laptop = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Laptop);
-                           CheckBox photo = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.photocopy);
-                           CheckBox mayin = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.Mayin);
-                           CheckBox mayfax = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.fax);
-                           CheckBox scan = (CheckBox) ((AlertDialog) dialog).findViewById(R.id.scan);
+
 
 
                            if (pc.isChecked()) {
@@ -811,10 +887,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                            } else if (list.contains(3)) {
                                checkPCInvisible = false;
                                cbPC.setVisibility(View.GONE);
-//
+
 
                            }
-                           if (Laptop.isChecked()) {
+                           if (Laptop1.isChecked()) {
                                if (!list.contains(4)) {
                                    list.add(4);
                                    cbLaptop.setVisibility(View.VISIBLE);
@@ -853,7 +929,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
 
                            }
-                           if (scan.isChecked()) {
+                           if (scan1.isChecked()) {
                                if (!list.contains(7)) {
                                    list.add(7);
                                    checkScanInvisible = true;
@@ -1129,5 +1205,34 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void onClick(View v) {
         selectImage();
+    }
+
+    public Bitmap getRoundedShape(Bitmap scaleBitmapImage) {
+
+        int targetWidth = 50;
+        int targetHeight = 50;
+        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
+                targetHeight,Bitmap.Config.ARGB_8888);
+        canvas = new Canvas(targetBitmap);
+        Path path = new Path();
+        path.addCircle(((float) targetWidth - 1) / 2,
+                ((float) targetHeight - 1) / 2,
+                (Math.min(((float) targetWidth),
+                        ((float) targetHeight)) / 2),
+                Path.Direction.CCW);
+
+        canvas.clipPath(path);
+        Bitmap sourceBitmap = scaleBitmapImage;
+        canvas.drawBitmap(sourceBitmap,
+                new Rect(0, 0, sourceBitmap.getWidth(),
+                        sourceBitmap.getHeight()),
+                new Rect(0, 0, targetWidth,
+                        targetHeight), null);
+        return targetBitmap;
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
     }
 }

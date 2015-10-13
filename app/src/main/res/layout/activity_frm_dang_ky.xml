@@ -6,13 +6,17 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <LinearLayout
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
+   >
     <LinearLayout
+        android:weightSum="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
@@ -21,19 +25,10 @@
         android:paddingRight="20dp"
         android:layout_marginTop="10dp"
         >
-<RelativeLayout
+    <RelativeLayout
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center">
-       <!-- <ImageButton
-            android:id="@+id/bntImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/avatar"
-            android:scaleType="fitCenter"
-            android:background="@drawable/draw_shape"/>
--->
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginBottom="10dp"
@@ -83,8 +78,6 @@
                 android:layout_marginLeft="20dp"
                 android:visibility="gone"/>
         </RelativeLayout>
-
-
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -95,14 +88,6 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         >
-        <!--<TextView-->
-        <!--android:id="@+id/email"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="left"-->
-        <!--android:textSize="20dp"-->
-        <!--android:text="Email:"-->
-        <!--android:textAppearance="?android:actionBarTabTextStyle"/>-->
         <EditText
             android:id="@+id/email"
             android:layout_width="fill_parent"
@@ -141,16 +126,6 @@
         android:paddingRight="20dp">
 
 
-        <!--<TextView-->
-        <!--android:text="Mật khẩu:"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="left"-->
-        <!--android:textSize="20dp"-->
-        <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-
-        <!--/>-->
-
         <EditText
             android:id="@+id/password"
             android:layout_width="wrap_content"
@@ -187,15 +162,6 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-
-        <!--<TextView-->
-        <!--android:text="Xác nhận mật khẩu:"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="left"-->
-        <!--android:textSize="20dp"-->
-        <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-
         <!--/>-->
 
         <EditText
@@ -216,153 +182,15 @@
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
+        <TextView
+            android:id="@+id/cfpassword1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Xác nhận mật khẩu không được bỏ trống"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:textColor="@color/maudo"/>
     </LinearLayout>
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:gravity="left"-->
-    <!--android:paddingLeft="20dp"-->
-    <!--android:paddingRight="20dp">-->
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="center"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-    <!--android:text="Họ và Tên:"/>-->
-    <!--<EditText-->
-    <!--android:id="@+id/full_name"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="120dp"-->
-    <!--android:ems="20"-->
-    <!--android:singleLine="false"-->
-    <!--android:maxLines="1"-->
-    <!--android:inputType="text"/>-->
-
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:layout_gravity="left"-->
-    <!--android:paddingLeft="20dp"-->
-    <!--android:paddingRight="20dp">-->
-
-    <!--<TableRow-->
-    <!--android:id="@+id/pick_date"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content">-->
-    <!--<TextView-->
-    <!--android:id="@id/pick_date"-->
-    <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:textSize="20dp"-->
-    <!--android:text="Ngày Sinh:">-->
-
-
-    <!--</TextView>-->
-    <!--<TextView-->
-    <!--android:id="@+id/txtDate"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="120dp"-->
-    <!--android:text="1/1/2015"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textColor="#FF0000">-->
-    <!--</TextView>-->
-    <!--<Button-->
-    <!--android:id="@+id/buttonDate"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="30dp"-->
-    <!--android:text="Chọn"-->
-    <!--/>-->
-    <!--<Spinner-->
-    <!--android:id="@+id/spinner1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-
-    <!--android:layout_marginLeft="60dp"-->
-    <!--android:scaleX="1.5"-->
-    <!--android:scaleY="1.5"-->
-
-    <!-->-->
-    <!--</Spinner>-->
-    <!--</TableRow>-->
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:layout_gravity="left"-->
-    <!--android:paddingLeft="20dp"-->
-    <!--android:paddingRight="20dp"-->
-    <!-->-->
-    <!--<TextView-->
-
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Giới Tính:"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textAppearance="?android:actionBarTabTextStyle"/>-->
-    <!--<TextView-->
-    <!--android:id="@+id/selection"-->
-    <!--android:layout_marginLeft="60dp"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="#999f"-->
-    <!--android:gravity="center"-->
-    <!--android:hint="selected"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textColor="#ff00" ></TextView>-->
-    <!--<Spinner-->
-    <!--android:id="@+id/spinner1"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-
-    <!--android:layout_marginLeft="155dp"-->
-    <!--android:scaleX="1.5"-->
-    <!--android:scaleY="1.5"-->
-
-    <!-->-->
-    <!--</Spinner>-->
-    <!---->
-
-
-    <!--</LinearLayout>-->
-    <!--<LinearLayout-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:orientation="horizontal"-->
-    <!--android:layout_gravity="left"-->
-    <!--android:paddingLeft="20dp"-->
-    <!--android:paddingRight="20dp">-->
-
-
-    <!--<TextView-->
-    <!--android:text="CMND:"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:gravity="left"-->
-    <!--android:textSize="20dp"-->
-    <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-
-    <!--/>-->
-
-    <!--<EditText-->
-    <!--android:id="@+id/CMND"-->
-    <!--android:layout_width="fill_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="165dp"-->
-    <!--android:ems = "20"-->
-    <!--android:singleLine="false"-->
-    <!--android:maxLines="1"-->
-    <!--android:inputType="number"-->
-
-    <!--/>-->
-    <!--</LinearLayout>-->
     <LinearLayout
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
@@ -372,16 +200,6 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
-
-        <!--<TextView-->
-        <!--android:text="Số Điện Thoại:"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:gravity="left"-->
-        <!--android:textSize="20dp"-->
-        <!--android:textAppearance="?android:actionBarTabTextStyle"-->
-
-        <!--/>-->
 
         <EditText
             android:id="@+id/phone"
@@ -457,7 +275,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="10dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -465,32 +284,29 @@
                 android:text="Loại tài khoản:"
                 android:textSize="20dp"
                 android:textColor="#000000"
+
                 />
             <CheckBox
-                android:layout_marginTop="20dp"
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20dp"
                 android:layout_marginLeft="20dp"
                 android:text="Người sử dụng"
-
+                android:button="@drawable/check_white"
+                android:paddingLeft="5dp"
                 />
-            <TextView
-                android:id="@+id/prefEditText"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
 
-                />
             <CheckBox
-
                 android:id="@+id/provider"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Người cung cấp dịch vụ"
                 android:textSize="20dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"></CheckBox>
+                android:button="@drawable/check_white"
+                android:paddingLeft="5dp"
+               ></CheckBox>
             <!--<ListView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
@@ -504,86 +320,92 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chuyên môn:"
-                android:textSize="15dp"
-                android:textStyle="bold"
-                android:visibility="gone"/>
+                android:textSize="20dp"
+
+                android:visibility="gone"
+                android:textColor="@color/mauden"
+                />
             <TextView
                 android:id="@+id/cbPC"
-                android:layout_marginLeft="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="PC"
+                android:text="-PC"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
+                android:layout_marginLeft="20dp"
+                android:textColor="@color/mauden"
                 />
             <TextView
                 android:id="@+id/cbLaptop"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Laptop"
+                android:text="-Laptop"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
 
-
+                android:textColor="@color/mauden"
                 />
             <TextView
                 android:id="@+id/cbMayin"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy in"
+                android:text="-Máy in"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
+                android:textColor="@color/mauden"
 
                 />
             <TextView
                 android:id="@+id/cbPhoto"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy Photocopy"
+                android:text="-Máy Photocopy"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
-
+                android:textColor="@color/mauden"
                 />
             <TextView
                 android:id="@+id/cbScan"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy Scan"
+                android:text="-Máy Scan"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
-
+                android:textColor="@color/mauden"
                 />
             <TextView
                 android:id="@+id/cbFax"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Máy Fax"
+                android:text="-Máy Fax"
                 android:visibility="gone"
                 android:textSize="20dp"
                 android:background="@null"
-
+                android:textColor="@color/mauden"
                 />
 
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
+        android:layout_weight="1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="right"
         android:layout_marginTop="30dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingRight="20dp"
+        android:paddingBottom="20dp">
 
         <Button
             android:id="@+id/dangkyok"
@@ -597,16 +419,6 @@
             android:enabled="false"
 
             />
-        <!--<Button-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="Trở về"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:layout_marginLeft="20dp"-->
-        <!--android:textSize="20dp"-->
-
-        />
     </LinearLayout>
-
 </LinearLayout >
 </ScrollView>
