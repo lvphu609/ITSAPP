@@ -1,37 +1,23 @@
 package com.example.llh_pc.it_support.utils.Events;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
 import android.widget.Toast;
-
-import com.example.llh_pc.it_support.R;
-import com.example.llh_pc.it_support.activities.frmLuuTru;
 import com.example.llh_pc.it_support.adapters.LoadPostAdapter;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
-import com.example.llh_pc.it_support.models.JsonParses.ViewPostParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
-import com.example.llh_pc.it_support.models.Post;
-import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.google.gson.Gson;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by LLH-PC on 10/4/2015.
  */
@@ -51,7 +37,6 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
         this.arrayListPost = list;
         this.loadPostAdapter = loadPostAdapter;
     }
-
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         try {
@@ -77,6 +62,7 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
                         Gson gson = new Gson();
                         PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
                         if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+
                             return true;
                         }
                         else{
@@ -105,4 +91,5 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
         }
         return false;
     }
+
 }

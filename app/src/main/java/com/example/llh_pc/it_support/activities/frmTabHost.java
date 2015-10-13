@@ -66,12 +66,10 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
         editor.commit();
-//
-        ;
 
-//
-        TextView tvView  = (TextView)findViewById(R.id.textView);
+        TextView tvView  = (TextView)findViewById(R.id.tvName);
         tvView.setText(fullname);
+        tvView.setOnClickListener(this);
 
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
@@ -165,7 +163,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         super.onPause();
 
     }
-
 
 
     private void initNavigation(Bundle savedInstanceState) {
@@ -270,6 +267,4 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         Intent profile1 = new Intent(frmTabHost.this, Profile1.class);
         startActivity(profile1);
     }
-
-
 }

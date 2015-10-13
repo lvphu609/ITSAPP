@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TextView;
@@ -48,6 +49,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     private LoadPostAdapter adapter;
     private String token,account_id;
     private ArrayList<LuuTruModel> postDetails;
+    private ArrayList<View> views = new ArrayList<>();
     TextView tv;
     private TabHost mTabHost;
     @Override
@@ -80,7 +82,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         }catch (Exception ex){
              t = ex.toString();
         }
-
         adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
         initFlags();
         initControl();
@@ -121,13 +122,13 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         lstPost = (ListView)findViewById(R.id.lsPost);
         lstPost.setAdapter(adapter);
 
+
     }
 
     @Override
     public void setEventForControl() {
-        lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, postDetails, adapter));
         lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
-
+        lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, postDetails, adapter));
     }
 
     @Override

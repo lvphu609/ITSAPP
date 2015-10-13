@@ -63,6 +63,7 @@ public class frmGhiChu extends AppCompatActivity {
                         restClient.addParam("type_id", type_id);
                         restClient.addParam("location_lat", y);
                         restClient.addParam("location_lng", x);
+                        restClient.addParam("content", edtGhiChu);
                         try {
                             restClient.execute(RequestMethod.POST);
                         } catch (Exception e) {
@@ -79,7 +80,6 @@ public class frmGhiChu extends AppCompatActivity {
                                 frmTabHost.x = 3;
                             }
                         }
-
                     }
                 }
             }
@@ -130,30 +130,6 @@ public class frmGhiChu extends AppCompatActivity {
         // show it
         alertDialog.show();
 
-
-
-
-
-
-        /*LayoutInflater li = LayoutInflater.from(frmGhiChu.this);
-        View promptsView = li.inflate(R.layout.popup_validation, null);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("?")
-                .setCancelable(false)
-                .setPositiveButton("Có", new DialogInterface.OnClickListener() {
-                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                        Toast.makeText(frmGhiChu.this, "Mở GPS.", Toast.LENGTH_LONG).show();
-                    }
-                })
-                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int id) {
-                        Toast.makeText(frmGhiChu.this, "Không mở GPS", Toast.LENGTH_LONG).show();
-                        dialog.cancel();
-                    }
-                });
-        final AlertDialog alert = builder.create();
-        alert.show();
- */   }
+    }
 
 }
