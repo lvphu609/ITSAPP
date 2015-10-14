@@ -17,6 +17,7 @@
     <string name="title_activity_frm_bao_hu">Báo hỏng</string>
     <string name="title_activity_post_adapter">PostAdapter</string>
     <string name="lable_quenmk">Vui lòng nhập email của bạn. Mã xác thực sẽ được gửi đến mail này</string>
+    <string name="lable_taomk">Vui lòng nhập mã xác thực và mật khẩu mới để khôi phục tài khoản</string>
     <string name="title_activity_child_post">childPost</string>
     <string name="title_activity_frm_child_post">Báo hỏng</string>
     <string name="title_activity_child_post_adapter">ChildPostAdapter</string>

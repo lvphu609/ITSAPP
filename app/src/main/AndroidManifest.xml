@@ -40,7 +40,9 @@
         </activity>
         <activity
             android:name=".activities.frmDangNhap"
-            android:label="@string/title_activity_frm_dang_nhap" >
+            android:label="@string/title_activity_frm_dang_nhap"
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity
             android:name=".activities.Main2Activity"

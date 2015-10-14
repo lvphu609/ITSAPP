@@ -44,4 +44,11 @@
         <item name="android:textColor">@color/actionbar_text</item>
     </style>
     <color name = "black">#000000</color>
+
+    <style name="MyEditTextTheme">
+        <!-- Used for the bottom line when not selected / focused -->
+        <item name="colorAccent">@color/mauxanh</item>
+        <!-- colorControlActivated & colorControlHighlight use the colorAccent color by default -->
+    </style>
+
 </resources>

@@ -71,8 +71,8 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
-                    tvMaXN.setText("Vui lòng nhập mã xác thực.");
                     A = 0;
+                    tvMaXN.setText("Vui lòng nhập mã xác thực.");
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
                 } else {
@@ -82,7 +82,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
                         btnSetPass.setEnabled(true);
                         btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     }
-
+                    tvMaXN.setText("");
                 }
             }
         });
@@ -113,6 +113,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
                         btnSetPass.setEnabled(true);
                         btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxanh));
                     }
+                    tvMatKhau.setText("");
                 }
             }
         });
