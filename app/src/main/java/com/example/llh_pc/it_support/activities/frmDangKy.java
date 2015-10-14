@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -61,6 +63,7 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -77,7 +80,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class frmDangKy extends AppCompatActivity implements InnoFunctionListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private boolean is_network = false;
-
+     boolean  flagcheckon = false;
     protected View gameView;
     ScrollView scrollView;
     TextView errorname;
@@ -138,7 +141,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             "Nữ"};
     ArrayList<Integer> arrayListCheck = new ArrayList<Integer>();
     private CircleImageView c;
-
+    String result,result1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,7 +165,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
          c.setOnClickListener(this);
         
         //jkbvjkjkcbvmkl
-        
+
 
 
         
@@ -273,24 +276,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
 //        AccountDAL abc = new AccountDAL(frmDangKy.this, listEditText);
 
-        Ifullname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == true) {
-                    errorname.setVisibility(View.GONE);
-                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-                }
-                else {
-                    if (Ifullname.getText().toString().equals("")) {
-                        errorname.setVisibility(View.VISIBLE);
-                    }
-                    else {errorname.setVisibility(View.GONE);}
-
-                }
-            }
-
-        });
 
         Ifullname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -301,23 +287,52 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().matches("")) {
 
                     errorname.setVisibility(View.VISIBLE);
                     fullnameflag = false;
                     setDongyEnble();
 
-                } else {
+                }
+                else {
+                    result = capitalizeFirstLetter(Ifullname.getText().toString());
                     fullnameflag = true;
                     setDongyEnble();
                     errorname.setVisibility(View.GONE);
+
                 }
 
+
             }
+        });
+        Ifullname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true) {
+
+                    Ifullname.setText(result);
+                    errorname.setVisibility(View.GONE);
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+                } else {
+                    Ifullname.setText(result);
+                    if (Ifullname.getText().toString().equals("")) {
+                        errorname.setVisibility(View.VISIBLE);
+                    } else {
+                        errorname.setVisibility(View.GONE);
+                    }
+
+
+                }
+            }
+
         });
 
         Iemail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -535,7 +550,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         Idia_chi.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus == true) {getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+                if (hasFocus == true) {
+                    Idia_chi.setText(result1);
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     if (Idia_chi.getText().toString().matches("")) {
                         addressflag = false;
                         setDongyEnble();
@@ -545,6 +562,15 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     else {    erroraddress.setVisibility(View.GONE);
                         erroraddress.setVisibility(View.GONE);}
                 } else {
+                    Idia_chi.setText(result1);
+                    if (Idia_chi.getText().toString().matches("")) {
+                        addressflag = false;
+                        setDongyEnble();
+                        erroraddress.setVisibility(View.VISIBLE);
+
+                    }
+                    else {    erroraddress.setVisibility(View.GONE);
+                        erroraddress.setVisibility(View.GONE);}
 
                 }
             }
@@ -562,12 +588,14 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().matches("")) {
                     addressflag = false;
                     setDongyEnble();
 
 
                 } else {
+                    result1 = capitalizeFirstLetter(Idia_chi.getText().toString());
                     addressflag = true;
                     setDongyEnble();
                     erroraddress.setVisibility(View.GONE);
@@ -1301,9 +1329,36 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
     }
-    private void changeToUpperCase(String inputString) {
 
+    public String capitalizeFirstLetter(String s){
+        char[] array = s.toCharArray();
+        // Uppercase first letter.
+        array[0] = Character.toUpperCase(array[0]);
 
+        // Uppercase all letters that follow a whitespace character.
+        for (int i = 1; i < array.length; i++) {
+            if (Character.isWhitespace(array[i - 1])) {
+                array[i] = Character.toUpperCase(array[i]);
+            }
+        }
+
+        // Result.
+        return new String(array);
+    }
+
+    public void  ontext()
+    {
+        if (Ifullname.getText().toString().matches(""))
+             {}
+            else {
+            if (flagcheckon == true) {
+                flagcheckon =false;
+                result = capitalizeFirstLetter(Ifullname.getText().toString());
+                Ifullname.setText(result);
+
+            }
+
+        }
 
     }
 

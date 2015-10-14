@@ -12,9 +12,9 @@ public interface Def {
 
     //Api url
 
-//    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
+    public static final String API_BASE_LINK = "http://demo.innoria.com/itsupport/api/";
 
-    public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
+//    public static final String API_BASE_LINK = "http://192.168.1.153:8080/ITS/api/";
     public static final String API_FORMAT_JSON = "";
     public static final String API_LOGIN = "accounts/login/";
     public static final String API_GET_ACCOUNT_INFO_BY_ID ="accounts/get_account_info_by_id";
