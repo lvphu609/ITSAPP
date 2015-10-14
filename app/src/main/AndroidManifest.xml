@@ -74,7 +74,8 @@
         <activity
             android:name=".activities.frmDangKy"
             android:label="@string/title_activity_frm_dang_ky"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".activities.frmThongBao"
