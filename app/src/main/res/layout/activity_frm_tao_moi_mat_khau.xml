@@ -11,7 +11,7 @@
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/lable_quenmk"
+        android:text="@string/lable_taomk"
         android:textSize="15dp"
         android:layout_weight="10"/>
     <LinearLayout
@@ -23,7 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edtCode"
-            android:hint="Nhập mã xác thực"/>
+            android:hint="Nhập mã xác thực"
+            android:theme="@style/MyEditTextTheme"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,7 +36,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtPassword"
             android:hint="Mật khẩu mới"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:theme="@style/MyEditTextTheme"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +49,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtAPass"
             android:hint="Nhập lại mật khẩu"
-            android:inputType="textPassword"/>
+            android:inputType="textPassword"
+            android:theme="@style/MyEditTextTheme"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
