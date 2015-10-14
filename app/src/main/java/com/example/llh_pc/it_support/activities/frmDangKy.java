@@ -260,7 +260,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     e.printStackTrace();
                 }
                 if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
-
                     startActivity(DN);
                     dangkythanhcong = true;
                     Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();

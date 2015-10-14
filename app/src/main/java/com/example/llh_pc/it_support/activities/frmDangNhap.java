@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -41,7 +42,8 @@ import com.google.android.gms.common.GoogleApiAvailability;
 
 import java.util.ArrayList;
 
-public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener {
+public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnFocusChangeListener {
+
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "frmDangNhap";
@@ -59,6 +61,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_dang_nhap);
+
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setTextColor(getResources().getColor(R.color.actionbar_text));
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -126,6 +129,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().isEmpty()) {
                     E = 0;
                     btnLogin.setEnabled(false);
@@ -149,6 +153,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -157,6 +162,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().isEmpty()) {
                     P = 0;
                     btnLogin.setEnabled(false);
@@ -174,6 +180,8 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 }
             }
         });
+        edtUserName.setOnFocusChangeListener(this);
+        edtPass.setOnFocusChangeListener(this);
         initFlags();
         initControl();
         setEventForControl();
@@ -289,5 +297,10 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     @Override
     public void setData() {
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 }
