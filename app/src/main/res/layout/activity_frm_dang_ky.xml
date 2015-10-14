@@ -181,6 +181,7 @@
             android:inputType="textPassword"
             android:hint="Xác nhận mật khẩu (*)"
             android:theme="@style/EditTextStyle"
+
             />
         <TextView
             android:id="@+id/cfpassword"

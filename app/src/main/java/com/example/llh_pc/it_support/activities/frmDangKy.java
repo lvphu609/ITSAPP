@@ -253,6 +253,27 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     ErrorLine();
 
                 }
+                 if (inVaild ==false||emailTontai ==true)
+                {
+                    Iemail.requestFocus();
+                }
+                 else if (checkpasswordtrue ==false)
+                 {
+                     Ipassword.requestFocus();
+                 }
+                else if(confirmpasswordflag ==false)
+                {
+                   Iconfirmpassword.requestFocus();
+                }
+
+                else if(phoneflag ==false)
+                {
+                    Iphone.requestFocus();
+                }
+                else if (addressflag ==false)
+                {
+                    Idia_chi.requestFocus();
+                }
 
 
                 boolean allInformationtrue = false;
@@ -301,7 +322,13 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                 }
                 else {
-                    result = capitalizeFirstLetter(Ifullname.getText().toString());
+
+                    if (s.toString().matches("")) {
+
+                    }
+                    else {
+                        result = capitalizeFirstLetter(Ifullname.getText().toString());
+                    }
                     fullnameflag = true;
                     setDongyEnble();
                     errorname.setVisibility(View.GONE);
@@ -322,11 +349,12 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
 
                 } else {
-                    Ifullname.setText(result);
+
                     if (Ifullname.getText().toString().equals("")) {
                         errorname.setVisibility(View.VISIBLE);
                     } else {
                         errorname.setVisibility(View.GONE);
+                        Ifullname.setText(result);
                     }
 
 
@@ -487,9 +515,11 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().matches("")) {
+
                     confirmpasswordflag = false;
                     errorcfpassword2.setVisibility(View.VISIBLE);
                     setDongyEnble();
+
                 } else if (s.toString().matches(Ipassword.getText().toString())) {
                     errorcfpassword.setVisibility(View.GONE);
                     confirmpasswordflag = true;
@@ -511,6 +541,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                         errorphone1.setVisibility(View.GONE);}
                     else{errorphone2.setVisibility(View.VISIBLE);}
                 } else {
+                    if((Iphone.getText().toString().length() >= 10))
+                    {errorphone2.setVisibility(View.GONE);
+                        errorphone1.setVisibility(View.GONE);}
+                    else{errorphone2.setVisibility(View.VISIBLE);}
 
                 }
             }
@@ -562,14 +596,15 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     else {    erroraddress.setVisibility(View.GONE);
                         erroraddress.setVisibility(View.GONE);}
                 } else {
-                    Idia_chi.setText(result1);
+
                     if (Idia_chi.getText().toString().matches("")) {
                         addressflag = false;
                         setDongyEnble();
                         erroraddress.setVisibility(View.VISIBLE);
 
                     }
-                    else {    erroraddress.setVisibility(View.GONE);
+                    else {   Idia_chi.setText(result1);
+                        erroraddress.setVisibility(View.GONE);
                         erroraddress.setVisibility(View.GONE);}
 
                 }
@@ -1340,26 +1375,14 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             if (Character.isWhitespace(array[i - 1])) {
                 array[i] = Character.toUpperCase(array[i]);
             }
+
         }
+
 
         // Result.
         return new String(array);
     }
 
-    public void  ontext()
-    {
-        if (Ifullname.getText().toString().matches(""))
-             {}
-            else {
-            if (flagcheckon == true) {
-                flagcheckon =false;
-                result = capitalizeFirstLetter(Ifullname.getText().toString());
-                Ifullname.setText(result);
 
-            }
-
-        }
-
-    }
 
 }
