@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
                         try {
                             sleep(2000);
                             finish();
-                            Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                            Intent cv = new Intent(MainActivity.this, frmTabHost.class);
                             //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
                             startActivity(cv);
                         } catch (InterruptedException e) {
