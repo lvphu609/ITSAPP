@@ -59,7 +59,8 @@
         </activity>
         <activity
             android:name=".activities.frmTaoMoiMatKhau"
-            android:label="@string/title_activity_frm_quen_mk" >
+            android:label="@string/title_activity_frm_quen_mk"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activities.frmBaoHu"
