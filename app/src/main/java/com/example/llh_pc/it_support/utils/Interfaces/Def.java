@@ -41,6 +41,7 @@ public interface Def {
     public static final String API_Loadpostdetail = "posts/get_post_detail_by_id/";
     //delete/post
     public static final String API_DeletePost= "posts/delete/";
+    public static final String API_Search = "posts/search/";
     //register tokenGCM
     public static final String API_tokenGCM= "accounts/update_reg_id/";
 

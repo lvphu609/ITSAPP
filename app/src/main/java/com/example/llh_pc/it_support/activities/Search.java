@@ -1,52 +1,141 @@
 package com.example.llh_pc.it_support.activities;
 
-import android.app.DownloadManager;
-import android.app.SearchManager;
-import android.content.Context;
-import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.ChildPostAdapter;
+import com.example.llh_pc.it_support.adapters.LoadPostAdapter;
+import com.example.llh_pc.it_support.models.JsonParses.SearchParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
+import com.example.llh_pc.it_support.restclients.RequestMethod;
+import com.example.llh_pc.it_support.restclients.Response;
+import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Events.eventDelete;
+import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
+import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Locale;
 
-public class Search extends AppCompatActivity implements SearchView.OnQueryTextListener{
-    EditText inputSearch;
-    SearchView searchView;
-    MenuItem searchMenuItem;
-    LayoutInflater inflater;
-    frmLuuTru childPost;
+public class Search extends AppCompatActivity implements SearchView.OnQueryTextListener,InnoFunctionListener{
+     ListView list;
+     private LoadPostAdapter adapter;
     //Search List
     private ListView mSearchNFilterLv;
-
+    EditText editsearch;
     private EditText mSearchEdt;
-
+    private int page =1;
+    private String query;
+    String t;
+    public static final String url_search= Def.API_BASE_LINK + Def.API_Search + Def.API_FORMAT_JSON;
     public ArrayList<LuuTruModel> searchPost;
     private ChildPostAdapter valueAdapter;
-
+    private String token,account_id;
+    private String lat="10.7632";
+    private String lng = "106.675";
     private TextWatcher mSearchTw;
+    public static ArrayList<LuuTruModel> postDetails;
+    public String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        childPost = new frmLuuTru();
-        inputSearch = (EditText) findViewById(R.id.inputSearch);
-        inflater=(LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Search.this);
+        token = sharedPreference.getString("token", "YourName");
+        account_id = sharedPreference.getString("id", "YourName");
+        list = (ListView) findViewById(R.id.list_view);
+
+        try
+        {
+            RestClient restClient = new RestClient(url_search);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.addParam("page","1");
+            restClient.addParam("account_id", account_id);
+            restClient.addParam("location_lat",lat);
+            restClient.addParam("location_lng",lng);
+            restClient.addParam("query",query);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                    restClient.getResponse() != null)
+            {
+                String jsonObject = restClient.getResponse();
+                SearchParse searchParse = new Gson().fromJson(jsonObject, SearchParse.class);
+
+                if(searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                    searchParse.getResults();
+                    postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse.getResults()));
+
+                }
+            }
+        }catch (Exception ex){
+            t = ex.toString();
+        }
+
+        adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
+        list.setAdapter(adapter);
+        editsearch = (EditText) findViewById(R.id.inputSearch);
+        editsearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String searchString=editsearch.getText().toString();
+                adapter.getFilter().filter(searchString);
+                searchAPI(searchString);
+                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails); list.setAdapter(adapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+        setEventForControl();
+    }
+
+    @Override
+    public void initFlags() {
+
+    }
+
+    @Override
+    public void initControl() {
+
+    }
+
+    @Override
+    public void setEventForControl() {
+
+       list.setOnItemClickListener(new eventDetailPost(Search.this,postDetails));
+
+    }
+
+    @Override
+    public void getData(String... params) {
+
+    }
+
+    @Override
+    public void setData() {
 
     }
 
@@ -86,4 +175,31 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
         return false;
     }
 
+    public void searchAPI(String query){
+        try
+    {
+        RestClient restClient = new RestClient(url_search);
+        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+        restClient.addHeader("token", token);
+        restClient.addParam("page","1");
+        restClient.addParam("account_id", account_id);
+        restClient.addParam("location_lat",lat);
+        restClient.addParam("location_lng",lng);
+        restClient.addParam("query",query);
+        restClient.execute(RequestMethod.POST);
+        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                restClient.getResponse() != null)
+        {
+            String jsonObject = restClient.getResponse();
+            SearchParse searchParse = new Gson().fromJson(jsonObject, SearchParse.class);
+
+            if(searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                searchParse.getResults();
+                postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse.getResults()));
+
+            }
+        }
+    }catch (Exception ex){
+        t = ex.toString();
+    }}
 }
