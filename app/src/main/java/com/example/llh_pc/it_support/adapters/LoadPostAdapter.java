@@ -13,9 +13,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.activities.frmLuuTru;
 import com.example.llh_pc.it_support.models.LuuTruModel;
 import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import java.util.List;
+import java.util.Locale;
 
 public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
 
@@ -62,5 +64,15 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
 
     public List<LuuTruModel> getData() {
         return data;
+    }
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        data.clear();
+        if (charText.length() == 0) {
+            data.addAll(frmLuuTru.postDetails);
+        } else {
+
+        }
+        notifyDataSetChanged();
     }
 }

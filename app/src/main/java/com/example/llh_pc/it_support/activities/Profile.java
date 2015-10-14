@@ -1115,9 +1115,11 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         if(isChecked){
             ++pccheck;
+            buttonView.setButtonDrawable(R.drawable.checked);
         }
         else{
             --pccheck;
+            buttonView.setButtonDrawable(R.drawable.check_white);
         }
 
         if (helpDialog != null && pccheck>0) {

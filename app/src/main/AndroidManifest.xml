@@ -26,7 +26,8 @@
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
-            android:theme="@style/delete_title_bar" >
+            android:theme="@style/delete_title_bar"
+            android:windowSoftInputMode="stateHidden">>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +73,9 @@
         </activity>
         <activity
             android:name=".activities.frmDangKy"
-            android:label="@string/title_activity_frm_dang_ky" >
+            android:label="@string/title_activity_frm_dang_ky"
+            android:windowSoftInputMode="adjustPan"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".activities.frmThongBao"
