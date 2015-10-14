@@ -316,7 +316,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus == true) {
 
-                    Ifullname.setText(result);
+
                     errorname.setVisibility(View.GONE);
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
@@ -551,7 +551,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus == true) {
-                    Idia_chi.setText(result1);
+
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
                     if (Idia_chi.getText().toString().matches("")) {
                         addressflag = false;
