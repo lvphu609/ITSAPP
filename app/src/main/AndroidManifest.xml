@@ -27,7 +27,8 @@
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:theme="@style/delete_title_bar"
-            android:windowSoftInputMode="stateHidden">>
+            android:windowSoftInputMode="stateHidden" >
+>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -42,8 +43,7 @@
         <activity
             android:name=".activities.frmDangNhap"
             android:label="@string/title_activity_frm_dang_nhap"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activities.Main2Activity"
@@ -60,7 +60,7 @@
         <activity
             android:name=".activities.frmTaoMoiMatKhau"
             android:label="@string/title_activity_frm_quen_mk"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activities.frmBaoHu"
@@ -76,9 +76,9 @@
         </activity>
         <activity
             android:name=".activities.frmDangKy"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_frm_dang_ky"
-            android:windowSoftInputMode="adjustPan"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize">
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activities.frmThongBao"
@@ -98,8 +98,7 @@
             android:name=".activities.frmTabHost"
             android:label="@string/title_activity_frm_tab_host"
             android:theme="@style/delete_title_bar"
-            android:windowSoftInputMode="adjustPan"
-            >
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".activities.Profile"
@@ -181,6 +180,14 @@
         <activity
             android:name=".activities.frmHoanThanh"
             android:label="@string/title_activity_frm_hoan_thanh" >
+        </activity>
+        <activity
+            android:name=".activities.SearchMap"
+            android:label="@string/title_activity_search_map" >
+        </activity>
+        <activity
+            android:name=".fragments.tabHostTimKiem"
+            android:label="@string/title_activity_search" >
         </activity>
     </application>
 

@@ -40,9 +40,11 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
+import org.apache.http.conn.params.ConnManagerParamBean;
+
 import java.util.ArrayList;
 
-public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnFocusChangeListener {
+public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener,CompoundButton.OnFocusChangeListener {
 
 
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
@@ -180,6 +182,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 }
             }
         });
+
         edtUserName.setOnFocusChangeListener(this);
         edtPass.setOnFocusChangeListener(this);
         initFlags();

@@ -38,6 +38,23 @@
         <item name="android:textColor">@color/actionbar_text</item>
     </style>
 
+<!--//edittext-->
+
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+
+        <item name="colorAccent">@color/mauxanh</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+    </style>
+    <style name="APPw" parent="AppBaseTheme">
+
+        <item name="colorAccent">@color/mauxanh</item>
+        <item name="android:editTextStyle">@style/EditTextStyle</item>
+    </style>
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/mauxanh</item>
+        <item name="colorControlActivated">@color/mauxanh</item>
+        <item name="colorControlHighlight">@color/mauxanh</item>
+    </style>
     <!-- ActionBar tabs text -->
     <style name="MyActionBarTabText"
         parent="@style/Widget.AppCompat.ActionBar.TabText">

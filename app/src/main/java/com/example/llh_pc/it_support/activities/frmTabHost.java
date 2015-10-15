@@ -27,6 +27,7 @@ import com.example.llh_pc.it_support.R;
 
 
 import com.example.llh_pc.it_support.fragments.TabHostHoatDong;
+import com.example.llh_pc.it_support.fragments.tabHostTimKiem;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
@@ -91,7 +92,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_thongbao))
                 .setContent(intentApple);
         // Windows tab
-        Intent intentWindows = new Intent().setClass(this, Search.class);
+        Intent intentWindows = new Intent().setClass(this, tabHostTimKiem.class);
         TabHost.TabSpec tabSpecWindows = tabHost
                 .newTabSpec("Windows")
                 .setIndicator("", ressources.getDrawable(R.drawable.ic_timkiem))
