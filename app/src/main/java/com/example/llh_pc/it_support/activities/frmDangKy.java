@@ -168,7 +168,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
 
 
-        
+
         
 //        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) bntImage.getLayoutParams();
 //        params.height = 300;
@@ -284,7 +284,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     e.printStackTrace();
                 }
                 if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
-
                     startActivity(DN);
                     dangkythanhcong = true;
                     Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
@@ -307,6 +306,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if(Ifullname.getText().toString().length()>0) {
+//                    result = capitalizeFirstLetter(Ifullname.getText().toString());
+//                    Ifullname.setText(result);
+//                }
 
 
             }
@@ -324,7 +327,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 else {
 
                     if (s.toString().matches("")) {
-
+                        errorname.setVisibility(View.VISIBLE);
                     }
                     else {
                         result = capitalizeFirstLetter(Ifullname.getText().toString());
@@ -344,7 +347,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (hasFocus == true) {
 
 
-                    errorname.setVisibility(View.GONE);
+
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 
@@ -370,26 +373,30 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (hasFocus == true) {
 
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                        if (inVaild == false) {
-                            errorline2.setVisibility(View.VISIBLE);
-                        }
-                        else if (Iemail.getText().toString().matches(""))
-                        {
-                            errorline1.setVisibility(View.VISIBLE);
-                            errorline2.setVisibility(View.GONE);
-                        }
-                        else {errorline1.setVisibility(View.GONE);
-                            errorline2.setVisibility(View.GONE);}
-
-                } else {
-                    if (inVaild == false) {
-                        errorline2.setVisibility(View.VISIBLE);
-                    }
-                    else if (Iemail.getText().toString().matches(""))
+                     if (Iemail.getText().toString().matches(""))
                     {
                         errorline1.setVisibility(View.VISIBLE);
                         errorline2.setVisibility(View.GONE);
                     }
+                       else if (inVaild == false &&Iemail.getText().toString().length()>0) {
+                            errorline2.setVisibility(View.VISIBLE);
+                         errorline1.setVisibility(View.GONE);
+                        }
+
+                        else {errorline1.setVisibility(View.GONE);
+                            errorline2.setVisibility(View.GONE);}
+
+                } else {
+                    if (Iemail.getText().toString().matches(""))
+                    {
+                        errorline1.setVisibility(View.VISIBLE);
+                        errorline2.setVisibility(View.GONE);
+                    }
+                    else if (inVaild == false &&Iemail.getText().toString().length()>0) {
+                        errorline2.setVisibility(View.VISIBLE);
+                        errorline1.setVisibility(View.GONE);
+                    }
+
                     else {errorline1.setVisibility(View.GONE);
                         errorline2.setVisibility(View.GONE);}
 
@@ -404,7 +411,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if (inVaild == false &&Iemail.getText().toString().length()>0) {
+                    errorline2.setVisibility(View.VISIBLE);
+                    errorline1.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -412,6 +422,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                 if (s.toString().matches("")) {
                     errorline1.setVisibility(View.VISIBLE);
+                    errorline2.setVisibility(View.GONE);
                     validate(s.toString());
                     checkErrorLineEmail = false;
                     emailflag = false;
@@ -427,6 +438,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     setDongyEnble();
                     validate(s.toString());
                     errorline1.setVisibility(View.GONE);
+
                 }
 
             }
@@ -435,16 +447,29 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                    if(Ipassword.getText().toString().length()<=5) {
-                        errorpass2.setVisibility(View.VISIBLE);
+                    if(Ipassword.getText().toString().matches("")) {
+                        errorpass1.setVisibility(View.VISIBLE);
+                        errorpass2.setVisibility(View.GONE);
                     }
-                    else{errorpass2.setVisibility(View.GONE);}
-                } else {
+
+                    else if(Ipassword.getText().toString().length()<=5&& Ipassword.getText().toString().length()>0) {
+                        errorpass2.setVisibility(View.VISIBLE);
                     errorpass1.setVisibility(View.GONE);
-                    if(Ipassword.getText().toString().length()<=5) {
-                        errorpass2.setVisibility(View.VISIBLE);
                     }
-                    else{errorpass2.setVisibility(View.GONE);}
+                    else{errorpass2.setVisibility(View.GONE);
+                    errorpass1.setVisibility(View.GONE);}
+                } else {
+                    if(Ipassword.getText().toString().matches("")) {
+                        errorpass1.setVisibility(View.VISIBLE);
+                        errorpass2.setVisibility(View.GONE);
+                    }
+
+                    else if(Ipassword.getText().toString().length()<=5&& Ipassword.getText().toString().length()>0) {
+                        errorpass2.setVisibility(View.VISIBLE);
+                        errorpass1.setVisibility(View.GONE);
+                    }
+                    else{errorpass2.setVisibility(View.GONE);
+                        errorpass1.setVisibility(View.GONE);}
                 }
 
             }
@@ -486,18 +511,26 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus == true) {
                     getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                    if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
+                    if(Iconfirmpassword.getText().toString().matches(""))
+                    { errorcfpassword2.setVisibility(View.VISIBLE)
+                    ;
+                        errorcfpassword.setVisibility(View.GONE);}
+                    else if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
                     {errorcfpassword.setVisibility(View.GONE);
                         errorcfpassword2.setVisibility(View.GONE);}
-                    else
-                    {errorcfpassword.setVisibility(View.VISIBLE);}
+                    else if (Iconfirmpassword.getText().toString().length()>0)
+                    {errorcfpassword.setVisibility(View.VISIBLE);
+                        errorcfpassword2.setVisibility(View.GONE);}
                 } else {
 
-                    if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
+                    if(Iconfirmpassword.getText().toString().matches(""))
+                    { errorcfpassword2.setVisibility(View.VISIBLE);}
+                    else if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
                     {errorcfpassword.setVisibility(View.GONE);
                         errorcfpassword2.setVisibility(View.GONE);}
-                    else
-                    {errorcfpassword.setVisibility(View.VISIBLE);}
+                    else if (Iconfirmpassword.getText().toString().length()>0)
+                    {errorcfpassword.setVisibility(View.VISIBLE);
+                        errorcfpassword2.setVisibility(View.GONE);}
                 }
             }
         });
@@ -509,7 +542,16 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if(Iconfirmpassword.getText().toString().matches(""))
+                { errorcfpassword2.setVisibility(View.VISIBLE)
+                ;
+                    errorcfpassword.setVisibility(View.GONE);}
+                else if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
+                {errorcfpassword.setVisibility(View.GONE);
+                    errorcfpassword2.setVisibility(View.GONE);}
+                else if (Iconfirmpassword.getText().toString().length()>0)
+                {errorcfpassword.setVisibility(View.VISIBLE);
+                    errorcfpassword2.setVisibility(View.GONE);}
             }
 
             @Override
@@ -536,15 +578,28 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus == true) {getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-                    if((Iphone.getText().toString().length() >= 10))
+
+                    if(Iphone.getText().toString().matches(""))
+                    {errorphone1.setVisibility(View.VISIBLE);
+                    errorphone2.setVisibility(View.GONE);}
+
+                   else if((Iphone.getText().toString().length() >= 10))
                     {errorphone2.setVisibility(View.GONE);
                         errorphone1.setVisibility(View.GONE);}
-                    else{errorphone2.setVisibility(View.VISIBLE);}
+                    else if (Iphone.getText().toString().length() >0 && Iphone.getText().toString().length() <10)
+                    {errorphone2.setVisibility(View.VISIBLE);
+                    errorphone1.setVisibility(View.GONE);}
                 } else {
-                    if((Iphone.getText().toString().length() >= 10))
+                    if(Iphone.getText().toString().matches(""))
+                    {errorphone1.setVisibility(View.VISIBLE);
+                        errorphone2.setVisibility(View.GONE);}
+
+                    else if((Iphone.getText().toString().length() >= 10))
                     {errorphone2.setVisibility(View.GONE);
                         errorphone1.setVisibility(View.GONE);}
-                    else{errorphone2.setVisibility(View.VISIBLE);}
+                    else if (Iphone.getText().toString().length() >0 && Iphone.getText().toString().length() <10)
+                    {errorphone2.setVisibility(View.VISIBLE);
+                        errorphone1.setVisibility(View.GONE);}
 
                 }
             }
@@ -557,7 +612,16 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(Iphone.getText().toString().matches(""))
+                {errorphone1.setVisibility(View.VISIBLE);
+                    errorphone2.setVisibility(View.GONE);}
 
+                else if((Iphone.getText().toString().length() >= 10))
+                {errorphone2.setVisibility(View.GONE);
+                    errorphone1.setVisibility(View.GONE);}
+                else if (Iphone.getText().toString().length() >0 && Iphone.getText().toString().length() <10)
+                {errorphone2.setVisibility(View.VISIBLE);
+                    errorphone1.setVisibility(View.GONE);}
             }
 
             @Override
@@ -832,6 +896,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     e.printStackTrace();
                 }
                 c.setImageBitmap(thumbnail);
+                TextView chonanh = (TextView) findViewById(R.id.chonanh);
+                chonanh.setVisibility(View.GONE);
 //                bntImage.setImageBitmap(thumbnail);
                 selectedImageflag = true;
                 setDongyEnble();
@@ -858,6 +924,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
                 c.setImageBitmap(bm);
+                TextView chonanh = (TextView) findViewById(R.id.chonanh);
+
+                chonanh.setVisibility(View.GONE);
                 //bntImage.setImageBitmap(bm);
                 selectedImageflag = true;
                 setDongyEnble();
@@ -1176,7 +1245,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, REQUEST_CAMERA);
                     TextView chonanh = (TextView) findViewById(R.id.chonanh);
-                    chonanh.setVisibility(View.GONE);
                 } else if (items[item].equals("Chọn từ thư viện")) {
                     Intent intent = new Intent(
                             Intent.ACTION_PICK,
@@ -1186,7 +1254,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                             Intent.createChooser(intent, "Select File"),
                             SELECT_FILE);
                     TextView chonanh = (TextView) findViewById(R.id.chonanh);
-                    chonanh.setVisibility(View.GONE);
+
+
                 } else if (items[item].equals("Hủy")) {
                     dialog.dismiss();
                 }
@@ -1368,7 +1437,15 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     public String capitalizeFirstLetter(String s){
         char[] array = s.toCharArray();
         // Uppercase first letter.
-        array[0] = Character.toUpperCase(array[0]);
+        if(array[0] == Character.toLowerCase(array[0]))
+        {
+            array[0] = Character.toUpperCase(array[0]);
+        }
+        else if (array[0] == Character.toUpperCase(array[0]))
+        {
+        }
+
+
 
         // Uppercase all letters that follow a whitespace character.
         for (int i = 1; i < array.length; i++) {
@@ -1377,8 +1454,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             }
 
         }
-
-
         // Result.
         return new String(array);
     }

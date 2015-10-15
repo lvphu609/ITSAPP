@@ -1040,6 +1040,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     e.printStackTrace();
                 }
                 c.setImageBitmap(thumbnail);
+
 //                bntImage.setImageBitmap(thumbnail);
                 BitMapToString(thumbnail);
 
@@ -1065,6 +1066,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
                 c.setImageBitmap(bm);
+
 //                bntImage.setImageBitmap(bm);
                 BitMapToString(bm);
 

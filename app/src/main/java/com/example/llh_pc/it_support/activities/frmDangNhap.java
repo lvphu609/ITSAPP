@@ -46,6 +46,7 @@ import java.util.ArrayList;
 
 public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener,CompoundButton.OnFocusChangeListener {
 
+
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "frmDangNhap";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
@@ -62,6 +63,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_dang_nhap);
+
         btnLogin = (Button) findViewById(R.id.btnLogin);
         btnLogin.setTextColor(getResources().getColor(R.color.actionbar_text));
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -129,6 +131,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().isEmpty()) {
                     E = 0;
                     btnLogin.setEnabled(false);
@@ -152,6 +155,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
             }
 
             @Override
@@ -160,6 +164,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
             @Override
             public void afterTextChanged(Editable s) {
+
                 if (s.toString().isEmpty()) {
                     P = 0;
                     btnLogin.setEnabled(false);

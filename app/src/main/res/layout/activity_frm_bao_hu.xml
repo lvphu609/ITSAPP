@@ -24,7 +24,7 @@
                 android:paddingTop="15dp"
                 android:background="#00000000"
                 android:id="@+id/edSearch"
-                android:hint=""
+                android:hint="Tìm kiếm"
                 />
         </LinearLayout>
         <View
