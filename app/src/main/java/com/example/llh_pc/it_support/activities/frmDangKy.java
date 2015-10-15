@@ -90,6 +90,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     private Context context;
     boolean emailTontai =false;
     //avatar
+    char[] array;
     Bitmap thumbnail, bm;
     public static String temp, accType, checkedbox;
     ArrayList<Integer> list = new ArrayList<>();
@@ -306,7 +307,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(Ifullname.getText().toString().length()>0) {
+//                if(Ifullname.getText().toString().length()>0 && array[0] == Character.toUpperCase(array[0]) ) {
 //                    result = capitalizeFirstLetter(Ifullname.getText().toString());
 //                    Ifullname.setText(result);
 //                }
@@ -984,7 +985,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 cbFax.setVisibility(View.GONE);
                 cbScan.setVisibility(View.GONE);
                 cbPhoto.setVisibility(View.GONE);
-                chuyenmon.setVisibility(View.INVISIBLE);
+                chuyenmon.setVisibility(View.GONE);
                 list.clear();
             }
         }
@@ -1160,7 +1161,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                            if (checkPCInvisible == true || checkLaptopInvisible == true || checkMayinInvisible == true || checkMayPhotoInvisible == true || checkfaxInvisible == true || checkScanInvisible == true) {
                                chuyenmon.setVisibility(View.VISIBLE);
                            } else if (checkPCInvisible == false && checkLaptopInvisible == false && checkMayinInvisible == false && checkMayPhotoInvisible == false && checkfaxInvisible == false && checkScanInvisible == false) {
-                               chuyenmon.setVisibility(View.INVISIBLE);
+                               chuyenmon.setVisibility(View.GONE);
                                provider.setChecked(false);
                            }
 
@@ -1435,22 +1436,27 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     }
 
     public String capitalizeFirstLetter(String s){
-        char[] array = s.toCharArray();
+        array = s.toCharArray();
         // Uppercase first letter.
         if(array[0] == Character.toLowerCase(array[0]))
         {
             array[0] = Character.toUpperCase(array[0]);
         }
-        else if (array[0] == Character.toUpperCase(array[0]))
-        {
-        }
-
-
+//        else
+//        { for (int i = 0; i < array.length;i++)
+//        {
+//            if(array[i] == Character.toUpperCase(array[i]))
+//            {
+//
+//            }
+//        }}
 
         // Uppercase all letters that follow a whitespace character.
         for (int i = 1; i < array.length; i++) {
             if (Character.isWhitespace(array[i - 1])) {
-                array[i] = Character.toUpperCase(array[i]);
+
+                    array[i] = Character.toUpperCase(array[i]);
+
             }
 
         }

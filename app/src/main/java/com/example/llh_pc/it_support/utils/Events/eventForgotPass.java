@@ -57,7 +57,7 @@ public class eventForgotPass implements View.OnClickListener {
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Email không hợp lệ ");
+                textView.setText("Email không hợp lệ.");
                 // set dialog message
                 alertDialogBuilder
                         .setTitle("IT Support")

@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/edtMail"
             android:inputType="textEmailAddress"
-            android:hint="Nhập mail"
+            android:hint="Nhập email"
             android:theme="@style/MyEditTextTheme"/>
         <TextView
             android:layout_width="wrap_content"
