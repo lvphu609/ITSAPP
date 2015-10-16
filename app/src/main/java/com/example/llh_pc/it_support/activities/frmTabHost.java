@@ -28,6 +28,7 @@ import com.example.llh_pc.it_support.R;
 
 import com.example.llh_pc.it_support.fragments.TabHostHoatDong;
 import com.example.llh_pc.it_support.fragments.tabHostTimKiem;
+import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
@@ -53,25 +54,32 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     FragmentTransaction fragTrac;
     public static int x;
     private SharedPreferences sharedPreference;
+    public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
+    private String full_name;
+    private String ts;
+    private String id;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
         final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
+
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        check = sharedPreference.getInt("check", 1);
         fullname = sharedPreference.getString("fullname", null);
         avatar = sharedPreference.getString("avatar", null);
+        id = sharedPreference.getString("id",null);
+        token = sharedPreference.getString("token",null);
+        getAccount(id,token);
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
         editor.commit();
-
         TextView tvView  = (TextView)findViewById(R.id.tvName);
         tvView.setText(fullname);
         tvView.setOnClickListener(this);
-
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
@@ -267,5 +275,27 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     public void onClick(View v) {
         Intent profile1 = new Intent(frmTabHost.this, Profile1.class);
         startActivity(profile1);
+    }
+
+    private void getAccount(String id, String token) {
+        try {
+            RestClient restClient = new RestClient(url_get_account_info_by_id);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addParam("id", id);
+            restClient.addHeader("token", token);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
+                if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                    fullname = getAccountJson.getDKresults().getFull_name().toString();
+                    avatar = getAccountJson.getDKresults().getAvatar().toString();
+
+                }
+            }
+        } catch (Exception ex) {
+            ts = ex.toString();
+        }
     }
 }
