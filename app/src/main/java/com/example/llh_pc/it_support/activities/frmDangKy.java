@@ -90,6 +90,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     private Context context;
     boolean emailTontai =false;
     //avatar
+    int i;
     char[] array;
     Bitmap thumbnail, bm;
     public static String temp, accType, checkedbox;
@@ -307,16 +308,21 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(Ifullname.getText().toString().length()>0 && array[0] == Character.toUpperCase(array[0]) ) {
+//                if(Ifullname.getText().toString().length()>0) {
 //                    result = capitalizeFirstLetter(Ifullname.getText().toString());
-//                    Ifullname.setText(result);
+//
 //                }
-
+//
+//
+//                    if (array[i] == Character.toUpperCase(array[i])) {
+//                        Ifullname.setText(result);
+//                    }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
 
                 if (s.toString().matches("")) {
 
@@ -1442,14 +1448,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         {
             array[0] = Character.toUpperCase(array[0]);
         }
-//        else
-//        { for (int i = 0; i < array.length;i++)
-//        {
-//            if(array[i] == Character.toUpperCase(array[i]))
-//            {
-//
-//            }
-//        }}
+        else
+        {
+        }
 
         // Uppercase all letters that follow a whitespace character.
         for (int i = 1; i < array.length; i++) {

@@ -28,7 +28,7 @@
             android:launchMode="singleTask"
             android:theme="@style/delete_title_bar"
             android:windowSoftInputMode="stateHidden" >
->
+        <uses-library android:name="com.google.android.maps" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -184,6 +184,9 @@
         <activity
             android:name=".activities.SearchMap"
             android:label="@string/title_activity_search_map" >
+            <meta-data
+                android:name="com.google.android.maps.v2.API_KEY"
+                android:value="AIzaSyCNdYvJwpxD7qKY1_E-gRPh9_w59tnSV34" />
         </activity>
         <activity
             android:name=".fragments.tabHostTimKiem"
