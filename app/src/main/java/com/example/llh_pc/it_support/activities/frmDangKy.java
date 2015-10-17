@@ -90,6 +90,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     private Context context;
     boolean emailTontai =false;
     //avatar
+    int i;
     char[] array;
     Bitmap thumbnail, bm;
     public static String temp, accType, checkedbox;
@@ -156,7 +157,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 .penaltyLog()
                 .build());
         StrictMode.enableDefaults();
-        final Intent DN = new Intent(this, frmDangNhap.class);
+
         accdal = new AccountDAL(getBaseContext());
         frmDN = new frmDangNhap();
         //ImageButton
@@ -285,9 +286,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     e.printStackTrace();
                 }
                 if (inVaild == true && emailTontai == false && checkpasswordtrue == true && confirmpasswordflag == true && phoneflag == true) {
-                    startActivity(DN);
-                    dangkythanhcong = true;
-                    Toast.makeText(getBaseContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+
+                    popupthanhcong();
+
 
                 }
 
@@ -307,16 +308,21 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(Ifullname.getText().toString().length()>0 && array[0] == Character.toUpperCase(array[0]) ) {
+//                if(Ifullname.getText().toString().length()>0) {
 //                    result = capitalizeFirstLetter(Ifullname.getText().toString());
-//                    Ifullname.setText(result);
+//
 //                }
-
+//
+//
+//                    if (array[i] == Character.toUpperCase(array[i])) {
+//                        Ifullname.setText(result);
+//                    }
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
 
                 if (s.toString().matches("")) {
 
@@ -659,7 +665,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                     }
                     else {    erroraddress.setVisibility(View.GONE);
-                        erroraddress.setVisibility(View.GONE);}
+                    }
                 } else {
 
                     if (Idia_chi.getText().toString().matches("")) {
@@ -683,7 +689,10 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (Idia_chi.getText().toString().matches("")) {
+                    erroraddress.setVisibility(View.VISIBLE);
 
+                }
             }
 
             @Override
@@ -692,7 +701,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 if (s.toString().matches("")) {
                     addressflag = false;
                     setDongyEnble();
-
+                    erroraddress.setVisibility(View.VISIBLE);
 
                 } else {
                     result1 = capitalizeFirstLetter(Idia_chi.getText().toString());
@@ -996,7 +1005,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
         helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
-
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
         helpBuilder.setView(checkboxLayout);
@@ -1006,7 +1014,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
          mayin = (CheckBox) checkboxLayout.findViewById(R.id.Mayin);
          mayfax = (CheckBox) checkboxLayout.findViewById(R.id.fax);
          scan1 = (CheckBox) checkboxLayout.findViewById(R.id.scan);
-
+        Button okpopup= (Button) checkboxLayout.findViewById(R.id.okpopup);
         pc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -1061,19 +1069,23 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         scan1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     scan1.setButtonDrawable(R.drawable.checked);
+                } else {
+                    scan1.setButtonDrawable(R.drawable.check_white);
                 }
-                else
-                {scan1.setButtonDrawable(R.drawable.check_white);}
             }
         });
-        helpBuilder.setCancelable(false).
-           setPositiveButton("OK",
-                   new DialogInterface.OnClickListener() {
+        final AlertDialog show = helpBuilder.show();
+        helpBuilder.setCancelable(false);
 
-                       public void onClick(DialogInterface dialog, int which) {
-
+//           setPositiveButton("",
+//                   new DialogInterface.OnClickListener() {
+//
+//                       public void onClick(DialogInterface dialog, int which) {
+                okpopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
 
 
                            if (pc.isChecked()) {
@@ -1164,15 +1176,15 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                                chuyenmon.setVisibility(View.GONE);
                                provider.setChecked(false);
                            }
-
+                        show.dismiss();
                        }
                    });
 
 
 
         // Remember, create doesn't show the dialog
-        AlertDialog helpDialog = helpBuilder.create();
-        helpDialog.show();
+//        AlertDialog helpDialog = helpBuilder.create();
+//        helpDialog.show();
 
     }
 
@@ -1316,9 +1328,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     public boolean validate(String hex) {
 
 
-        String emailPattern = "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" + "\\@"
-                + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" + "(" + "\\."
-                + "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" + ")+";
+        String emailPattern = "([a-z0-9\\+_\\-]+)(\\.[a-z0-9\\+_\\-]+)*@([a-z0-9\\-]+\\.)+[a-z]{2,6}";
         Pattern p = Pattern.compile(emailPattern);
         Matcher m = p.matcher(hex);
         if (m.matches()) {
@@ -1442,14 +1452,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         {
             array[0] = Character.toUpperCase(array[0]);
         }
-//        else
-//        { for (int i = 0; i < array.length;i++)
-//        {
-//            if(array[i] == Character.toUpperCase(array[i]))
-//            {
-//
-//            }
-//        }}
+        else
+        {
+        }
 
         // Uppercase all letters that follow a whitespace character.
         for (int i = 1; i < array.length; i++) {
@@ -1464,6 +1469,30 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         return new String(array);
     }
 
+    public void popupthanhcong(){
+        final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View checkboxLayout = inflater.inflate(R.layout.popupdangky, null);
 
+        helpBuilder.setView(checkboxLayout);
+        // set dialog message
+        helpBuilder
+                .setCancelable(false);
+        final Intent DN = new Intent(this, frmDangNhap.class);
+        final AlertDialog show = helpBuilder.show();
+        Button okpopup= (Button) checkboxLayout.findViewById(R.id.okpopup);
+        okpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(DN);
+                dangkythanhcong = true;
+                show.dismiss();
+            }
+        });
+
+
+        // create alert dialog
+
+    }
 
 }
