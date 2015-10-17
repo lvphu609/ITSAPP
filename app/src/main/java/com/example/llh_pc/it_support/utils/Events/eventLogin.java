@@ -38,7 +38,7 @@ public class eventLogin implements View.OnClickListener {
     private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
     public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
     private String url_tokenGCM = Def.API_BASE_LINK + Def.API_tokenGCM + Def.API_FORMAT_JSON;
-    private Context context;
+    public static Context context;
     private ArrayList<View> views;
     private String full_name;
     private String avatar;

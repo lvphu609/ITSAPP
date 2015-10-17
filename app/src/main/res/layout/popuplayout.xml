@@ -4,51 +4,75 @@
     android:layout_height="match_parent"
     android:paddingLeft="10dp">
     <CheckBox android:id="@+id/PC"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="PC"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
+
         ></CheckBox>
     <CheckBox android:id="@+id/Laptop"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Laptop"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
         ></CheckBox>
     <CheckBox android:id="@+id/Mayin"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Máy in"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
         ></CheckBox>
     <CheckBox android:id="@+id/photocopy"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Máy Photocopy"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
         ></CheckBox>
     <CheckBox android:id="@+id/scan"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Máy scan"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
         ></CheckBox>
     <CheckBox android:id="@+id/fax"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Máy fax"
         android:checked="false"
         android:button="@drawable/check_white"
         android:paddingLeft="5dp"
+        android:paddingTop="5dp"
+
         ></CheckBox>
+
+    <Button
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:text="OK"
+        android:id="@+id/okpopup"
+        android:textColor="@color/actionbar_text"
+        android:background="@color/mauxanh"
+        android:layout_gravity="right"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="10dp"/>
 </LinearLayout>

@@ -7,49 +7,61 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class SearchMap extends AppCompatActivity {
+    static final LatLng TutorialsPoint = new LatLng(21 , 57);
     private GoogleMap googleMap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_map);
+        try {
+            // Loading map
+            initilizeMap();
 
-//        try {
-//            // Loading map
-//            initilizeMap();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
-//
-//    /**
-//     * function to load map. If map is not created it will create it for you
-//     * */
-//    private void initilizeMap() {
-//        if (googleMap == null) {
-//            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-//                    R.id.map)).getMap();
-//
-//            // check if map is created successfully or not
-//            if (googleMap == null) {
-//                Toast.makeText(getApplicationContext(),
-//                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-//                        .show();
-//            }
-//        }
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        initilizeMap();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
+
+    /**
+     * function to load map. If map is not created it will create it for you
+     * */
+
+
+
+    private void initilizeMap() {
+        if (googleMap == null) {
+            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                    R.id.map)).getMap();
+
+            // check if map is created successfully or not
+            if (googleMap == null) {
+                Toast.makeText(getApplicationContext(),
+                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initilizeMap();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
