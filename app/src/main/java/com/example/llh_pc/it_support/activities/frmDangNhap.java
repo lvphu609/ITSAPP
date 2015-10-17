@@ -93,12 +93,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-        if (frmDK.dangkythanhcong == true) {
-            btnLogin.setEnabled(true);
-            btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
-            btnLogin.invalidate();
 
-        }
         cbSave = (CheckBox) findViewById(R.id.cbLuuTK);
         cbSave.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -114,11 +109,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         final TextView tvEmail = (TextView) findViewById(R.id.txtEmail);
         edtUserName = (EditText) findViewById(R.id.edtTenDangNhap);
-        if (frmDK.dangkythanhcong == true) {
-            edtUserName.setText(accdal.applyEmail.toString());
-        } else {
-            frmDK.dangkythanhcong = false;
-        }
+
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -208,6 +199,32 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }*/
+
+        if (frmDK.dangkythanhcong == true) {
+            edtUserName.setText(accdal.applyEmail.toString());
+            if(edtUserName.getText().toString().length()>0) {
+                E=1;
+            }
+            if(edtPass.getText().toString().length()>0)
+            {
+                P =1;
+            }
+            cbSave.setChecked(true);
+
+        } else {
+            frmDK.dangkythanhcong = false;
+        }
+
+        if (frmDK.dangkythanhcong == true ) {
+            if(E+P ==2) {
+                btnLogin.setEnabled(true);
+                btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+            }
+
+            btnLogin.invalidate();
+
+
+        }
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
