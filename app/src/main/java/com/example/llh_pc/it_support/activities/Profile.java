@@ -94,7 +94,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     Bitmap avatar1;
     ImageButton setavatar;
     EditText eemail, efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
-    Button pc, laptop, mayin, scan, mayfax, photocopy, editProfile, OK, changePass;
+    Button pc, laptop, mayin, scan, mayfax, photocopy, editProfile, OK, changePass,okprofile;
     ImageLoader imageload;
     Bitmap thumbnail, bm;
     ArrayList<Integer> list = new ArrayList<>();
@@ -276,15 +276,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     public void editProfile() {
         OK = (Button) findViewById(R.id.OKProfile);
         changePass = (Button) findViewById(R.id.changepass);
-        editProfile = (Button) findViewById(R.id.editProfile);
+//        editProfile = (Button) findViewById(R.id.editProfile);
         final EditText editpassword = (EditText) findViewById(R.id.password);
 //        editProfile.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 
                 changeAcctype();
-                editProfile.setEnabled(false);
-                editProfile.setVisibility(View.INVISIBLE);
+//                editProfile.setEnabled(false);
+//                editProfile.setVisibility(View.INVISIBLE);
 //                OK.setEnabled(true);
                 OK.setVisibility(View.VISIBLE);
                 changePass.setEnabled(true);
@@ -414,8 +414,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     c.setClickable(false);
 //                bntImage.setEnabled(false);
 //                bntImage.setClickable(false);
-                editProfile.setEnabled(true);
-                editProfile.setVisibility(View.VISIBLE);
+//                editProfile.setEnabled(true);
+//                editProfile.setVisibility(View.VISIBLE);
                 OK.setEnabled(false);
                 OK.setVisibility(View.INVISIBLE);
                 changePass.setEnabled(false);
@@ -882,7 +882,6 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
-        helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.populayoutprofile, null);
         helpBuilder.setView(checkboxLayout);
@@ -893,7 +892,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         cbmayin = (CheckBox) checkboxLayout.findViewById(R.id.Mayin);
         cbmayfax = (CheckBox) checkboxLayout.findViewById(R.id.fax);
         cbscan = (CheckBox) checkboxLayout.findViewById(R.id.scan);
-
+        okprofile = (Button) checkboxLayout.findViewById(R.id.okpopup);
         /**
          * set event
          */
@@ -903,170 +902,170 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         cbmayin.setOnCheckedChangeListener(this);
         cbmayfax.setOnCheckedChangeListener(this);
         cbscan.setOnCheckedChangeListener(this);
-        helpBuilder.setCancelable(false).setPositiveButton("OK",
-                new DialogInterface.OnClickListener() {
+        helpBuilder.setCancelable(false);
+        helpDialog = helpBuilder.create();
+        helpDialog.show();
+        okprofile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-                    public void onClick(DialogInterface dialog, int which) {
-
-
-                        user = (TextView) findViewById(R.id.enableUser);
-                        provier = (TextView) findViewById(R.id.enableProvider);
-                        pc = (Button) findViewById(R.id.bntPC);
-                        laptop = (Button) findViewById(R.id.bntLaptpo);
-                        scan = (Button) findViewById(R.id.bntMayScan);
-                        photocopy = (Button) findViewById(R.id.photocopy);
-                        mayfax = (Button) findViewById(R.id.bntMayfax);
-                        mayin = (Button) findViewById(R.id.bntMayin);
-                        chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
-                        list.clear();
-
-
-                        if (cbpc.isChecked()) {
-
-                            list.remove((Integer) 3);
-                            if (!list.contains(3) || !arrayList.equals("3")) {
-                                list.remove((Integer) 3);
-                                list.add(3);
-                                pc.setVisibility(View.VISIBLE);
-                                pc.setEnabled(true);
-                                pc.setTextColor(getResources().getColor(R.color.mauxanh));
-
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-
-                            }
+                user = (TextView) findViewById(R.id.enableUser);
+                provier = (TextView) findViewById(R.id.enableProvider);
+                pc = (Button) findViewById(R.id.bntPC);
+                laptop = (Button) findViewById(R.id.bntLaptpo);
+                scan = (Button) findViewById(R.id.bntMayScan);
+                photocopy = (Button) findViewById(R.id.photocopy);
+                mayfax = (Button) findViewById(R.id.bntMayfax);
+                mayin = (Button) findViewById(R.id.bntMayin);
+                chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
+                list.clear();
 
 
-                        } else
+                if (cbpc.isChecked()) {
 
-                        {
-
-                            list.remove((Integer) 3);
-                            pc.setVisibility(View.GONE);
-
-                        }
-
-                        if (cbLaptop.isChecked()) {
-
-                            list.remove((Integer) 4);
-                            if (!list.contains(4) || !arrayList.equals("4")) {
-                                list.remove((Integer) 4);
-                                list.add(4);
-                                laptop.setVisibility(View.VISIBLE);
-                                laptop.setEnabled(true);
-                                laptop.setTextColor(getResources().getColor(R.color.mauxanh));
+                    list.remove((Integer) 3);
+                    if (!list.contains(3) || !arrayList.equals("3")) {
+                        list.remove((Integer) 3);
+                        list.add(3);
+                        pc.setVisibility(View.VISIBLE);
+                        pc.setEnabled(true);
+                        pc.setTextColor(getResources().getColor(R.color.mauxanh));
 
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-                            }
-                        } else
-
-                        {
-                            list.remove((Integer) 4);
-                            laptop.setVisibility(View.GONE);
-
-                        }
-
-                        if (cbmayin.isChecked())
-
-                        {
-                            list.remove((Integer) 5);
-                            if (!list.contains(5) || !arrayList.equals("5")) {
-                                list.remove((Integer) 5);
-                                list.add(5);
-                                mayin.setVisibility(View.VISIBLE);
-                                mayin.setEnabled(true);
-                                mayin.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-
-                            }
-                        } else
-
-                        {
-                            list.remove((Integer) 5);
-                            mayin.setVisibility(View.GONE);
-
-                        }
-
-                        if (cbphoto.isChecked())
-
-                        {
-                            list.remove((Integer) 6);
-                            if (!list.contains(6) || !arrayList.equals("6")) {
-                                list.remove((Integer) 6);
-                                list.add(6);
-                                photocopy.setVisibility(View.VISIBLE);
-                                photocopy.setEnabled(true);
-                                photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-
-
-                            }
-                        } else
-
-                        {
-
-                            list.remove((Integer) 6);
-                            photocopy.setVisibility(View.GONE);
-
-                        }
-
-                        if (cbscan.isChecked())
-
-                        {
-                            list.remove((Integer) 7);
-                            if (!list.contains(7) || !arrayList.equals("7")) {
-                                list.remove((Integer) 7);
-                                list.add(7);
-                                scan.setVisibility(View.VISIBLE);
-                                scan.setEnabled(true);
-                                scan.setTextColor(getResources().getColor(R.color.mauxanh));
-
-                            }
-                        } else
-
-                        {
-                            list.remove((Integer) 7);
-                            scan.setVisibility(View.GONE);
-
-                        }
-
-                        if (cbmayfax.isChecked())
-
-                        {
-                            list.remove((Integer) 8);
-                            if (!list.contains(8) || !arrayList.equals("8")) {
-                                list.remove((Integer) 8);
-                                list.add(8);
-                                mayfax.setVisibility(View.VISIBLE);
-                                mayfax.setEnabled(true);
-                                mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
-//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
-
-                            }
-                        } else
-
-                        {
-
-                            list.remove((Integer) 8);
-                            mayfax.setVisibility(View.GONE);
-
-
-                        }
-
-
-                        // checkedbox.joi = String.join(",", list);
-                        checkedbox = TextUtils.join(",", list);
-                        checkedbox = "[" + checkedbox;
-                        checkedbox = checkedbox + "]";
 
                     }
-                });
+
+
+                } else
+
+                {
+
+                    list.remove((Integer) 3);
+                    pc.setVisibility(View.GONE);
+
+                }
+
+                if (cbLaptop.isChecked()) {
+
+                    list.remove((Integer) 4);
+                    if (!list.contains(4) || !arrayList.equals("4")) {
+                        list.remove((Integer) 4);
+                        list.add(4);
+                        laptop.setVisibility(View.VISIBLE);
+                        laptop.setEnabled(true);
+                        laptop.setTextColor(getResources().getColor(R.color.mauxanh));
+
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+                    }
+                } else
+
+                {
+                    list.remove((Integer) 4);
+                    laptop.setVisibility(View.GONE);
+
+                }
+
+                if (cbmayin.isChecked())
+
+                {
+                    list.remove((Integer) 5);
+                    if (!list.contains(5) || !arrayList.equals("5")) {
+                        list.remove((Integer) 5);
+                        list.add(5);
+                        mayin.setVisibility(View.VISIBLE);
+                        mayin.setEnabled(true);
+                        mayin.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+
+                    }
+                } else
+
+                {
+                    list.remove((Integer) 5);
+                    mayin.setVisibility(View.GONE);
+
+                }
+
+                if (cbphoto.isChecked())
+
+                {
+                    list.remove((Integer) 6);
+                    if (!list.contains(6) || !arrayList.equals("6")) {
+                        list.remove((Integer) 6);
+                        list.add(6);
+                        photocopy.setVisibility(View.VISIBLE);
+                        photocopy.setEnabled(true);
+                        photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+
+
+                    }
+                } else
+
+                {
+
+                    list.remove((Integer) 6);
+                    photocopy.setVisibility(View.GONE);
+
+                }
+
+                if (cbscan.isChecked())
+
+                {
+                    list.remove((Integer) 7);
+                    if (!list.contains(7) || !arrayList.equals("7")) {
+                        list.remove((Integer) 7);
+                        list.add(7);
+                        scan.setVisibility(View.VISIBLE);
+                        scan.setEnabled(true);
+                        scan.setTextColor(getResources().getColor(R.color.mauxanh));
+
+                    }
+                } else
+
+                {
+                    list.remove((Integer) 7);
+                    scan.setVisibility(View.GONE);
+
+                }
+
+                if (cbmayfax.isChecked())
+
+                {
+                    list.remove((Integer) 8);
+                    if (!list.contains(8) || !arrayList.equals("8")) {
+                        list.remove((Integer) 8);
+                        list.add(8);
+                        mayfax.setVisibility(View.VISIBLE);
+                        mayfax.setEnabled(true);
+                        mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
+//                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
+
+                    }
+                } else
+
+                {
+
+                    list.remove((Integer) 8);
+                    mayfax.setVisibility(View.GONE);
+
+
+                }
+
+
+                // checkedbox.joi = String.join(",", list);
+                checkedbox = TextUtils.join(",", list);
+                checkedbox = "[" + checkedbox;
+                checkedbox = checkedbox + "]";
+                helpDialog.dismiss();
+            }
+        });
 
         // Remember, create doesn't show the dialog
 
-
-        helpDialog = helpBuilder.create();
-        helpDialog.show();
-        helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+//
+//        helpDialog = helpBuilder.create();
+//        helpDialog.show();
         /*if (pccheck==true) {
             helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
         } else {
@@ -1242,9 +1241,11 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         }
 
         if (helpDialog != null && pccheck>0) {
-            helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(true);
+            okprofile.setEnabled(true);
+            okprofile.setBackgroundColor(getResources().getColor(R.color.mauxanh));
         } else {
-            helpDialog.getButton(DialogInterface.BUTTON_POSITIVE).setEnabled(false);
+            okprofile.setEnabled(false);
+            okprofile.setBackgroundColor(getResources().getColor(R.color.mauxam));
         }
     }
 
