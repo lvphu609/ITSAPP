@@ -603,16 +603,130 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
         alertDialogBuilder.setView(promptView);
 
-
+        final Button okdialog = (Button) promptView.findViewById(R.id.diaglogok);
+        Button huy = (Button) promptView.findViewById(R.id.dialoghuy);
         passcu = (EditText) promptView.findViewById(R.id.passcu);
         passmoi = (EditText) promptView.findViewById(R.id.passmoi);
         cfpassmoi = (EditText) promptView.findViewById(R.id.cfpassmoi);
 
-        // setup a dialog window
+        passcu.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        alertDialogBuilder.setCancelable(false)
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                        okdialog.setEnabled(true);
+                        okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+        });
+        passmoi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+        });
+        cfpassmoi.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+                }
+                else
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+        });
+
+
+        // setup a dialog window
+        final AlertDialog show = alertDialogBuilder.show();
+        alertDialogBuilder.setCancelable(false);
+                okdialog.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
                         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
                         String token = sharedPreference.getString("token", "YourName");
                         String id2 = sharedPreference.getString("id", "");
@@ -622,29 +736,27 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         if (status.equals("success")) {
                             Toast.makeText(getBaseContext(), "Đổi mật khẩu thành công", Toast.LENGTH_SHORT).show();
 
-                            dialog.cancel();
+                            show.cancel();
                         } else {
                             Toast.makeText(getBaseContext(), "Vui lòng thử lại", Toast.LENGTH_SHORT).show();
 
-                            dialog.cancel();
+                            show.cancel();
                         }
 
                     }
                 });
 
 
-        alertDialogBuilder.setCancelable(false)
-                .setNegativeButton("Cancel",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
+        alertDialogBuilder.setCancelable(false);
+               huy.setOnClickListener(new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) {
+                                show.cancel();
                             }
                         });
 
 
         // create an alert dialog
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
     }
 
     public void changePassword(String id, String token, String passcu, String passmoi, String cfpassmoi) {
