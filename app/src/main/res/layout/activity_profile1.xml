@@ -51,17 +51,29 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_gravity="center">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Họ và tên:"
+                        android:textColor="@color/mauden"
+                        android:textStyle="bold"/>
                 <TextView
                     android:id="@+id/full_name"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_gravity="center"
                     android:ems="30"
                     android:singleLine="false"
                     android:textColor="@color/mauden"
                     android:layout_weight="0"
                     />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -69,7 +81,7 @@
                     android:layout_gravity="center">
                     <TextView
                         android:id="@+id/rateText"
-                        android:layout_marginLeft="35dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Rating:"
@@ -106,7 +118,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
             <TextView
@@ -118,7 +129,7 @@
                 android:singleLine="false"
                 android:enabled="false"
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="55dp"
+                android:layout_marginLeft="63dp"
                 android:layout_weight="1" />
 
         </LinearLayout>
@@ -134,7 +145,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Mật khẩu:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
             <RelativeLayout
@@ -168,7 +178,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"
                 />
@@ -180,7 +189,7 @@
                 android:id="@+id/phone"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="17dp"
                 android:ems="30"
                 android:textColor="@color/mauden"
                 android:layout_weight="1"
@@ -201,7 +210,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
             <TextView
@@ -212,7 +220,7 @@
                 android:singleLine="false"
                 android:enabled="false"
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="55dp"
                 android:layout_gravity="right"
                 android:layout_weight="1"
                 />
@@ -229,26 +237,23 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Loại tài khoản:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
             <TextView
                 android:id="@+id/enableUser"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Người sử dụng"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:textColor="@color/mauden"/>
             <TextView
                 android:id="@+id/enableProvider"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Người cung cấp dịch vụ"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:textColor="@color/mauden"/>
 
         </LinearLayout>
@@ -260,7 +265,6 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:layout_marginTop="10dp"
-
             >
 
             <TextView
@@ -268,18 +272,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chuyên môn:"
-                android:textSize="10dp"
                 android:textStyle="bold"
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"/>
-
+                />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="15dp"
+        android:layout_weight="1">
             <TextView
                 android:id="@+id/bntPC"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:text="PC"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
@@ -291,7 +298,6 @@
                 android:layout_height="30dp"
                 android:text="Laptop"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
@@ -304,7 +310,6 @@
                 android:layout_height="30dp"
                 android:text="Máy in"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
@@ -316,7 +321,6 @@
                 android:layout_height="30dp"
                 android:text="Máy Scan"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
@@ -328,7 +332,6 @@
                 android:layout_height="30dp"
                 android:text="Máy Photocopy"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
@@ -340,14 +343,13 @@
                 android:layout_height="30dp"
                 android:text="Máy Fax"
                 android:visibility="gone"
-                android:textSize="10dp"
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauden"
                 android:layout_marginLeft="5dp"
 
                 />
-
+    </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -356,7 +358,7 @@
             android:orientation="horizontal"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="40dp"
             android:layout_gravity="right">
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -369,14 +371,11 @@
                     android:layout_gravity="right"
                     android:gravity="center"
                     android:textSize="20dp"
-                    android:textStyle="bold"
                     android:visibility="visible"
                     android:editable="true"
                     android:background="@color/mauxanh"
                     android:textColor="@color/actionbar_text"
                     android:textAllCaps="false"
-                    />
-
                     />
             </RelativeLayout>
         </LinearLayout>
