@@ -32,6 +32,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -73,7 +75,7 @@ import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener,TextWatcher {
+public class Profile  extends AppCompatActivity implements InnoFunctionListener, CompoundButton.OnCheckedChangeListener,View.OnClickListener,TextWatcher,OnFocusChangeListener {
     ImageButton bntImage;
     public final static int REQUEST_CAMERA = 1;
     public final static int SELECT_FILE = 2;
@@ -291,6 +293,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 efullname.setEnabled(true);
                 eadress.setEnabled(true);
                 ephone.setEnabled(true);
+        efullname.setOnFocusChangeListener(this);
+        eadress.setOnFocusChangeListener(this);
+        ephone.setOnFocusChangeListener(this);
         efullname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1270,5 +1275,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             OK.setEnabled(true);
             OK.setBackgroundColor(getResources().getColor(R.color.mauxanh));
         }
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 }
