@@ -9,6 +9,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.example.llh_pc.it_support.models.Account;
+import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.restclients.RequestMethod;
+import com.example.llh_pc.it_support.restclients.Response;
+import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.CommonFunction;
+import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.google.gson.Gson;
 import com.newrelic.agent.android.NewRelic;
 import com.example.llh_pc.it_support.R;
 
@@ -16,17 +24,13 @@ public class MainActivity extends AppCompatActivity {
     //private GCMClientManager pushClientManager;
     String PROJECT_NUMBER = "<YOUR PROJECT NUMBER HERE>";
     private Intent intent;
+    private String url_login = Def.API_BASE_LINK + Def.API_checkToken + Def.API_FORMAT_JSON;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //-----install newselic-------\\
-        NewRelic.withApplicationToken(
-                "AAfc264dac549cbfb6e921fae2991f2cefa93a378e"
-        ).start(this.getApplication());
-        //-----------------------------\\
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        String token = sharedPreference.getString("token", null);
+        final String token = sharedPreference.getString("token", null);
         int check = sharedPreference.getInt("check", 1);
         int staylogin = sharedPreference.getInt("staylogin", 0);
         if(staylogin == 1)
@@ -35,11 +39,21 @@ public class MainActivity extends AppCompatActivity {
                 Thread t = new Thread() {
                     public void run() {
                         try {
-                            sleep(2000);
-                            finish();
-                            Intent cv = new Intent(MainActivity.this, frmTabHost.class);
-                            //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
-                            startActivity(cv);
+                            boolean check = checkToken(token);
+                            if(check) {
+                                sleep(2000);
+                                finish();
+                                Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                startActivity(cv);
+                            }else
+                            {
+                                sleep(2000);
+                                finish();
+                                Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                startActivity(cv);
+                            }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -80,6 +94,30 @@ public class MainActivity extends AppCompatActivity {
             };
             t.start();
         }
+    }
+    private boolean checkToken(String token)
+    {
+        try
+        {
+            RestClient restClient = new RestClient(url_login);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
+            {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
+                if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                    String t = "sussecc";
+                    return true;
+                }
+            }
+        }catch (Exception ex)
+        {
+
+        }
+        return false;
     }
 
     @Override

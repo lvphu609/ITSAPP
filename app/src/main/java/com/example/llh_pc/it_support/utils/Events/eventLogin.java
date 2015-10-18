@@ -52,10 +52,10 @@ public class eventLogin implements View.OnClickListener {
     private String user_type;
     private String token;
 
+
     public eventLogin(Context current, ArrayList<View> viewArrayList) {
         this.context = current;
         this.views = viewArrayList;
-
     }
 
     @Override
@@ -139,13 +139,13 @@ public class eventLogin implements View.OnClickListener {
                     String id = getLoginJson.getResults().getAccount_id();
                     String account_type = getLoginJson.getResults().getAccount_type();
                     token = getLoginJson.getResults().getAccess_token();
-                    /*--------------------information accoun------------------*/
-                    getAccount(id, token);
+                    /*--------------------information account------------------*/
+                    /*getAccount(id, token);*/
                     /*--------------------------------------------------------*/
                     editor.putString("token", t);
                     editor.putString("id", id);
-                    editor.putString("avatar",avatar);
-                    editor.putString("fullname",full_name);
+                    /*editor.putString("avatar",avatar);
+                    editor.putString("fullname",full_name);*/
                     editor.commit();
                     Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
                     LoginGCM();
