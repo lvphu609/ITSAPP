@@ -140,7 +140,7 @@ public class eventLogin implements View.OnClickListener {
                     String account_type = getLoginJson.getResults().getAccount_type();
                     token = getLoginJson.getResults().getAccess_token();
                     /*--------------------information account------------------*/
-                    /*getAccount(id, token);*/
+                    getAccount(id, token);
                     /*--------------------------------------------------------*/
                     editor.putString("token", t);
                     editor.putString("id", id);
