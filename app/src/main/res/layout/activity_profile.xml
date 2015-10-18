@@ -50,17 +50,34 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:textSize="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Họ và tên:"
+                android:textColor="@color/mauden"
+                android:textStyle="bold"
+                android:layout_gravity="center"/>
         <EditText
             android:id="@+id/full_name"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="10dp"
             android:layout_gravity="center"
             android:ems="30"
-            android:singleLine="false"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:enabled="false"
+            android:gravity="bottom"
+            android:maxLines="2"
+            android:maxLength="30"
+            android:maxHeight="50dp"
             />
+        </LinearLayout>
         <TextView
             android:id="@+id/valaditionname"
             android:layout_marginLeft="40dp"
@@ -77,13 +94,14 @@
             android:layout_gravity="center">
         <TextView
             android:id="@+id/rateText"
-            android:layout_marginLeft="35dp"
+            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Rating:"
             android:textSize="10dp"
             android:textStyle="bold"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:textColor="@color/mauden"/>
 
         <RatingBar
 
@@ -115,7 +133,8 @@
             android:layout_height="wrap_content"
             android:text="Email:"
             android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/mauden"/>
 
         <EditText
             android:id="@+id/email"
@@ -125,6 +144,7 @@
             android:ems="40"
             android:singleLine="false"
             android:enabled="false"
+            android:layout_marginLeft="30dp"
             />
 
     </LinearLayout>
@@ -142,7 +162,8 @@
             android:layout_height="wrap_content"
             android:text="Mật khẩu:"
             android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/mauden"/>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -159,13 +180,17 @@
             />
             <Button
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:id="@+id/changepass"
                 android:text="Thay đổi mật khẩu"
-                android:layout_marginLeft="10dp"
-                android:textSize="10dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="12dp"
                 android:enabled="false"
                 android:visibility="invisible"
+                android:textAllCaps="false"
+                android:textColor="@color/mauxanh"
+                android:background="@null"
+
                 />
         </RelativeLayout>
     </LinearLayout>
@@ -183,7 +208,8 @@
                 android:layout_height="wrap_content"
                 android:text="Số điện thoại:"
                 android:textSize="10dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:textColor="@color/mauden"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -196,6 +222,7 @@
             android:singleLine="false"
             android:inputType="number"
             android:enabled="false"
+            android:maxLength="30"
             />
         <TextView
             android:id="@+id/vadalitionphone"
@@ -221,7 +248,8 @@
             android:layout_height="wrap_content"
             android:text="Địa chỉ:"
             android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/mauden"/>
         <LinearLayout
             android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
@@ -233,13 +261,16 @@
             android:layout_height="wrap_content"
             android:ems="40"
             android:singleLine="false"
-            android:inputType="text"
+            android:inputType="textMultiLine"
             android:enabled="false"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
+            android:maxLength="30"
+
+
             />
         <TextView
             android:id="@+id/validationaddress"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Địa chỉ không được bỏ trống."
@@ -260,23 +291,26 @@
             android:layout_height="wrap_content"
             android:text="Loại tài khoản:"
             android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/mauden"/>
         <TextView
             android:id="@+id/enableUser"
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Người sử dụng"
             android:visibility="gone"
-            android:textSize="10dp"/>
+            android:textSize="10dp"
+            android:textColor="@color/mauden"
+            android:layout_marginLeft="5dp"/>
         <TextView
             android:id="@+id/enableProvider"
-            android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Người cung cấp dịch vụ"
             android:visibility="gone"
-            android:textSize="10dp"/>
+            android:textSize="15dp"
+            android:textColor="@color/mauden"
+            android:layout_marginLeft="5dp"/>
 
     </LinearLayout>
     <LinearLayout
@@ -296,7 +330,9 @@
         android:layout_height="wrap_content"
         android:text="Chuyên môn:"
         android:textSize="10dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/mauden"
+            android:layout_marginLeft="5dp"/>
         <Button
             android:id="@+id/bntPC"
             android:layout_width="40dp"
