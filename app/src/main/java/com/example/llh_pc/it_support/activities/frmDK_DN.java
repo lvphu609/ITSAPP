@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
 
@@ -19,6 +20,17 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_dk__dn);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if (bundle != null){
+            String checkTOKEN = bundle.getString("checkTOKEN","0");
+            if(checkTOKEN.equals("1"))
+            {
+                Toast.makeText(frmDK_DN.this, "Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.", Toast.LENGTH_LONG).show();
+            }
+        }
+
         Button btnDN = (Button)findViewById(R.id.btnDN);
         btnDN.setOnClickListener(new View.OnClickListener() {
             @Override

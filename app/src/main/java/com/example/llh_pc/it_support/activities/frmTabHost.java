@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.os.StrictMode;
 import android.support.v4.app.FragmentTabHost;
 
 import android.os.Bundle;
@@ -66,12 +67,15 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         setContentView(R.layout.activity_frm_tab_host);
         final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
 
+
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        fullname = sharedPreference.getString("fullname", null);
-        avatar = sharedPreference.getString("avatar", null);
+        /*fullname = sharedPreference.getString("fullname", null);
+        avatar = sharedPreference.getString("avatar", null);*/
         id = sharedPreference.getString("id",null);
         token = sharedPreference.getString("token",null);
-        getAccount(id,token);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        getAccount(id, token);
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
