@@ -46,7 +46,8 @@ public interface Def {
     public static final String API_Search = "posts/search/";
     //register tokenGCM
     public static final String API_tokenGCM= "accounts/update_reg_id/";
-
+    //check Token
+    public static final String API_checkToken= "accounts/check_token/";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
     public static final String REPONSE_CHECKEMAIL="true";

@@ -72,10 +72,8 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
                 if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
                 {
-
                     array_post = getListPostJson.getResults();
                     adapter = new PostAdapter(frmBaoHu.this, R.layout.activity_post_adapter, array_post);
-
                 }
             }
         }catch (Exception ex){}
