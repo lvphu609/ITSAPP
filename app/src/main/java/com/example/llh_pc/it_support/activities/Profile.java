@@ -34,19 +34,24 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.adapters.adapterGridView;
 import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.GetAccount;
@@ -104,6 +109,12 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     int pccheck = 0;
     private AlertDialog helpDialog;
     private CircleImageView c;
+    GridView gridView;
+    private  Button[] buttonValues;
+//    public Profile(Context context, Button[] buttonValues) {
+//        this.context = context;
+//        this.buttonValues = buttonValues;
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,7 +132,6 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         validationname = (TextView) findViewById(R.id.valaditionname);
         validationphone=(TextView) findViewById(R.id.vadalitionphone);
         validationadess=(TextView) findViewById(R.id.validationaddress);
-
         ll = (LinearLayout) findViewById(R.id.ll);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -146,7 +156,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         getAccount(name, id);
         setProfile();
         checkAcctype();
+//        gridView();
         editProfile();
+
+
 
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -1282,4 +1295,5 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     public void onFocusChange(View v, boolean hasFocus) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
+
 }

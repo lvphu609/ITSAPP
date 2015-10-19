@@ -321,8 +321,17 @@
         android:paddingLeft="5dp"
         android:paddingRight="10dp"
         android:layout_marginTop="10dp"
-
         >
+        <!--<GridView xmlns:android="http://schemas.android.com/apk/res/android"-->
+            <!--android:id="@+id/gridView1"-->
+            <!--android:numColumns="auto_fit"-->
+            <!--android:gravity="center"-->
+            <!--android:columnWidth="50dp"-->
+            <!--android:stretchMode="columnWidth"-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent" >-->
+
+        <!--</GridView>-->
 
         <TextView
             android:id="@+id/viewchuyenmon"
@@ -400,7 +409,6 @@
             android:background="@null"
             android:textColor="@color/mauxam"
             />
-
     </LinearLayout>
     <!--<LinearLayout-->
         <!--android:layout_width="wrap_content"-->
