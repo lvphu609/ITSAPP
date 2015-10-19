@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
@@ -27,7 +29,8 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
             String checkTOKEN = bundle.getString("checkTOKEN","0");
             if(checkTOKEN.equals("1"))
             {
-                Toast.makeText(frmDK_DN.this, "Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.", Toast.LENGTH_LONG).show();
+                Validation();
+                /*Toast.makeText(frmDK_DN.this, "Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.", Toast.LENGTH_LONG).show();*/
             }
         }
 
@@ -51,6 +54,29 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
         initControl();
         //Profile
 
+    }
+
+    public void Validation(){
+        final android.app.AlertDialog.Builder helpBuilder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View checkboxLayout = inflater.inflate(R.layout.popup_validation, null);
+
+        helpBuilder.setView(checkboxLayout);
+        // set dialog message
+        helpBuilder.setCancelable(false);
+        final android.app.AlertDialog show = helpBuilder.show();
+        Button okpopup= (Button) checkboxLayout.findViewById(R.id.okpopup);
+        TextView tv = (TextView)checkboxLayout.findViewById(R.id.tvValidation);
+        tv.setText("Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.");
+        okpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show.dismiss();
+            }
+        });
+
+
+        // create alert dialog
 
     }
 

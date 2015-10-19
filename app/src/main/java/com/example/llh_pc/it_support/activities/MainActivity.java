@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
                                 startActivity(cv);
                             }else
                             {
-
                                 sleep(2000);
                                 finish();
                                 Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
@@ -62,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 };
                 t.start();
+
             }else {
                 Thread t = new Thread() {
                     public void run() {

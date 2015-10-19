@@ -65,6 +65,13 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         setContentView(R.layout.activity_frm_dang_nhap);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
+        /*btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String t ="fdsadfsasfdafsd";
+                String t1 ="fdsadfsasfdafsd";
+            }
+        });*/
         btnLogin.setTextColor(getResources().getColor(R.color.actionbar_text));
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
