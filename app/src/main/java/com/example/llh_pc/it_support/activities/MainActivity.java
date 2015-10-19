@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
                                 sleep(2000);
                                 finish();
                                 Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+
                                 startActivity(cv);
                             }else
                             {
