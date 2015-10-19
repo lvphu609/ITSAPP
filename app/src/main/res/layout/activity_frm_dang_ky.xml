@@ -230,7 +230,7 @@
             android:id="@+id/errorphone1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Vui lòng nhập số điện thoại"
+            android:text=" Nhập số điện thoại"
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -273,7 +273,7 @@
             android:id="@+id/erroraddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Vui lòng nhập địa chỉ"
+            android:text=" Nhập địa chỉ"
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>

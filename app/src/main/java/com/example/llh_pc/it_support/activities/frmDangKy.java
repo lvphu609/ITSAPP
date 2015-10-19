@@ -889,7 +889,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CAMERA) {
+
                 thumbnail = (Bitmap) data.getExtras().get("data");
+                Uri mImageUri2 =data.getData();
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
                 File destination = new File(Environment.getExternalStorageDirectory(),
@@ -905,6 +907,15 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+//                Intent intent = new Intent("com.android.camera.action.CROP");
+//                intent .setDataAndType(mImageUri2, "image/*");
+//                intent.putExtra("outputX",thumbnail.getWidth());
+//                intent.putExtra("outputY", thumbnail.getHeight());
+//                intent.putExtra("aspectX", 1);
+//                intent.putExtra("aspectY", 1);
+//                intent.putExtra("scale", true);
+//                intent.putExtra("return-data", false);
+//                startActivityForResult(intent,REQUEST_CAMERA);
                 c.setImageBitmap(thumbnail);
                 TextView chonanh = (TextView) findViewById(R.id.chonanh);
                 chonanh.setVisibility(View.GONE);
@@ -933,9 +944,17 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
+//                Intent intent = new Intent("com.android.camera.action.CROP");
+//                intent .setDataAndType(selectedImageUri, "image/*");
+//                intent.putExtra("outputX",bm.getWidth());
+//                intent.putExtra("outputY", bm.getHeight());
+//                intent.putExtra("aspectX", 1);
+//                intent.putExtra("aspectY", 1);
+//                intent.putExtra("scale", true);
+//                intent.putExtra("return-data", false);
+//                startActivityForResult(intent, 2);
                 c.setImageBitmap(bm);
                 TextView chonanh = (TextView) findViewById(R.id.chonanh);
-
                 chonanh.setVisibility(View.GONE);
                 //bntImage.setImageBitmap(bm);
                 selectedImageflag = true;
@@ -1494,5 +1513,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         // create alert dialog
 
     }
+
 
 }
