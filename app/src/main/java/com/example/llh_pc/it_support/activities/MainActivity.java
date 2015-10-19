@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
@@ -44,15 +45,16 @@ public class MainActivity extends AppCompatActivity {
                                 sleep(2000);
                                 finish();
                                 Intent cv = new Intent(MainActivity.this, frmTabHost.class);
-                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
                                 startActivity(cv);
                             }else
                             {
+
                                 sleep(2000);
                                 finish();
                                 Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
-                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                cv.putExtra("checkTOKEN","1");
                                 startActivity(cv);
+
                             }
                         } catch (InterruptedException e) {
                             e.printStackTrace();
