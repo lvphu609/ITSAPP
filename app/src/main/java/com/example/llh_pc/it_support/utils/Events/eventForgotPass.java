@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -54,25 +55,23 @@ public class eventForgotPass implements View.OnClickListener {
             {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Email không hợp lệ.");
                 // set dialog message
-                alertDialogBuilder
-                        .setTitle("IT Support")
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                alertDialogBuilder.setView(promptsView);
+                // set dialog message
+                alertDialogBuilder.setCancelable(false);
+                final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+                Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+                TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+                tv.setText("Email không hợp lệ.");
+                okpopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        show.dismiss();
+                    }
+                });
             }else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
@@ -84,29 +83,25 @@ public class eventForgotPass implements View.OnClickListener {
                     context.startActivity(intent);
                 }else
                 {
-                    //save values into sharePreference
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.popup_validation, null);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder( context);
+                    android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                     alertDialogBuilder.setView(promptsView);
                     final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                    textView.setText("Email không hợp lệ hoặc chưa đăng ký.");
                     // set dialog message
-                    alertDialogBuilder
-                            .setTitle("IT Support")
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-
-
-                                        }
-                                    });
-
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    // show it
-                    alertDialog.show();
+                    alertDialogBuilder.setView(promptsView);
+                    // set dialog message
+                    alertDialogBuilder.setCancelable(false);
+                    final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+                    Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+                    TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+                    tv.setText("Email không hợp lệ hoặc chưa đăng ký.");
+                    okpopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            show.dismiss();
+                        }
+                    });
                 }
             }
         }catch (Exception ex)

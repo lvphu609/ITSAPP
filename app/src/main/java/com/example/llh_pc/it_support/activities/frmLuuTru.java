@@ -83,7 +83,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
                 }
             }
         }catch (Exception ex){
-             t = ex.toString();
+            t = ex.toString();
         }
         adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
         initFlags();
