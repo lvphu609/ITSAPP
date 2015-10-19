@@ -2,6 +2,8 @@ package com.example.llh_pc.it_support.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -71,6 +73,11 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
         okpopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmDK_DN.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.putInt("staylogin", 0);
+                editor.commit();
                 show.dismiss();
             }
         });
