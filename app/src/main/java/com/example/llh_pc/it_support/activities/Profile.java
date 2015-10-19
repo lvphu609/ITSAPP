@@ -94,7 +94,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
     TextView user, provier, chuyenmon, resultText,rateText;
-    TextView validationname,validationphone,validationadess;
+    TextView validationname,validationphone,validationadess,validationphone1;
     RatingBar rateBar;
     Bitmap avatar1;
     ImageButton setavatar;
@@ -131,6 +131,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         rateText = (TextView) findViewById(R.id.rateText);
         validationname = (TextView) findViewById(R.id.valaditionname);
         validationphone=(TextView) findViewById(R.id.vadalitionphone);
+        validationphone1=(TextView) findViewById(R.id.vadalitionphone1);
         validationadess=(TextView) findViewById(R.id.validationaddress);
         ll = (LinearLayout) findViewById(R.id.ll);
 
@@ -373,7 +374,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                if(ephone.getText().toString().length()>9) {
+                    validationphone1.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -387,8 +390,11 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 else
                 {
                     validationphone.setVisibility(View.GONE);
-                    z=1;
-                    setOKenable();
+                    if(s.toString().length()>9) {
+                        z = 1;
+                        setOKenable();
+                    }
+
                 }
             }
         });
@@ -687,7 +693,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));

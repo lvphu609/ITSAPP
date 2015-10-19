@@ -76,6 +76,7 @@
             android:maxLines="2"
             android:maxLength="30"
             android:maxHeight="50dp"
+            android:theme="@style/MyEditTextTheme"
             />
         </LinearLayout>
         <TextView
@@ -145,6 +146,7 @@
             android:singleLine="false"
             android:enabled="false"
             android:layout_marginLeft="30dp"
+            android:theme="@style/MyEditTextTheme"
             />
 
     </LinearLayout>
@@ -176,6 +178,7 @@
             android:inputType="textPassword"
             android:text="**********"
             android:enabled="false"
+            android:theme="@style/MyEditTextTheme"
 
             />
             <Button
@@ -223,6 +226,7 @@
             android:inputType="number"
             android:enabled="false"
             android:maxLength="30"
+            android:theme="@style/MyEditTextTheme"
             />
         <TextView
             android:id="@+id/vadalitionphone"
@@ -232,6 +236,13 @@
             android:textColor="@color/maudo"
             android:visibility="gone"
             />
+            <TextView
+                android:id="@+id/vadalitionphone1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Số điện thoại phải có ít nhất 10 ký tự."
+                android:textColor="@color/maudo"
+                android:visibility="gone"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout
@@ -265,6 +276,7 @@
             android:enabled="false"
             android:layout_marginLeft="20dp"
             android:maxLength="30"
+            android:theme="@style/MyEditTextTheme"
 
 
             />

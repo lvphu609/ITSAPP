@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -892,6 +893,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                 thumbnail = (Bitmap) data.getExtras().get("data");
                 Uri mImageUri2 =data.getData();
+
                 ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                 thumbnail.compress(Bitmap.CompressFormat.PNG, 90, bytes);
                 File destination = new File(Environment.getExternalStorageDirectory(),
@@ -917,6 +919,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 //                intent.putExtra("return-data", false);
 //                startActivityForResult(intent,REQUEST_CAMERA);
                 c.setImageBitmap(thumbnail);
+
                 TextView chonanh = (TextView) findViewById(R.id.chonanh);
                 chonanh.setVisibility(View.GONE);
 //                bntImage.setImageBitmap(thumbnail);
@@ -935,7 +938,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 String selectedImagePath = cursor.getString(column_index);
                 BitmapFactory.Options options = new BitmapFactory.Options();
                 options.inJustDecodeBounds = true;
+                AssetFileDescriptor fileDescriptor = null;
                 BitmapFactory.decodeFile(selectedImagePath, options);
+
                 final int REQUIRED_SIZE = 200;
                 int scale = 1;
                 while (options.outWidth / scale / 2 >= REQUIRED_SIZE
@@ -946,6 +951,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
 //                Intent intent = new Intent("com.android.camera.action.CROP");
 //                intent .setDataAndType(selectedImageUri, "image/*");
+//                intent.putExtra("crop", "true");
 //                intent.putExtra("outputX",bm.getWidth());
 //                intent.putExtra("outputY", bm.getHeight());
 //                intent.putExtra("aspectX", 1);
@@ -1347,7 +1353,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     public boolean validate(String hex) {
 
 
-        String emailPattern = "([a-z0-9\\+_\\-]+)(\\.[a-z0-9\\+_\\-]+)*@([a-z0-9\\-]+\\.)+[a-z]{2,6}";
+        String emailPattern = "([a-zA-Z0-9\\+_\\-]+)(\\.[a-z0-9\\+_\\-]+)*@([a-z0-9\\-]+\\.)+[a-z]{2,6}";
         Pattern p = Pattern.compile(emailPattern);
         Matcher m = p.matcher(hex);
         if (m.matches()) {
