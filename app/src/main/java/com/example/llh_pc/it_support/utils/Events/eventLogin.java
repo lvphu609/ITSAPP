@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -62,7 +63,6 @@ public class eventLogin implements View.OnClickListener {
     public void onClick(View v) {
 
         try {
-
             /*save*//*
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -85,48 +85,49 @@ public class eventLogin implements View.OnClickListener {
             restClient.addParam(Account.PASSWORD, CommonFunction.md5(P));
             restClient.execute(RequestMethod.POST);
             if (!emailValidator(edtUserName.getText().toString())) {
+
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Email không hợp lệ.");
                 // set dialog message
-                alertDialogBuilder
-                        .setTitle("IT Support")
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                alertDialogBuilder.setView(promptsView);
+                // set dialog message
+                alertDialogBuilder.setCancelable(false);
+                final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+                Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+                TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+                tv.setText("Email không hợp lệ.");
+                okpopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        show.dismiss();
+                    }
+                });
 
-                                    }
-                                });
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
                 editor.putInt("check", 1);
+
             } else if (edtPassword.getText().length() < 6) {
                 LayoutInflater li = LayoutInflater.from(context);
                 View promptsView = li.inflate(R.layout.popup_validation, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                 alertDialogBuilder.setView(promptsView);
                 final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                textView.setText("Mật khẩu phải có ít nhất 6 kí tự.");
                 // set dialog message
-                alertDialogBuilder
-                        .setTitle("IT Support")
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-                // show it
-                alertDialog.show();
+                alertDialogBuilder.setView(promptsView);
+                // set dialog message
+                alertDialogBuilder.setCancelable(false);
+                final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+                Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+                TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+                tv.setText("Mật khẩu phải có ít nhất 6 kí tự.");
+                okpopup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        show.dismiss();
+                    }
+                });
                 editor.putInt("check", 1);
             } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
@@ -148,7 +149,7 @@ public class eventLogin implements View.OnClickListener {
                     editor.putString("fullname",full_name);*/
                     editor.commit();
                     Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
-                    LoginGCM();
+                    /*LoginGCM();*/
                     intent = new Intent(context, frmTabHost.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
@@ -157,24 +158,23 @@ public class eventLogin implements View.OnClickListener {
                 } else {
                     LayoutInflater li = LayoutInflater.from(context);
                     View promptsView = li.inflate(R.layout.popup_validation, null);
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+                    android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                     alertDialogBuilder.setView(promptsView);
                     final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-                    textView.setText("Email hoặc mật khẩu không hợp lệ. Vui lòng nhập lại.");
                     // set dialog message
-                    alertDialogBuilder
-                            .setTitle("IT Support")
-                            .setCancelable(false)
-                            .setPositiveButton("OK",
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                        }
-                                    });
-
-                    // create alert dialog
-                    AlertDialog alertDialog = alertDialogBuilder.create();
-                    // show it
-                    alertDialog.show();
+                    alertDialogBuilder.setView(promptsView);
+                    // set dialog message
+                    alertDialogBuilder.setCancelable(false);
+                    final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+                    Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+                    TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+                    tv.setText("Email hoặc mật khẩu không hợp lệ. Vui lòng nhập lại.");
+                    okpopup.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            show.dismiss();
+                        }
+                    });
                     editor.putInt("check", 1);
                 }
             }
@@ -184,7 +184,7 @@ public class eventLogin implements View.OnClickListener {
         }
     }
 
-    private void LoginGCM()
+/*    private void LoginGCM()
     {
         try{
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
@@ -207,7 +207,7 @@ public class eventLogin implements View.OnClickListener {
         {
             String t = ex.toString();
         }
-    }
+    }*/
     private void getAccount(String id, String token) {
         try {
             RestClient restClient = new RestClient(url_get_account_info_by_id);
@@ -248,5 +248,6 @@ public class eventLogin implements View.OnClickListener {
             return null;
         }
     }
+
 }
 
