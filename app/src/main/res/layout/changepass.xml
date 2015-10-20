@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_passcu"
             android:textSize="12dp"
-            android:inputType="textPassword"
+            android:inputType="textNoSuggestions|textPassword"
             android:padding="10dp"
             android:theme="@style/MyEditTextTheme"/>
         <EditText
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_passmoi"
             android:textSize="12dp"
-            android:inputType="textPassword"
+            android:inputType="textNoSuggestions|textPassword"
         android:padding="10dp"
             android:theme="@style/MyEditTextTheme"/>
         <EditText
@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:hint="@string/hint_cfpassmoi"
             android:textSize="12dp"
-            android:inputType="textPassword"
+            android:inputType="textNoSuggestions|textPassword"
         android:padding="10dp"
             android:theme="@style/MyEditTextTheme"/>
     <LinearLayout
