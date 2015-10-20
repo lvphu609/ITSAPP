@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.graphics.Typeface;
 import android.os.StrictMode;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -177,7 +179,11 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
         tvNhapMK = (TextView)findViewById(R.id.txtNhapMK);
         edtCode = (EditText)findViewById(R.id.edtCode);
         edtPass = (EditText)findViewById(R.id.edtPassword);
+        edtPass.setTypeface(Typeface.DEFAULT);
+        edtPass.setTransformationMethod(new PasswordTransformationMethod());
         edtAPass = (EditText)findViewById(R.id.edtAPass);
+        edtAPass.setTypeface(Typeface.DEFAULT);
+        edtAPass.setTransformationMethod(new PasswordTransformationMethod());
         views.add((View)edtCode);
         views.add((View)edtPass);
         views.add((View)edtAPass);

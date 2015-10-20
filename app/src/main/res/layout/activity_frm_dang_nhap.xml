@@ -14,8 +14,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <ImageView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_width="@dimen/frmDangNhap_imageWidth"
+            android:layout_height="@dimen/frmDangNhap_imageHeight"
             android:layout_gravity="center"
             android:src="@drawable/itsupport_logo_vuong" />
         <LinearLayout
@@ -42,11 +42,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <EditText
+                android:singleLine="true"
+                android:typeface="normal"
                 android:id="@+id/edtMatKhau"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mật khẩu"
-                android:inputType="textPassword"
                 android:theme="@style/MyEditTextTheme"/>
             <TextView
                 android:id="@+id/txtMatKhau"

@@ -3,4 +3,14 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <!--Main-->
+    <dimen name="Main_imageWidth">299dp</dimen>
+    <dimen name="Main_imageHeight">130dp</dimen>
+    <!--frmDK_DN-->
+    <dimen name="frmDK_DN_imageWidth">256dp</dimen>
+    <dimen name="frmDK_DN_imageHeight">256dp</dimen>
+    <dimen name="frmDK_DN_Linear">256dp</dimen>
+    <!--frmDangNhap-->
+    <dimen name="frmDangNhap_imageWidth">150dp</dimen>
+    <dimen name="frmDangNhap_imageHeight">150dp</dimen>
 </resources>

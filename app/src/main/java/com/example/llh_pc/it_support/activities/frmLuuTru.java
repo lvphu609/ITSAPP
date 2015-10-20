@@ -1,13 +1,17 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -28,6 +32,7 @@ import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Dialogs.DialogDefault;
 import com.example.llh_pc.it_support.utils.Events.eventDelete;
 import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
@@ -46,46 +51,17 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     public static final String url_loadPost = Def.API_BASE_LINK + Def.API_LoadPost + Def.API_FORMAT_JSON;
     public static final String url_get= Def.API_BASE_LINK + Def.API_DeletePost + Def.API_FORMAT_JSON;
     private ListView lstPost;
-    public static LoadPostAdapter adapter;
+    private LoadPostAdapter adapter;
     private String token,account_id;
 
     public static ArrayList<LuuTruModel> postDetails;
 
-    private ArrayList<View> views = new ArrayList<>();
-
-    TextView tv;
-    private TabHost mTabHost;
+    private ProgressDialog progress;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_luu_tru);
-        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
-        token = sharedPreference.getString("token", "YourName");
-        account_id = sharedPreference.getString("id", "YourName");
-        String page = "1";
-        try
-        {
-            RestClient restClient = new RestClient(url_loadPost);
-            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-            restClient.addHeader("token", token);
-            restClient.addParam("page", page);
-            restClient.addParam("account_id", account_id);
-            restClient.execute(RequestMethod.POST);
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
-                    restClient.getResponse() != null)
-            {
-                String jsonObject = restClient.getResponse();
-                LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
 
-                if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-                    luuTruParse.getResults();
-                    postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(luuTruParse.getResults()));
-                }
-            }
-        }catch (Exception ex){
-            t = ex.toString();
-        }
-        adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
         initFlags();
         initControl();
         setEventForControl();
@@ -93,27 +69,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 //        Tab
     }
 
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_luu_tru, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void initFlags() {
@@ -123,20 +78,33 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void initControl() {
         lstPost = (ListView)findViewById(R.id.lsPost);
-        lstPost.setAdapter(adapter);
+
 
 
     }
 
     @Override
     public void setEventForControl() {
-        lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
-        lstPost.setOnItemLongClickListener(new eventDelete(frmLuuTru.this, postDetails, adapter));
+        //lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
+        lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+               try{
+                   new DialogDefault(frmLuuTru.this.getParent()).showConfirmCloseApp();
+               }
+               catch (Exception e){
+                   Log.e("error", e.getMessage());
+                   e.printStackTrace();
+               }
+
+                return false;
+            }
+        });
     }
 
     @Override
     public void getData(String... params) {
-
+        new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -144,4 +112,57 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     }
 
+    private class getPostList extends AsyncTask<String, Integer, ArrayList<LuuTruModel>>{
+        @Override
+        protected void onPreExecute() {
+            progress = ProgressDialog.show(frmLuuTru.this.getParent(), Def.STRING_EMPTY, "Loading...",true);
+            progress.getWindow().setGravity(Gravity.CENTER_VERTICAL);
+        }
+
+        @Override
+        protected ArrayList<LuuTruModel> doInBackground(String... params) {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
+            token = sharedPreference.getString("token", "YourName");
+            account_id = sharedPreference.getString("id", "YourName");
+            String page = "1";
+            try
+            {
+                RestClient restClient = new RestClient(url_loadPost);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("page", page);
+                restClient.addParam("account_id", account_id);
+                restClient.execute(RequestMethod.POST);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                        restClient.getResponse() != null)
+                {
+                    String jsonObject = restClient.getResponse();
+                    LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
+                    if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                        postDetails = luuTruParse.getResults();
+                    }
+                }
+            }catch (Exception ex){
+                Log.e("error" + "Luu Tru", ex.getMessage());
+                ex.printStackTrace();
+            }
+            return postDetails;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<LuuTruModel> luuTruModels) {
+            super.onPostExecute(luuTruModels);
+            if(luuTruModels != null){
+                adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
+                lstPost.setAdapter(adapter);
+            }
+            progress.dismiss();
+        }
+        
+    };
 }
