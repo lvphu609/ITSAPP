@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.StrictMode;
@@ -18,6 +19,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,13 +67,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         setContentView(R.layout.activity_frm_dang_nhap);
 
         btnLogin = (Button) findViewById(R.id.btnLogin);
-        /*btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String t ="fdsadfsasfdafsd";
-                String t1 ="fdsadfsasfdafsd";
-            }
-        });*/
         btnLogin.setTextColor(getResources().getColor(R.color.actionbar_text));
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
@@ -150,6 +145,8 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         final TextView tvMatKhau = (TextView) findViewById(R.id.txtMatKhau);
         edtPass = (EditText) findViewById(R.id.edtMatKhau);
+        edtPass.setTypeface(Typeface.DEFAULT);
+        edtPass.setTransformationMethod(new PasswordTransformationMethod());
         edtPass.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

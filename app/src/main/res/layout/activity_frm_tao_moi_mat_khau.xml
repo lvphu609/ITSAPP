@@ -8,7 +8,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.llh_pc.it_support.activities.frmTaoMoiMK">
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
@@ -22,61 +21,53 @@
             android:layout_weight="10"
             android:text="@string/lable_taomk"
             android:textSize="15dp" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="30"
             android:orientation="vertical">
-
             <EditText
+                android:singleLine="true"
                 android:id="@+id/edtCode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập mã xác thực"
                 android:theme="@style/MyEditTextTheme" />
-
             <TextView
                 android:id="@+id/txtMaXT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/maudo" />
-
             <EditText
+                android:singleLine="true"
                 android:id="@+id/edtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mật khẩu mới"
-                android:inputType="textPassword"
                 android:theme="@style/MyEditTextTheme" />
-
             <TextView
                 android:id="@+id/txtMatKhau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/maudo" />
-
             <EditText
+                android:singleLine="true"
                 android:id="@+id/edtAPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nhập lại mật khẩu"
-                android:inputType="textPassword"
                 android:theme="@style/MyEditTextTheme" />
-
             <TextView
                 android:id="@+id/txtNhapMK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/maudo" />
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:orientation="vertical">
-
             <Button
                 android:id="@+id/btnSetPass"
                 android:layout_width="wrap_content"
