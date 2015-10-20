@@ -42,10 +42,13 @@
     <string name="title_activity_item_menu_left_apdapter">ItemMenuLeftApdapter</string>
     <string name="title_activity_frm_provider_bao_hong">frmProviderBaoHong</string>
     <string name="title_activity_provider_bao_hong">ProviderBaoHong</string>
-
+    <string name="hint_passcu">Nhập mật khẩu hiện tại</string>
+    <string name="hint_passmoi">Nhập mật khẩu mới</string>
+    <string name="hint_cfpassmoi">Xác nhận mật khẩu mới</string>
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_search">Search</string>
     <string name="title_activity_frm_hoan_thanh">frmHoanThanh</string>
     <string name="title_activity_search_map">SearchMap</string>
+    <string name="multilines">Line1Line1\nLine2Line2</string>
 </resources>

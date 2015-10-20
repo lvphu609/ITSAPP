@@ -66,18 +66,29 @@
             android:ems="30"
             android:singleLine="false"
             android:maxLines="1"
-            android:inputType="textPersonName"
+            android:inputType="textNoSuggestions|text"
             android:hint="Nhập họ và tên (*)"
             android:imeOptions="flagNoFullscreen"
             android:shadowColor="@color/mauxam"
             android:theme="@style/MyEditTextTheme"
-            android:maxLength="25"
+            android:maxLength="24"
+
           />
             <TextView
                 android:id="@+id/errorname"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Nhập họ và tên"
+                android:text="Nhập họ và tên."
+                android:textColor="@color/maudo"
+                android:gravity="left"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/errorname1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text=" Họ và tên không được bắt đầu bằng khoảng trống."
                 android:textColor="@color/maudo"
                 android:gravity="left"
                 android:layout_marginTop="40dp"
@@ -102,7 +113,7 @@
             android:ems="40"
             android:singleLine="false"
             android:maxLines="1"
-            android:inputType="textEmailAddress"
+            android:inputType="textNoSuggestions|textEmailAddress"
             android:hint="Nhập email (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="30"
@@ -119,7 +130,7 @@
             android:id="@+id/erroEmail2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Email đã được đăng ký hoặc không đúng định dạng abc@mail.com"
+            android:text="Email đã được đăng ký hoặc không đúng định dạng abc@mail.com."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -141,10 +152,10 @@
             android:ems = "40"
             android:singleLine="false"
             android:maxLines="1"
-            android:inputType="textPassword"
+            android:inputType="textNoSuggestions|textPassword"
             android:hint="Nhập mật khẩu (*)"
             android:theme="@style/MyEditTextTheme"
-            android:maxLength="30"
+            android:maxLength="28"
             />
         <TextView
             android:id="@+id/errorpass1"
@@ -158,7 +169,7 @@
             android:id="@+id/errorpass2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Mật khẩu phải có ít nhất 6 ký tự"
+            android:text="Mật khẩu phải có ít nhất 6 ký tự."
             android:visibility="gone"
             android:layout_gravity="left"
             android:textColor="@color/maudo"/>
@@ -181,17 +192,17 @@
             android:ems = "40"
             android:singleLine="false"
             android:maxLines="1"
-            android:inputType="textPassword"
+            android:inputType="textNoSuggestions|textPassword"
             android:hint="Xác nhận mật khẩu (*)"
             android:theme="@style/MyEditTextTheme"
-            android:maxLength="30"
+            android:maxLength="28"
 
             />
         <TextView
             android:id="@+id/cfpassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Nhập lại mật khẩu phải trùng khớp với mật khẩu đăng ký"
+            android:text="Nhập lại mật khẩu phải trùng khớp với mật khẩu đăng ký."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -199,7 +210,7 @@
             android:id="@+id/cfpassword1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Xác nhận mật khẩu không được bỏ trống"
+            android:text="Xác nhận mật khẩu không được bỏ trống."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -221,16 +232,16 @@
             android:ems = "40"
             android:singleLine="false"
             android:maxLines="1"
-            android:inputType="number"
+            android:inputType="textNoSuggestions|number"
             android:hint="Nhập số điện thoại (*)"
             android:theme="@style/MyEditTextTheme"
-            android:maxLength="30"
+            android:maxLength="25"
             />
         <TextView
             android:id="@+id/errorphone1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text=" Nhập số điện thoại"
+            android:text=" Nhập số điện thoại."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -238,7 +249,7 @@
             android:id="@+id/errorphone2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Số điện thoại yêu cầu phải có ít nhất 10 ký tự"
+            android:text="Số điện thoại yêu cầu phải có ít nhất 10 ký tự."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
@@ -265,7 +276,7 @@
             android:ems="40"
             android:singleLine="false"
             android:maxLines="2"
-            android:inputType="text"
+            android:inputType="textNoSuggestions|text"
             android:hint="Nhập địa chỉ (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="30"/>
@@ -273,10 +284,19 @@
             android:id="@+id/erroraddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text=" Nhập địa chỉ"
+            android:text=" Nhập địa chỉ."
             android:visibility="gone"
             android:layout_gravity="center"
             android:textColor="@color/maudo"/>
+        <TextView
+            android:id="@+id/validationaddress1"
+            android:layout_marginLeft="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Địa chỉ không được bắt đầu bằng khoảng trống."
+            android:textColor="@color/maudo"
+            android:visibility="gone"
+            />
 
     </LinearLayout>
     <LinearLayout
@@ -294,6 +314,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
