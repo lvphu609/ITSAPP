@@ -28,25 +28,32 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.R;
+import com.example.llh_pc.it_support.adapters.adapterGridView;
 import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.GetAccount;
@@ -72,6 +79,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -89,9 +98,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
     TextView user, provier, chuyenmon, resultText,rateText;
-    TextView validationname,validationphone,validationadess;
+    TextView validationname,validationphone,validationadess,validationphone1,valadationname1,validationadress1;
     RatingBar rateBar;
     Bitmap avatar1;
+    char[] array,array1,array2;
     ImageButton setavatar;
     EditText eemail, efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
     Button pc, laptop, mayin, scan, mayfax, photocopy, editProfile, OK, changePass,okprofile;
@@ -102,13 +112,20 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     int x=1,y=1,z=1;
     public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
     int pccheck = 0;
+    String result,result1;
     private AlertDialog helpDialog;
     private CircleImageView c;
+    GridView gridView;
+    private  Button[] buttonValues;
+//    public Profile(Context context, Button[] buttonValues) {
+//        this.context = context;
+//        this.buttonValues = buttonValues;
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
+        setValueForGridView();
 //        bntImage = (ImageButton) findViewById(R.id.bntImage);
 //        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) bntImage.getLayoutParams();
 //        params.height = 300;
@@ -119,9 +136,12 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         rateBar =(RatingBar) findViewById(R.id.ratingBar);
         rateText = (TextView) findViewById(R.id.rateText);
         validationname = (TextView) findViewById(R.id.valaditionname);
-        validationphone=(TextView) findViewById(R.id.vadalitionphone);
-        validationadess=(TextView) findViewById(R.id.validationaddress);
+        valadationname1 = (TextView) findViewById(R.id.valaditionname1);
 
+        validationphone=(TextView) findViewById(R.id.vadalitionphone);
+        validationphone1=(TextView) findViewById(R.id.vadalitionphone1);
+        validationadess=(TextView) findViewById(R.id.validationaddress);
+        validationadress1=(TextView) findViewById(R.id.validationaddress1);
         ll = (LinearLayout) findViewById(R.id.ll);
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
@@ -146,7 +166,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         getAccount(name, id);
         setProfile();
         checkAcctype();
+//        gridView();
         editProfile();
+
+
 
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -293,13 +316,30 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 efullname.setEnabled(true);
                 eadress.setEnabled(true);
                 ephone.setEnabled(true);
-        efullname.setOnFocusChangeListener(this);
-        eadress.setOnFocusChangeListener(this);
+
         ephone.setOnFocusChangeListener(this);
+        efullname.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+                } else {
+                    if(efullname.getText().toString().length()>0) {
+                        result = capitalizeFirstLetter(efullname.getText().toString());
+                        efullname.setText(result);
+                    }
+
+
+                }
+                }
+
+        });
         efullname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                x=1;
+                x = 1;
 
             }
 
@@ -310,19 +350,46 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(s.toString().isEmpty()){
-                    validationname.setVisibility(View.VISIBLE);
-                    OK.setEnabled(false);
-                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    x=0;
-                }
-                else
-                {
-                    validationname.setVisibility(View.GONE);
-                    x=1;
-                    setOKenable();
+
+                for (int i = s.length(); i > 0; i--) {
+
+                    if (s.subSequence(i - 1, i).toString().equals("\n"))
+                        s.replace(i - 1, i, "");
+
                 }
 
+
+                if (s.toString().matches("")) {
+
+                    validationname.setVisibility(View.VISIBLE);
+                    valadationname1.setVisibility(View.GONE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    x = 0;
+                }
+
+                else {
+
+                    validationname.setVisibility(View.GONE);
+                    valadationname1.setVisibility(View.GONE);
+                    checkname(s.toString());
+                }
+            }
+        });
+        eadress.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus == true) {
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
+
+                } else {
+
+                        if(eadress.getText().toString().length()>0) {
+                            result = capitalizeFirstLetter(eadress.getText().toString());
+                            eadress.setText(result);
+                        }
+                    }
             }
         });
         eadress.addTextChangedListener(new TextWatcher() {
@@ -338,8 +405,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
+                for(int i = s.length(); i > 0; i--){
+
+                    if(s.subSequence(i-1, i).toString().equals("\n"))
+                        s.replace(i-1, i, "");
+
+                }
                 if(s.toString().isEmpty()){
                     validationadess.setVisibility(View.VISIBLE);
+                    validationadress1.setVisibility(View.GONE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
                     y=0;
@@ -347,8 +421,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 else
                 {
                     validationadess.setVisibility(View.GONE);
-                  y=1;
-                    setOKenable();
+                    validationadress1.setVisibility(View.GONE);
+                    checkdiachi(s.toString());
                 }
             }
         });
@@ -360,13 +434,31 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(ephone.getText().toString().length()<9) {
+                    validationphone1.setVisibility(View.VISIBLE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    z=0;
+                    setOKenable();
+                }
+                else
+                {validationphone1.setVisibility(View.GONE);
+                z=1;}
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                for(int i = s.length(); i > 0; i--){
+
+                    if(s.subSequence(i-1, i).toString().equals("\n"))
+                        s.replace(i-1, i, "");
+
+                }
                 if(s.toString().isEmpty()){
                     validationphone.setVisibility(View.VISIBLE);
+                    validationphone1.setVisibility(View.GONE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
                     z=0;
@@ -374,8 +466,11 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 else
                 {
                     validationphone.setVisibility(View.GONE);
-                    z=1;
-                    setOKenable();
+                    if(s.toString().length()>9) {
+                        z = 1;
+                        setOKenable();
+                    }
+
                 }
             }
         });
@@ -622,7 +717,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -638,7 +733,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                         okdialog.setEnabled(true);
                         okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -659,7 +754,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -674,7 +769,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -695,7 +790,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -710,7 +805,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().length()>0 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
@@ -1281,5 +1376,75 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
+    public String capitalizeFirstLetter(String s){
+        array = s.toCharArray();
+        // Uppercase first letter.
+        if(array[0] == Character.toLowerCase(array[0]))
+        {
+            array[0] = Character.toUpperCase(array[0]);
+        }
+        else
+        {
+        }
+
+        // Uppercase all letters that follow a whitespace character.
+        for (int i = 1; i < array.length; i++) {
+            if (Character.isWhitespace(array[i - 1])) {
+
+                array[i] = Character.toUpperCase(array[i]);
+
+            }
+
+        }
+        // Result.
+        return new String(array);
+    }
+
+    @Override
+    protected void onResume() {
+
+
+        super.onResume();
+    }
+    public String checkname(String s)
+        { array1 = s.toCharArray();
+        for (int i = 0; i < array1.length; i++) {
+            if (Character.isWhitespace(array1[0])) {
+                valadationname1.setVisibility(View.VISIBLE);
+                validationname.setVisibility(View.GONE);
+                OK.setEnabled(false);
+                OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                x = 0;
+            }
+            else {      valadationname1.setVisibility(View.GONE);
+                result = capitalizeFirstLetter(efullname.getText().toString());
+                x = 1;
+                setOKenable();}
+        }
+        return new String (array1);
+    }
+
+    public String checkdiachi(String s)
+    { array2 = s.toCharArray();
+        for (int i = 0; i < array2.length; i++) {
+            if (Character.isWhitespace(array2[0])) {
+                validationadress1.setVisibility(View.VISIBLE);
+                validationadess.setVisibility(View.GONE);
+                OK.setEnabled(false);
+                OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                y=0;
+            }
+            else {      validationadress1.setVisibility(View.GONE);
+                if(s.toString().length()>0) {
+                    result = capitalizeFirstLetter(eadress.getText().toString());
+                }
+                y=1;
+                setOKenable();}
+        }
+        return new String (array2);
+    }
+
+    private void setValueForGridView(){
     }
 }

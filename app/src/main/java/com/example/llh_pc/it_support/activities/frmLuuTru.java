@@ -32,7 +32,6 @@ import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
-import com.example.llh_pc.it_support.utils.Dialogs.DialogDefault;
 import com.example.llh_pc.it_support.utils.Events.eventDelete;
 import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
@@ -90,7 +89,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                try{
-                   new DialogDefault(frmLuuTru.this.getParent()).showConfirmCloseApp();
+//                   new DialogDefault(frmLuuTru.this.getParent()).showConfirmCloseApp();
                }
                catch (Exception e){
                    Log.e("error", e.getMessage());
