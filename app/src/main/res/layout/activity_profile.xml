@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:ems = "40"
                     android:singleLine="false"
-                    android:inputType="textNoSuggestions|number"
+                    android:inputType="number"
                     android:enabled="false"
                     android:maxLength="25"
                     android:theme="@style/MyEditTextTheme"
@@ -378,6 +378,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
                 />
             <Button
                 android:id="@+id/bntLaptpo"
@@ -388,6 +389,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
 
                 />
             <Button
@@ -399,6 +401,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
                 />
             <Button
                 android:id="@+id/bntMayScan"
@@ -409,6 +412,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
                 />
             <Button
                 android:id="@+id/photocopy"
@@ -419,6 +423,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
                 />
             <Button
                 android:id="@+id/bntMayfax"
@@ -429,6 +434,7 @@
                 android:enabled="false"
                 android:background="@null"
                 android:textColor="@color/mauxam"
+                android:layout_alignParentLeft="true"
                 />
         </LinearLayout>
         <!--<LinearLayout-->
