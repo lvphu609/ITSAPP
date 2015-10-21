@@ -14,29 +14,36 @@
             android:text=" Thay đổi mật khẩu"
             android:id="@+id/textView"
             android:textColor="@color/mauxanh"
-            android:textSize="30dp"/>
+            android:textSize="20dp"
+            android:theme="@style/MyEditTextTheme"/>
 
         <EditText
             android:id="@+id/passcu"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Nhập mật khẩu hiện tại"
-            android:inputType="textPassword"
-            android:padding="10dp" />
+            android:hint="@string/hint_passcu"
+            android:textSize="12dp"
+            android:inputType="textNoSuggestions|textPassword"
+            android:padding="10dp"
+            android:theme="@style/MyEditTextTheme"/>
         <EditText
         android:id="@+id/passmoi"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Nhập mật khẩu mới"
-            android:inputType="textPassword"
-        android:padding="10dp" />
+        android:hint="@string/hint_passmoi"
+            android:textSize="12dp"
+            android:inputType="textNoSuggestions|textPassword"
+        android:padding="10dp"
+            android:theme="@style/MyEditTextTheme"/>
         <EditText
         android:id="@+id/cfpassmoi"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="Xác nhận mật khẩu mới"
-            android:inputType="textPassword"
-        android:padding="10dp" />
+        android:hint="@string/hint_cfpassmoi"
+            android:textSize="12dp"
+            android:inputType="textNoSuggestions|textPassword"
+        android:padding="10dp"
+            android:theme="@style/MyEditTextTheme"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
