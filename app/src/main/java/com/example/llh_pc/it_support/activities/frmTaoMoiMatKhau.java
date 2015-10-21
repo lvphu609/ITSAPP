@@ -12,7 +12,9 @@ import android.text.method.PasswordTransformationMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 
 import java.util.ArrayList;
 
-public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionListener {
+public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionListener,CompoundButton.OnFocusChangeListener{
 
     private ArrayList<View> views = new ArrayList<>();
     private EditText edtCode,edtPass,edtAPass;
@@ -34,6 +36,24 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tao_moi_mat_khau);
+        /*ABC*/
+        tvMaXN = (TextView) findViewById(R.id.txtMaXT);
+        tvMatKhau = (TextView) findViewById(R.id.txtMatKhau);
+        tvNhapMK = (TextView) findViewById(R.id.txtNhapMK);
+        edtCode = (EditText) findViewById(R.id.edtCode);
+        edtPass = (EditText) findViewById(R.id.edtPassword);
+        edtPass.setTypeface(Typeface.DEFAULT);
+        edtPass.setTransformationMethod(new PasswordTransformationMethod());
+        edtAPass = (EditText) findViewById(R.id.edtAPass);
+        edtAPass.setTypeface(Typeface.DEFAULT);
+        edtAPass.setTransformationMethod(new PasswordTransformationMethod());
+        views.add((View) edtCode);
+        views.add((View) edtPass);
+        views.add((View) edtAPass);
+        btnSetPass = (Button) findViewById(R.id.btnSetPass);
+        /*fds*/
+
+
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -46,18 +66,9 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             String value = extras.getString("mail");
             this.mail = value;
         }
-        initFlags();
-
-        initControl();
-
-        setEventForControl();
-
-        getData();
-
-        setData();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         btnSetPass.setTextColor(getResources().getColor(R.color.actionbar_text));
+
 
         edtCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -147,14 +158,20 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
                 }
             }
         });
+        edtCode.setOnFocusChangeListener(this);
+        edtPass.setOnFocusChangeListener(this);
+        edtAPass.setOnFocusChangeListener(this);
+        initFlags();
+
+        initControl();
+
+        setEventForControl();
+
+        getData();
+
+        setData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_tao_moi_mat_khau, menu);
-        return true;
-    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -174,20 +191,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
 
     @Override
     public void initControl() {
-        tvMaXN = (TextView)findViewById(R.id.txtMaXT);
-        tvMatKhau = (TextView)findViewById(R.id.txtMatKhau);
-        tvNhapMK = (TextView)findViewById(R.id.txtNhapMK);
-        edtCode = (EditText)findViewById(R.id.edtCode);
-        edtPass = (EditText)findViewById(R.id.edtPassword);
-        edtPass.setTypeface(Typeface.DEFAULT);
-        edtPass.setTransformationMethod(new PasswordTransformationMethod());
-        edtAPass = (EditText)findViewById(R.id.edtAPass);
-        edtAPass.setTypeface(Typeface.DEFAULT);
-        edtAPass.setTransformationMethod(new PasswordTransformationMethod());
-        views.add((View)edtCode);
-        views.add((View)edtPass);
-        views.add((View)edtAPass);
-        btnSetPass = (Button)findViewById(R.id.btnSetPass);
+
     }
 
     @Override
@@ -203,5 +207,10 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
     @Override
     public void setData() {
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 }

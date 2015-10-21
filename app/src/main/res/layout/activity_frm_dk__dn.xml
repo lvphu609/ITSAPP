@@ -6,7 +6,6 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.example.llh_pc.it_support.activities.frmDK_DN"
     android:orientation="vertical">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,29 +13,43 @@
         android:gravity="center">
         <ImageView
             android:layout_width="@dimen/frmDK_DN_imageWidth"
-            android:layout_height="@dimen/frmDK_DN_imageHeight"
+            android:layout_height="@dimen/frmDK_DN_imageWidth"
             android:src="@drawable/itsupport_logo_vuong" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/llGroupButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="top|center"
-        android:paddingTop="50dp">
-        <Button
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"
+        android:paddingTop="@dimen/frmDK_DN_llGroupButton_top">
+        <!--<Button
+            android:layout_width="@dimen/frmDK_DN_btnDN_Width"
+            android:layout_height="@dimen/frmDK_DN_Height"
             android:text="Đăng nhập"
             android:id="@+id/btnDN"
             style="@style/style_dk_dn"
-            android:layout_marginBottom="15dp"/>
+            android:layout_marginBottom="@dimen/frmDK_DN_btnDN_bottom"/>-->
+        <!--<Button
+            android:layout_width="@dimen/frmDK_DN_btnDN_Width"
+            android:layout_height="@dimen/frmDK_DN_Height"
+            android:text="Đăng ký"
+            android:id="@+id/btnDK"
+            style="@style/style_dk_dn"/>-->
 
         <Button
-            android:layout_width="225dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/frmDK_DN_btnDN_Width"
+            android:layout_height="@dimen/frmDK_DN_btnDN_Height"
+            android:text="Đăng nhập"
+            android:id="@+id/btnDN"
+            style="@style/style_dk_dn"
+            android:layout_marginBottom="@dimen/frmDK_DN_btnDN_bottom"/>
+
+        <Button
+            android:layout_width="@dimen/frmDK_DN_btnDN_Width"
+            android:layout_height="@dimen/frmDK_DN_btnDN_Height"
             android:text="Đăng ký"
             android:id="@+id/btnDK"
             style="@style/style_dk_dn"/>
-
     </LinearLayout>
 </LinearLayout >
