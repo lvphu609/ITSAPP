@@ -60,7 +60,7 @@
                 android:textColor="@color/actionbar_text"
                 android:enabled="false"
                 android:id="@+id/btnSendMail"
-                android:textSize="@dimen/frmDangNhap_textsizevalidation"
+                android:textSize="@dimen/frmDangNhap_textsize"
                 android:text="Gửi"/>
         </LinearLayout>
     </LinearLayout>
