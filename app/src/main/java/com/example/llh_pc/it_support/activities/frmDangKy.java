@@ -322,7 +322,12 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
             @Override
             public void afterTextChanged(Editable s) {
 
+                for (int i = s.length(); i > 0; i--) {
 
+                    if (s.subSequence(i - 1, i).toString().equals("\n"))
+                        s.replace(i - 1, i, "");
+
+                }
                 if (s.toString().matches("")) {
 
                     errorname.setVisibility(View.VISIBLE);
@@ -743,6 +748,12 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void afterTextChanged(Editable s) {
+                for (int i = s.length(); i > 0; i--) {
+
+                    if (s.subSequence(i - 1, i).toString().equals("\n"))
+                        s.replace(i - 1, i, "");
+
+                }
 
                 if (s.toString().matches("")) {
                     addressflag = false;

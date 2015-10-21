@@ -1173,6 +1173,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
 
                 }
+                if(pccheck >0)
+                {
+                    pccheck= 0;
+                }
 
 
                 // checkedbox.joi = String.join(",", list);
