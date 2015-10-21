@@ -111,7 +111,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
 
         final TextView tvEmail = (TextView) findViewById(R.id.txtEmail);
         edtUserName = (EditText) findViewById(R.id.edtTenDangNhap);
-
         edtUserName.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -142,7 +141,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 }
             }
         });
-
         final TextView tvMatKhau = (TextView) findViewById(R.id.txtMatKhau);
         edtPass = (EditText) findViewById(R.id.edtMatKhau);
         edtPass.setTypeface(Typeface.DEFAULT);
@@ -287,7 +285,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), frmDK_DN.class);
         startActivityForResult(myIntent, 0);
-
         return true;
     }
 

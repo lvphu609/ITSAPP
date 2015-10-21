@@ -98,7 +98,7 @@ public class eventLogin implements View.OnClickListener {
                 final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
                 Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
                 TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
-                tv.setText("Email không hợp lệ.");
+                tv.setText("Email không đúng định dạng.");
                 okpopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -183,31 +183,6 @@ public class eventLogin implements View.OnClickListener {
 
         }
     }
-
-/*    private void LoginGCM()
-    {
-        try{
-            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
-            String tokenGCM = sharedPreference.getString("tokenGCM", "YourName");
-            RestClient restClient = new RestClient(url_tokenGCM);
-            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-            restClient.addHeader("token", token);
-            restClient.addParam("reg_id", tokenGCM);
-            restClient.execute(RequestMethod.POST);
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                String jsonObject = restClient.getResponse();
-                Gson gson = new Gson();
-                AccountParse getAccountJson = gson.fromJson(jsonObject, AccountParse.class);
-                if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                    String t = "fdsasfdsfd";
-                    return;
-                }
-            }
-        }catch (Exception ex)
-        {
-            String t = ex.toString();
-        }
-    }*/
     private void getAccount(String id, String token) {
         try {
             RestClient restClient = new RestClient(url_get_account_info_by_id);

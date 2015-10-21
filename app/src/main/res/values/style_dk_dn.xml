@@ -3,5 +3,6 @@
     <style name="style_dk_dn" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">#FFFFFF</item>
         <item name="android:background">@drawable/drb_dk_dn</item>
+        <item name="android:textSize">@dimen/frmDK_DN_sizetext</item>
     </style>
 </resources>

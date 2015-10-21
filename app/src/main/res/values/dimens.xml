@@ -9,8 +9,17 @@
     <!--frmDK_DN-->
     <dimen name="frmDK_DN_imageWidth">256dp</dimen>
     <dimen name="frmDK_DN_imageHeight">256dp</dimen>
-    <dimen name="frmDK_DN_Linear">256dp</dimen>
+    <dimen name="frmDK_DN_llGroupButton_top">30dp</dimen>
+    <dimen name="frmDK_DN_btnDN_Width">225dp</dimen>
+    <dimen name="frmDK_DN_btnDN_Height">46dp</dimen>
+    <dimen name="frmDK_DN_sizetext">16dp</dimen>
+    <dimen name="frmDK_DN_btnDN_bottom">15dp</dimen>
     <!--frmDangNhap-->
-    <dimen name="frmDangNhap_imageWidth">150dp</dimen>
-    <dimen name="frmDangNhap_imageHeight">150dp</dimen>
+    <dimen name="frmDangNhap_imageWidth">130dp</dimen>
+    <dimen name="frmDangNhap_imageHeight">130dp</dimen>
+    <dimen name="frmDangNhap_edittext_Height">46dp</dimen>
+    <dimen name="frmDangNhap_textsize">22dp</dimen>
+    <dimen name="frmDangNhap_textsizevalidation">14dp</dimen>
+    <dimen name="frmDangNhap_btnLogin_Width">150dp</dimen>
+    <dimen name="frmDangNhap_btnLogin_Height">60dp</dimen>
 </resources>

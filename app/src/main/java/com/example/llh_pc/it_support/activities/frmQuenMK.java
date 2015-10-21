@@ -12,7 +12,9 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,7 +25,7 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 
 import java.util.ArrayList;
 
-public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener {
+public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener,CompoundButton.OnFocusChangeListener {
 
     private Button btnSend;
     private ArrayList<View> views = new ArrayList<>();
@@ -34,20 +36,11 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_quen_mk);
-
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-        ActionBar actionBar = getSupportActionBar();
-        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        initFlags();
-        initControl();
-        setEventForControl();
-        getData();
-        setData();
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        /*ABC*/
+        edtMail = (EditText)findViewById(R.id.edtMail);
+        views.add((View) edtMail);
+        btnSend = (Button)findViewById(R.id.btnSendMail);
+        tvMatKhau = (TextView)findViewById(R.id.txtEmail);
         btnSend.setTextColor(getResources().getColor(R.color.actionbar_text));
         edtMail = (EditText)findViewById(R.id.edtMail);
         edtMail.addTextChangedListener(new TextWatcher() {
@@ -75,6 +68,22 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 }
             }
         });
+        /*sda*/
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+        ActionBar actionBar = getSupportActionBar();
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        edtMail.setOnFocusChangeListener(this);
+        initFlags();
+        initControl();
+        setEventForControl();
+        getData();
+        setData();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -93,10 +102,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void initControl() {
-        edtMail = (EditText)findViewById(R.id.edtMail);
-        views.add((View)edtMail);
-        btnSend = (Button)findViewById(R.id.btnSendMail);
-        tvMatKhau = (TextView)findViewById(R.id.txtEmail);
+
     }
 
     @Override
@@ -112,5 +118,10 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void setData() {
 
+    }
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
 }
