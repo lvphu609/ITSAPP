@@ -11,6 +11,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +24,7 @@ import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -151,6 +154,18 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 .penaltyLog()
                 .build());
         StrictMode.enableDefaults();
+//change
+
+
+
+
+
+
+
+
+
+
+
 
         accdal = new AccountDAL(getBaseContext());
         imageload = new ImageLoader(getBaseContext());
@@ -429,12 +444,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         ephone.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                z=1;
+
+                if(ephone.getText().toString().length()>=10)
+                {
+                    z = 1;
+                }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(ephone.getText().toString().length()<9) {
+                if(ephone.getText().toString().length()<=9) {
                     validationphone1.setVisibility(View.VISIBLE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
@@ -456,7 +475,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         s.replace(i-1, i, "");
 
                 }
-                if(s.toString().isEmpty()){
+
+                if(ephone.getText().toString().length()<=9) {
+                    validationphone1.setVisibility(View.VISIBLE);
+                    OK.setEnabled(false);
+                    OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                    z=0;
+                    setOKenable();
+                }
+                else if(s.toString().isEmpty()){
                     validationphone.setVisibility(View.VISIBLE);
                     validationphone1.setVisibility(View.GONE);
                     OK.setEnabled(false);
@@ -1146,6 +1173,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
 
                 }
+                if(pccheck >0)
+                {
+                    pccheck= 0;
+                }
 
 
                 // checkedbox.joi = String.join(",", list);
@@ -1276,10 +1307,31 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 options.inSampleSize = scale;
                 options.inJustDecodeBounds = false;
                 bm = BitmapFactory.decodeFile(selectedImagePath, options);
-                c.setImageBitmap(bm);
+                Bitmap bitmap = bm;
+                ExifInterface exif = null;
+                try {
+                    exif = new ExifInterface(selectedImagePath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+                Matrix m = new Matrix();
+
+                if ((orientation == 3)) {
+                    m.postRotate(180);
+                    m.postScale((float) bm.getWidth(), (float) bm.getHeight());
+                    bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+                } else if (orientation == 6) {
+                    m.postRotate(90);
+                    bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+                } else if (orientation == 8) {
+                    m.postRotate(270);
+                    bitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), m, true);
+                }
+                c.setImageBitmap(bitmap);
 
 //                bntImage.setImageBitmap(bm);
-                BitMapToString(bm);
+                BitMapToString(bitmap);
 
             }
         }
