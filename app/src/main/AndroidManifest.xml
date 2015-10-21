@@ -61,6 +61,7 @@
         <activity
             android:screenOrientation="portrait"
             android:name=".activities.frmQuenMK"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_frm_quen_mk" >
         </activity>
         <activity
@@ -72,7 +73,7 @@
             android:screenOrientation="portrait"
             android:name=".activities.frmTaoMoiMatKhau"
             android:label="@string/title_activity_frm_quen_mk"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
         <activity
             android:screenOrientation="portrait"

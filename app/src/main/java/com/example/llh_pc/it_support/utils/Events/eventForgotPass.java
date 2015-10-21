@@ -65,7 +65,7 @@ public class eventForgotPass implements View.OnClickListener {
                 final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
                 Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
                 TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
-                tv.setText("Email không hợp lệ.");
+                tv.setText("Email không đúng định dạng.");
                 okpopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
