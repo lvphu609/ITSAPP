@@ -78,6 +78,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -121,6 +122,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     boolean checkpasswordtrue = false;
     public static boolean dangkythanhcong = false;
     public ArrayList<View> listEditText = new ArrayList<>();
+    List<Character> list1 = new ArrayList<Character>();
     Canvas canvas;
     //API
 //    private Context context;
@@ -363,11 +365,12 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                 } else {
 
-                    if (Ifullname.getText().toString().equals("")) {
-//                        errorname.setVisibility(View.VISIBLE);
-                    } else {
-                        errorname.setVisibility(View.GONE);
+                    if (Ifullname.getText().toString().length()>0) {
+//                         errorname.setVisibility(View.GONE);
+                        result = capitalizeFirstLetter(Ifullname.getText().toString());
                         Ifullname.setText(result);
+
+                    } else {
                     }
 
 
@@ -718,15 +721,17 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     }
                 } else {
 
-                    if (Idia_chi.getText().toString().matches("")) {
+                    if(Idia_chi.getText().toString().length()>0) {
+                        result = capitalizeFirstLetter(Idia_chi.getText().toString());
+                        Idia_chi.setText(result);
+                        erroraddress.setVisibility(View.GONE);
+                        erroraddress.setVisibility(View.GONE);
+                    }
+                    else  {
                         addressflag = false;
                         setDongyEnble();
 //                        erroraddress.setVisibility(View.VISIBLE);
 
-                    } else {
-                        Idia_chi.setText(result1);
-                        erroraddress.setVisibility(View.GONE);
-                        erroraddress.setVisibility(View.GONE);
                     }
 
                 }
@@ -1563,6 +1568,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
     public String capitalizeFirstLetter(String s) {
         array = s.toCharArray();
+//        for (int i = 0; i<=array.length;i++)
+//            list1.add(array[i]);
         // Uppercase first letter.
         if (array[0] == Character.toLowerCase(array[0])) {
             array[0] = Character.toUpperCase(array[0]);
@@ -1617,6 +1624,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 fullnameflag = false;
                 setDongyEnble();
             } else {
+
                 result = capitalizeFirstLetter(Ifullname.getText().toString());
                 fullnameflag = true;
                 setDongyEnble();
