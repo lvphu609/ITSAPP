@@ -191,6 +191,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             boolean value = extras.getBoolean("checkboxFW");
             edtUserName.setText(extras.getString("EmailFW"));
             cbSave.setChecked(true);
+            frmDK.dangkythanhcong = false;
         }
         /*-----------------*/
 
