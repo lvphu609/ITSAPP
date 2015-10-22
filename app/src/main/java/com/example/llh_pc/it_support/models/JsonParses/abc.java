@@ -7,37 +7,48 @@ import com.google.gson.annotations.SerializedName;
  */
 public class abc {
 
-    @SerializedName("id")
-    private String id;
+    @SerializedName("status")
+    private String status;
 
-    @SerializedName("type_id")
-    private String type_id;
+    @SerializedName("message")
+    private String message;
 
-    @SerializedName("content")
-    private String content;
+    @SerializedName("results")
+    private String results;
 
-    public String getId() {
-        return id;
+    @SerializedName("validation")
+    private String validation;
+
+    public String getStatus() {
+        return status;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getType_id() {
-        return type_id;
+    public String getMessage() {
+        return message;
     }
 
-    public void setType_id(String type_id) {
-        this.type_id = type_id;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getContent() {
-        return content;
+    public String getResults() {
+        return results;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setResults(String results) {
+        this.results = results;
+    }
+
+    public String getValidation() {
+        return validation;
+    }
+
+    public void setValidation(String validation) {
+        this.validation = validation;
     }
 
 }
