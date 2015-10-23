@@ -854,6 +854,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     Tpassmoi2.setVisibility(View.GONE);
                     Tpassmoi3.setVisibility(View.GONE);
                 }
+
                  if (passmoi.getText().toString().matches(passcu.getText().toString()))
                 {
                     Tpassmoi1.setVisibility(View.GONE);
@@ -874,6 +875,12 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 }
 
+
+                else if (passmoi.getText().toString().matches(cfpassmoi.getText().toString()))
+                {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                }
                 else
                 {
                     okdialog.setEnabled(false);
