@@ -236,7 +236,7 @@
                     android:singleLine="false"
                     android:inputType="number"
                     android:enabled="false"
-                    android:maxLength="25"
+                    android:maxLength="20"
                     android:theme="@style/MyEditTextTheme"
                     android:layout_marginLeft="10dp"
                     />
