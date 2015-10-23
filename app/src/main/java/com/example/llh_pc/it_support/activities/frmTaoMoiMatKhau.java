@@ -85,7 +85,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
                     A = 0;
-                    tvMaXN.setText("Vui lòng nhập mã xác thực.");
+                    tvMaXN.setText("Không được để trống trường này.");
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
                 } else {
@@ -114,7 +114,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
             @Override
             public void afterTextChanged(Editable s) {
                 if (s.toString().isEmpty()) {
-                    tvMatKhau.setText("Vui lòng nhập mật khẩu mới.");
+                    tvMatKhau.setText("Không được để trống trường này.");
                     B = 0;
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
@@ -147,7 +147,7 @@ public class frmTaoMoiMatKhau extends AppCompatActivity implements InnoFunctionL
                     C = 0;
                     btnSetPass.setEnabled(false);
                     btnSetPass.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    tvNhapMK.setText("Vui lòng nhập lại mật khẩu.");
+                    tvNhapMK.setText("Không được để trống trường này.");
                 } else {
                     C = 1;
                     if (A + B + C == 3) {

@@ -21,6 +21,9 @@ public class PostParse {
     @SerializedName("validation")
     private String validation;
 
+    @SerializedName("is_expire")
+    private String is_expire;
+
     public String getValidation() {
         return validation;
     }
@@ -51,5 +54,13 @@ public class PostParse {
 
     public void setResults(ArrayList<Post> results) {
         this.results = results;
+    }
+
+    public String getIs_expire() {
+        return is_expire;
+    }
+
+    public void setIs_expire(String is_expire) {
+        this.is_expire = is_expire;
     }
 }
