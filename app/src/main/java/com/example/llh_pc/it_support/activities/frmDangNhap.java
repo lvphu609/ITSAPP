@@ -128,7 +128,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                     E = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    tvEmail.setText("Vui lòng nhập email.");
+                    tvEmail.setText("Không được để trống trường này.");
                 } else {
                     E = 1;
                     if (E + P == 2) {
@@ -162,7 +162,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                     P = 0;
                     btnLogin.setEnabled(false);
                     btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    tvMatKhau.setText("Vui lòng nhập mật khẩu.");
+                    tvMatKhau.setText("Không được để trống trường này.");
                 } else {
                     P = 1;
                     if (E + P == 2) {

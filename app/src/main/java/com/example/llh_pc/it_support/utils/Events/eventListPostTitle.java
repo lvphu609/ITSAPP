@@ -2,6 +2,8 @@ package com.example.llh_pc.it_support.utils.Events;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 
@@ -36,10 +38,18 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
         String idPost = p.getId();
         String namePost = p.getName();
         //-----------//
-        try
+        Intent intent = new Intent(context, frmChildPost.class);
+        intent.putExtra("NamePost",namePost);
+        intent.putExtra("ID", idPost);
+        context.startActivity(intent);
+        //-----------//
+        /*try
         {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+            final String token = sharedPreference.getString("token", null);
             RestClient restClient = new RestClient(url_get_my_notifications);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token",token);
             restClient.execute(RequestMethod.GET);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
             {
@@ -56,9 +66,7 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
                 }
             }
 
+        }catch (Exception ex){}*/
 
-
-        }catch (Exception ex){}
-
-    }
+     }
 }

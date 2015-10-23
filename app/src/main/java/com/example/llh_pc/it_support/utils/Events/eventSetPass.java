@@ -91,7 +91,7 @@ public class eventSetPass implements View.OnClickListener {
                 final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
                 Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
                 TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
-                tv.setText("Nhập lại mật khẩu không trùng khớp với mật khẩu đã đăng ký.");
+                tv.setText("Xác nhận mật khẩu không trùng khớp với mật khẩu đã đăng ký.");
                 okpopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -99,7 +99,7 @@ public class eventSetPass implements View.OnClickListener {
                     }
                 });
             } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                String jsonObject = restClient.getResponse();
+                   String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
                 LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
                 //if result from response success
@@ -112,7 +112,8 @@ public class eventSetPass implements View.OnClickListener {
                     //Toast.makeText(context, "", Toast.LENGTH_LONG).show();
                     context.startActivity(intent);
                 } else {
-                    LayoutInflater li = LayoutInflater.from(context);
+                    LayoutInflater li = LayoutInflater.from(context)
+                            ;
                     View promptsView = li.inflate(R.layout.popup_validation, null);
                     android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
                     alertDialogBuilder.setView(promptsView);

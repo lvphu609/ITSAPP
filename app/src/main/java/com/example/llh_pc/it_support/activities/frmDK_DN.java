@@ -62,7 +62,6 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
         final android.app.AlertDialog.Builder helpBuilder = new android.app.AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popup_validation, null);
-
         helpBuilder.setView(checkboxLayout);
         // set dialog message
         helpBuilder.setCancelable(false);

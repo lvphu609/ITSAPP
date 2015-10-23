@@ -98,7 +98,7 @@ public class eventLogin implements View.OnClickListener {
                 final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
                 Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
                 TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
-                tv.setText("Email không đúng định dạng.");
+                tv.setText("Email hoặc mật khẩu không hợp lệ.");
                 okpopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -138,6 +138,7 @@ public class eventLogin implements View.OnClickListener {
                     //save values into sharePreference
                     String t = getLoginJson.getResults().getAccess_token();
                     String id = getLoginJson.getResults().getAccount_id();
+
                     String account_type = getLoginJson.getResults().getAccount_type();
                     token = getLoginJson.getResults().getAccess_token();
                     /*--------------------information account------------------*/
@@ -145,6 +146,8 @@ public class eventLogin implements View.OnClickListener {
                     /*--------------------------------------------------------*/
                     editor.putString("token", t);
                     editor.putString("id", id);
+                    editor.putString("email", email);
+                    editor.putString("password",P);
                     /*editor.putString("avatar",avatar);
                     editor.putString("fullname",full_name);*/
                     editor.commit();
@@ -168,7 +171,7 @@ public class eventLogin implements View.OnClickListener {
                     final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
                     Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
                     TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
-                    tv.setText("Email hoặc mật khẩu không hợp lệ. Vui lòng nhập lại.");
+                    tv.setText("Email hoặc mật khẩu không hợp lệ.");
                     okpopup.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -198,6 +201,10 @@ public class eventLogin implements View.OnClickListener {
                     full_name = getAccountJson.getDKresults().getFull_name().toString();
                     avatar = getAccountJson.getDKresults().getAvatar().toString();
                     user_type = getAccountJson.getDKresults().getAccount_type().toString();
+                    /*info login*/
+                    email = getAccountJson.getDKresults().getEmail();
+
+
                 }
             }
         } catch (Exception ex) {
