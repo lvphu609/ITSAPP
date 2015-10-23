@@ -35,10 +35,11 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:id="@+id/profile_image"
-        android:layout_width="60dp"
-        android:layout_height="71dp"
+        android:layout_width="@dimen/avatar"
+        android:layout_height="@dimen/avatar1"
         android:src="@drawable/avatar"
-        android:layout_weight="0.10" />
+        android:layout_weight="0.10"
+       />
 
             <TextView
                 android:id="@+id/chonanh"
@@ -46,11 +47,12 @@
                 android:layout_height="wrap_content"
                 android:text="Chọn ảnh (*)"
                 android:gravity="bottom"
-                android:textSize="11dp"
-                android:layout_marginTop="75dp"
+                android:textSize="@dimen/chonanh"
+                android:layout_marginTop="@dimen/androidmarginchonanh"
                 android:layout_marginLeft="0dp"
-                android:textColor="@color/mauden"
+                android:textColor="@color/mauxam"
                 android:visibility="visible"/>
+
 
 </RelativeLayout>
         <RelativeLayout
@@ -72,28 +74,31 @@
             android:shadowColor="@color/mauxam"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="24"
+            android:textSize="@dimen/hoten"
 
           />
             <TextView
                 android:id="@+id/errorname"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Nhập họ và tên."
+                android:text="@string/Emailtrong"
                 android:textColor="@color/maudo"
                 android:gravity="left"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="20dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:textSize="@dimen/hoten"/>
             <TextView
                 android:id="@+id/errorname1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text=" Họ và tên không được bắt đầu bằng khoảng trống."
+                android:text="@string/nameerror"
                 android:textColor="@color/maudo"
                 android:gravity="left"
                 android:layout_marginTop="40dp"
                 android:layout_marginLeft="20dp"
-                android:visibility="gone"/>
+                android:visibility="gone"
+                android:textSize="@dimen/hoten"/>
         </RelativeLayout>
     </LinearLayout>
     <LinearLayout
@@ -117,23 +122,26 @@
             android:hint="Nhập email (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="30"
+            android:textSize="@dimen/email"
             />
         <TextView
             android:id="@+id/erroEmail1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Nhập email"
+            android:text="@string/Emailtrong"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/email"/>
         <TextView
             android:id="@+id/erroEmail2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Email đã được đăng ký hoặc không đúng định dạng abc@mail.com."
+            android:text="@string/Emaillerror"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/email"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -156,23 +164,26 @@
             android:hint="Nhập mật khẩu (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="28"
+            android:textSize="@dimen/matkhau"
             />
         <TextView
             android:id="@+id/errorpass1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Nhập mật khẩu"
+            android:text="@string/Emailtrong"
             android:visibility="gone"
             android:layout_gravity="left"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/matkhau"/>
         <TextView
             android:id="@+id/errorpass2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Mật khẩu phải có ít nhất 6 ký tự."
+            android:text="@string/passerror"
             android:visibility="gone"
             android:layout_gravity="left"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/matkhau"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -196,24 +207,27 @@
             android:hint="Xác nhận mật khẩu (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="28"
+            android:textSize="@dimen/nhaplaimapkhau"
 
             />
         <TextView
             android:id="@+id/cfpassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Nhập lại mật khẩu phải trùng khớp với mật khẩu đăng ký."
+            android:text="@string/cfpasserror"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/nhaplaimapkhau"/>
         <TextView
             android:id="@+id/cfpassword1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Xác nhận mật khẩu không được bỏ trống."
+            android:text="@string/Emailtrong"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/nhaplaimapkhau"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -222,7 +236,8 @@
         android:orientation="vertical"
         android:layout_gravity="left"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp">
+        android:paddingRight="20dp"
+        >
 
 
         <EditText
@@ -236,23 +251,26 @@
             android:hint="Nhập số điện thoại (*)"
             android:theme="@style/MyEditTextTheme"
             android:maxLength="25"
+            android:textSize="@dimen/phone"
             />
         <TextView
             android:id="@+id/errorphone1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text=" Nhập số điện thoại."
+            android:text="@string/Emailtrong"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/phone"/>
         <TextView
             android:id="@+id/errorphone2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Số điện thoại yêu cầu phải có ít nhất 10 ký tự."
+            android:text="@string/phoneerror"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/phone"/>
     </LinearLayout>
     <LinearLayout
         android:layout_marginTop="10dp"
@@ -279,23 +297,26 @@
             android:inputType="textNoSuggestions|textMultiLine"
             android:hint="Nhập địa chỉ (*)"
             android:theme="@style/MyEditTextTheme"
-            android:maxLength="30"/>
+            android:maxLength="30"
+            android:textSize="@dimen/diachi"/>
         <TextView
             android:id="@+id/erroraddress"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text=" Nhập địa chỉ."
+            android:text="@string/Emailtrong"
             android:visibility="gone"
             android:layout_gravity="center"
-            android:textColor="@color/maudo"/>
+            android:textColor="@color/maudo"
+            android:textSize="@dimen/diachi"/>
         <TextView
             android:id="@+id/validationaddress1"
             android:layout_marginLeft="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Địa chỉ không được bắt đầu bằng khoảng trống."
+            android:text="@string/addresserror"
             android:textColor="@color/maudo"
             android:visibility="gone"
+            android:textSize="@dimen/diachi"
             />
 
     </LinearLayout>
@@ -320,19 +341,19 @@
                 android:layout_height="wrap_content"
                 tools:context=".frmDangKy"
                 android:text="Loại tài khoản:"
-                android:textSize="20dp"
                 android:textColor="#000000"
+                android:textSize="@dimen/loaitaikhoan"
 
                 />
             <CheckBox
                 android:id="@+id/user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
                 android:layout_marginLeft="20dp"
                 android:text="Người sử dụng"
                 android:button="@drawable/check_white"
                 android:paddingLeft="5dp"
+                android:textSize="@dimen/loaitaikhoan"
                 />
 
             <CheckBox
@@ -340,11 +361,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Người cung cấp dịch vụ"
-                android:textSize="20dp"
                 android:layout_marginLeft="20dp"
                 android:button="@drawable/check_white"
                 android:paddingLeft="5dp"
-               ></CheckBox>
+                android:textSize="@dimen/loaitaikhoan"
+                ></CheckBox>
             <!--<ListView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
@@ -358,7 +379,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Chuyên môn:"
-                android:textSize="20dp"
+                android:textSize="@dimen/hoten"
 
                 android:visibility="gone"
                 android:textColor="@color/mauden"
@@ -369,10 +390,10 @@
                 android:layout_height="wrap_content"
                 android:text="-PC"
                 android:visibility="gone"
-                android:textSize="20dp"
                 android:background="@null"
                 android:layout_marginLeft="20dp"
                 android:textColor="@color/mauden"
+                android:textSize="@dimen/hoten"
                 />
             <TextView
                 android:id="@+id/cbLaptop"
@@ -381,9 +402,8 @@
                 android:layout_height="wrap_content"
                 android:text="-Laptop"
                 android:visibility="gone"
-                android:textSize="20dp"
                 android:background="@null"
-
+                android:textSize="@dimen/loaitaikhoan"
                 android:textColor="@color/mauden"
                 />
             <TextView
@@ -393,7 +413,7 @@
                 android:layout_height="wrap_content"
                 android:text="-Máy in"
                 android:visibility="gone"
-                android:textSize="20dp"
+                android:textSize="@dimen/loaitaikhoan"
                 android:background="@null"
                 android:textColor="@color/mauden"
 
@@ -405,7 +425,7 @@
                 android:layout_height="wrap_content"
                 android:text="-Máy Photocopy"
                 android:visibility="gone"
-                android:textSize="20dp"
+                android:textSize="@dimen/loaitaikhoan"
                 android:background="@null"
                 android:textColor="@color/mauden"
                 />
@@ -416,7 +436,7 @@
                 android:layout_height="wrap_content"
                 android:text="-Máy Scan"
                 android:visibility="gone"
-                android:textSize="20dp"
+                android:textSize="@dimen/loaitaikhoan"
                 android:background="@null"
                 android:textColor="@color/mauden"
                 />
@@ -427,7 +447,7 @@
                 android:layout_height="wrap_content"
                 android:text="-Máy Fax"
                 android:visibility="gone"
-                android:textSize="20dp"
+                android:textSize="@dimen/loaitaikhoan"
                 android:background="@null"
                 android:textColor="@color/mauden"
                 />
@@ -447,11 +467,11 @@
 
         <Button
             android:id="@+id/dangkyok"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/bntdangkyokW"
+            android:layout_height="@dimen/bntdangkyokH"
             android:text="Đăng ký"
             android:gravity="center"
-            android:textSize="15dp"
+            android:textSize="@dimen/loaitaikhoan"
             android:textColor="@color/actionbar_text"
             android:background="@color/mauxam"
             android:enabled="false"

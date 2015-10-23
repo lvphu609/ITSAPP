@@ -20,6 +20,7 @@ import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Environment;
+import android.os.Handler;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -29,6 +30,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.PasswordTransformationMethod;
@@ -50,6 +52,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.Scroller;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -77,8 +80,11 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -87,6 +93,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class frmDangKy extends AppCompatActivity implements InnoFunctionListener, View.OnClickListener, CompoundButton.OnCheckedChangeListener {
     private boolean is_network = false;
     boolean flagcheckon = false;
+    boolean flagcheckdiachi =false;
     protected View gameView;
     ScrollView scrollView;
     TextView errorname, errorname1;
@@ -97,7 +104,9 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     boolean emailTontai = false;
     //avatar
     int i;
-    char[] array;
+    char k;
+    StringBuilder sb;
+    String[] array;
     Bitmap thumbnail, bm;
     public static String temp, accType, checkedbox;
     ArrayList<Integer> list = new ArrayList<>();
@@ -313,36 +322,57 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 //                    result = capitalizeFirstLetter(Ifullname.getText().toString());
 //
 //                }
-//
-//
-//                    if (array[i] == Character.toUpperCase(array[i])) {
-//                        Ifullname.setText(result);
-//                    }
+
+                if (Ifullname.getText().toString().length()>0 ) {
+                    errorname.setVisibility(View.GONE);
+                }
+
+
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
+                String txt = Ifullname.getText().toString();
+                if(txt != null && txt.length()>0){
+                    String first = txt.substring(0,1);
+                    if(!(first == first.toUpperCase())){
+                        String result = toUpperCaseFirst(Ifullname.getText().toString());
+                        Ifullname.setText(result);
+                        Ifullname.setSelection(Ifullname.getText().length());
+                    }
+                }
+
+
+
+                    flagcheckon =true;
+                flagcheckdiachi =false;
                 for (int i = s.length(); i > 0; i--) {
 
                     if (s.subSequence(i - 1, i).toString().equals("\n"))
                         s.replace(i - 1, i, "");
 
                 }
+
+
                 if (s.toString().matches("")) {
+
 
                     errorname.setVisibility(View.VISIBLE);
                     errorname1.setVisibility(View.GONE);
                     fullnameflag = false;
                     setDongyEnble();
 
-                } else {
+
+                } else{
 
                     if (s.toString().matches("")) {
+
                         errorname.setVisibility(View.VISIBLE);
                         errorname1.setVisibility(View.GONE);
                     } else {
+
                         errorname.setVisibility(View.GONE);
                         errorname1.setVisibility(View.GONE);
                         checkname(s.toString());
@@ -367,7 +397,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                     if (Ifullname.getText().toString().length()>0) {
 //                         errorname.setVisibility(View.GONE);
-                        result = capitalizeFirstLetter(Ifullname.getText().toString());
+                        result = toUpperCaseFirst(Ifullname.getText().toString());
                         Ifullname.setText(result);
 
                     } else {
@@ -424,6 +454,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     errorline2.setVisibility(View.VISIBLE);
                     errorline1.setVisibility(View.GONE);
                 }
+
             }
 
             @Override
@@ -474,6 +505,18 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                         errorpass1.setVisibility(View.GONE);
                         checkpasswordtrue = true;
                         passwordflag = true;
+                        setDongyEnble();
+                    }
+                    if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
+                        errorcfpassword.setVisibility(View.GONE);
+                        errorcfpassword2.setVisibility(View.GONE);
+                        confirmpasswordflag = true;
+                        setDongyEnble();
+                    }
+                    else {
+//                        errorcfpassword.setVisibility(View.VISIBLE);
+//                        errorcfpassword2.setVisibility(View.GONE);
+                        confirmpasswordflag = false;
                         setDongyEnble();
                     }
                 } else {
@@ -528,6 +571,17 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     errorpass1.setVisibility(View.GONE);
                     errorpass2.setVisibility(View.GONE);
                 }
+                if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
+                    errorcfpassword.setVisibility(View.GONE);
+                    errorcfpassword2.setVisibility(View.GONE);
+                    confirmpasswordflag = true;
+                    setDongyEnble();
+                }
+                else {
+
+                    confirmpasswordflag = false;
+                    setDongyEnble();
+                }
             }
         });
         Iconfirmpassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -541,14 +595,22 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                         errorcfpassword.setVisibility(View.GONE);
                         confirmpasswordflag = false;
                         setDongyEnble();
-                    } else if (Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())) {
+                    }
+                    else if(Iconfirmpassword.getText().toString().length() > 0){
+                        errorcfpassword.setVisibility(View.VISIBLE);
+                        errorcfpassword2.setVisibility(View.GONE);
+                        confirmpasswordflag = false;
+                        setDongyEnble();
+                    }
+                    if(Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
                         errorcfpassword.setVisibility(View.GONE);
                         errorcfpassword2.setVisibility(View.GONE);
                         confirmpasswordflag = true;
                         setDongyEnble();
-                    } else if (Iconfirmpassword.getText().toString().length() > 0) {
-                        errorcfpassword.setVisibility(View.VISIBLE);
+                    }
+                        else {
                         errorcfpassword2.setVisibility(View.GONE);
+                        errorcfpassword.setVisibility(View.VISIBLE);
                         confirmpasswordflag = false;
                         setDongyEnble();
                     }
@@ -556,17 +618,24 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
                     if (Iconfirmpassword.getText().toString().matches("")) {
 //                        errorcfpassword2.setVisibility(View.VISIBLE);
-                    } else if (Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())) {
-                        errorcfpassword.setVisibility(View.GONE);
-                        errorcfpassword2.setVisibility(View.GONE);
-                        confirmpasswordflag = true;
-                        setDongyEnble();
                     } else if (Iconfirmpassword.getText().toString().length() > 0) {
                         errorcfpassword.setVisibility(View.VISIBLE);
                         errorcfpassword2.setVisibility(View.GONE);
                         confirmpasswordflag = false;
                         setDongyEnble();
                     }
+                     if (Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
+                         errorcfpassword.setVisibility(View.GONE);
+                         errorcfpassword2.setVisibility(View.GONE);
+                         confirmpasswordflag = true;
+                         setDongyEnble();
+                     }
+                    else {errorcfpassword2.setVisibility(View.GONE);
+                         errorcfpassword.setVisibility(View.VISIBLE);
+
+                         confirmpasswordflag = false;
+                         setDongyEnble();
+                     }
                 }
             }
         });
@@ -584,7 +653,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     errorcfpassword.setVisibility(View.GONE);
                     confirmpasswordflag = false;
                     setDongyEnble();
-                } else if (Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())) {
+                } else if (Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
                     errorcfpassword.setVisibility(View.GONE);
                     errorcfpassword2.setVisibility(View.GONE);
                     confirmpasswordflag = true;
@@ -605,7 +674,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                     errorcfpassword2.setVisibility(View.VISIBLE);
                     setDongyEnble();
 
-                } else if (s.toString().matches(Ipassword.getText().toString())) {
+                } else if (s.toString().matches(Ipassword.getText().toString())&& Iconfirmpassword.getText().toString().length()  == Ipassword.getText().toString().length()) {
                     errorcfpassword.setVisibility(View.GONE);
                     confirmpasswordflag = true;
                     setDongyEnble();
@@ -722,8 +791,8 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 } else {
 
                     if(Idia_chi.getText().toString().length()>0) {
-                        result = capitalizeFirstLetter(Idia_chi.getText().toString());
-                        Idia_chi.setText(result);
+                        result1 = capitalizeFirstLetter(Idia_chi.getText().toString());
+                        Idia_chi.setText(result1);
                         erroraddress.setVisibility(View.GONE);
                         erroraddress.setVisibility(View.GONE);
                     }
@@ -753,6 +822,19 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
             @Override
             public void afterTextChanged(Editable s) {
+
+
+                String txt = Idia_chi.getText().toString();
+                if(txt != null && txt.length()>0){
+                    String first = txt.substring(0,1);
+                    if(!(first == first.toUpperCase())){
+                        String result = toUpperCaseFirst(Idia_chi.getText().toString());
+                        Idia_chi.setText(result);
+                        Idia_chi.setSelection(Idia_chi.getText().length());
+                    }
+                }
+                flagcheckon =false;
+                flagcheckdiachi =true;
                 for (int i = s.length(); i > 0; i--) {
 
                     if (s.subSequence(i - 1, i).toString().equals("\n"))
@@ -1122,7 +1204,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
         final AlertDialog.Builder helpBuilder = new AlertDialog.Builder(this);
 //        helpBuilder.setTitle("Chuyên môn");
-        helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
+//        helpBuilder.setMessage("Chọn chuyên môn sửa chữa");
         LayoutInflater inflater = getLayoutInflater();
         final View checkboxLayout = inflater.inflate(R.layout.popuplayout, null);
         helpBuilder.setView(checkboxLayout);
@@ -1298,7 +1380,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 show.dismiss();
             }
         });
-
+    show.show();
 
         // Remember, create doesn't show the dialog
 //        AlertDialog helpDialog = helpBuilder.create();
@@ -1567,26 +1649,37 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
     }
 
     public String capitalizeFirstLetter(String s) {
-        array = s.toCharArray();
+         k = s.charAt(0);
+
 //        for (int i = 0; i<=array.length;i++)
 //            list1.add(array[i]);
         // Uppercase first letter.
-        if (array[0] == Character.toLowerCase(array[0])) {
-            array[0] = Character.toUpperCase(array[0]);
-        } else {
-        }
+        if (k == Character.toLowerCase(k)) {
 
-        // Uppercase all letters that follow a whitespace character.
-        for (int i = 1; i < array.length; i++) {
-            if (Character.isWhitespace(array[i - 1])) {
+            k= Character.toUpperCase(k);
+            if(k == Character.toUpperCase(k))
+            {
+                if (flagcheckon == true) {
+                    Ifullname.setText(sb);
+                    Ifullname.setSelection(Ifullname.getText().length());
 
-                array[i] = Character.toUpperCase(array[i]);
-
+                }
             }
 
         }
+
+
+        // Uppercase all letters that follow a whitespace character.
+//        for (int i = 1; i < array.length; i++) {
+//            if (Character.isWhitespace(array[i - 1])) {
+//
+//                array[i] = Character.toUpperCase(array[i]);
+//
+//            }
+//
+//        }
         // Result.
-        return new String(array);
+        return  Character.toString(k);
     }
 
     public void popupthanhcong() {
@@ -1595,7 +1688,7 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
         final View checkboxLayout = inflater.inflate(R.layout.popupdangky, null);
 
         helpBuilder.setView(checkboxLayout);
-        // set dialog message
+        // set dialog messagec
         helpBuilder
                 .setCancelable(false);
         final Intent DN = new Intent(this, frmDangNhap.class);
@@ -1615,6 +1708,22 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
 
     }
 
+    public  String toUpperCaseFirst(String s) {
+        if (s != null && s.length() > 0) {
+            String first = s.substring(0, 1).toUpperCase();
+            if (s.length() == 1) {
+                return first;
+            } else {
+                String result = first + s.substring(1);
+                return result;
+            }
+
+
+
+        }else return "";
+
+    }
+
     public String checkname(String s) {
         array1 = s.toCharArray();
         for (int i = 0; i < array1.length; i++) {
@@ -1625,7 +1734,6 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 setDongyEnble();
             } else {
 
-                result = capitalizeFirstLetter(Ifullname.getText().toString());
                 fullnameflag = true;
                 setDongyEnble();
                 errorname.setVisibility(View.GONE);
@@ -1644,13 +1752,19 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                 addressflag = false;
                 setDongyEnble();
             } else {
-                result1 = capitalizeFirstLetter(Idia_chi.getText().toString());
+
                 addressflag = true;
                 setDongyEnble();
                 erroraddress.setVisibility(View.GONE);
             }
         }
         return new String (array2);
+    }
+
+    public  String   removeFirstChar(char p){
+        sb = new StringBuilder();
+        sb.append(p);
+        return sb.toString();
     }
 
 }

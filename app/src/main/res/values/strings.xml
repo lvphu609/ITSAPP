@@ -51,4 +51,18 @@
     <string name="title_activity_frm_hoan_thanh">frmHoanThanh</string>
     <string name="title_activity_search_map">SearchMap</string>
     <string name="multilines">Line1Line1\nLine2Line2</string>
+
+    <string name="nameerror">Họ tên không hợp lệ.</string>
+     <string name="Emaillerror">Email đã được đăng ký hoặc chưa đúng định dạng: abc@mail.com.</string>
+    <string name="Emailtrong">Không được để trống trường này.</string>
+    <string name="passerror">Mật khẩu phải có ít nhất 6 kí tự.</string>
+    <string name="cfpasserror">Xác nhận mật khẩu phải trùng khớp với mật khẩu đã đăng ký.</string>
+    <string name="phoneerror">Số điện thoại phải có ít nhất 10 kí tự.</string>
+    <string name="addresserror">Địa chỉ không được bắt đầu bằng khoảng trắng</string>
+
+    <string name="passmoi">Mật khẩu không hợp lệ.</string>
+    <string name="passcu"> Mật khẩu không hợp lệ.</string>
+    <string name="cfpassmoi">Xác nhận mật khẩu phải trùng khớp với mật khẩu đã đăng ký.</string>
+    <string name="trungpasscu">Mật khẩu mới không được trùng khớp  mật khẩu hiện tại.</string>
+
 </resources>

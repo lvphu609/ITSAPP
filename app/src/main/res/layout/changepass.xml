@@ -22,28 +22,87 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_passcu"
-            android:textSize="12dp"
             android:inputType="textNoSuggestions|textPassword"
             android:padding="10dp"
             android:theme="@style/MyEditTextTheme"/>
+    <TextView
+        android:id="@+id/errorpass1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Emailtrong"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
+    <TextView
+        android:id="@+id/errorpass2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passcu"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
         <EditText
         android:id="@+id/passmoi"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_passmoi"
-            android:textSize="12dp"
+
             android:inputType="textNoSuggestions|textPassword"
         android:padding="10dp"
             android:theme="@style/MyEditTextTheme"/>
+    <TextView
+        android:id="@+id/errorpassmoi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Emailtrong"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
+    <TextView
+        android:id="@+id/errorpassmoi2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/passmoi"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
+    <TextView
+        android:id="@+id/errorpassmoi3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/trungpasscu"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
         <EditText
         android:id="@+id/cfpassmoi"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_cfpassmoi"
-            android:textSize="12dp"
-            android:inputType="textNoSuggestions|textPassword"
-        android:padding="10dp"
-            android:theme="@style/MyEditTextTheme"/>
+        android:hint="@string/hint_cfpassmoi"  android:inputType="textNoSuggestions|textPassword"
+        android:padding="10dp" android:theme="@style/MyEditTextTheme"/>
+    <TextView
+        android:id="@+id/errorcfpassmoi"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Emailtrong"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
+    <TextView
+        android:id="@+id/errorcfpassmoi2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cfpassmoi"
+        android:visibility="gone"
+        android:layout_gravity="left"
+        android:textColor="@color/maudo"
+        android:textSize="@dimen/matkhau"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
