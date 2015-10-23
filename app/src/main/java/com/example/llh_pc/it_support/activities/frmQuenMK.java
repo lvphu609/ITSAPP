@@ -76,7 +76,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 if (s.toString().isEmpty()) {
                     btnSend.setEnabled(false);
                     btnSend.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    tvMatKhau.setText("Vui lòng nhập email.");
+                    tvMatKhau.setText("Không được để trống trường này.");
                 } else {
                     tvMatKhau.setText("");
                     btnSend.setEnabled(true);
@@ -159,7 +159,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(frmQuenMK.this, "", "Loading...");
+            progressDialog = ProgressDialog.show(frmQuenMK.this, "IT Support", "Loading...");
         }
 
         @Override
@@ -200,23 +200,24 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
 
         @Override
         protected void onPostExecute(String s) {
-            switch (s.toString())
+            if(s.equals("1"))
             {
-                case "1":Intent intent = new Intent(frmQuenMK.this, frmTaoMoiMatKhau.class);
-                    intent.putExtra("mail", email);
-                    progressDialog.dismiss();
-                    startActivity(intent);
-                case "2":
-                    String t2 = "Email không hợp lệ hoặc chưa đăng ký.";
-                    progressDialog.dismiss();
-                    popupValidation(t2);
-                    break;
-                case "3":
-                    String t3 = "Email không đúng định dạng.";
-                    progressDialog.dismiss();
-                    popupValidation(t3);
-                    break;
-
+                Intent intent = new Intent(frmQuenMK.this, frmTaoMoiMatKhau.class);
+                intent.putExtra("mail", email);
+                progressDialog.dismiss();
+                startActivity(intent);
+            }
+            if(s.equals("2"))
+            {
+                String t2 = "Email không hợp lệ hoặc chưa đăng ký.";
+                progressDialog.dismiss();
+                popupValidation(t2);
+            }
+            if(s.equals("3"))
+            {
+                String t3 = " Email không hợp lệ hoặc chưa đăng ký.";
+                progressDialog.dismiss();
+                popupValidation(t3);
             }
             super.onPostExecute(s);
         }

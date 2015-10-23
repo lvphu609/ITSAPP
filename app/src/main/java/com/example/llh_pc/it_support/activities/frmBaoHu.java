@@ -62,8 +62,11 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         }
         try
         {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+            final String token = sharedPreference.getString("token", null);
             RestClient restClient = new RestClient(url_get_my_notifications);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token",token);
             restClient.execute(RequestMethod.GET);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
             {

@@ -1,7 +1,9 @@
 package com.example.llh_pc.it_support.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -50,9 +52,12 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
         }
         try
         {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+            final String token = sharedPreference.getString("token", null);
             RestClient restClient = new RestClient(url_get_my_notifications);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addParam(Post.ID, ID);
+            restClient.addHeader("token",token);
             restClient.execute(RequestMethod.POST);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
             {
@@ -63,6 +68,11 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
                 {
                     array_post = getListPostJson.getResults();
                     adapter = new ChildPostAdapter(frmChildPost.this,R.layout.activity_child_post_adapter,array_post);
+                }else if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_FALSE))
+                {
+                    Intent intent = new Intent(this, frmDK_DN.class);
+                    intent.putExtra("checkTOKEN","0");
+                    startActivity(intent);
                 }
             }
         }catch (Exception ex){}
