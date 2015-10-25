@@ -22,4 +22,23 @@
     <dimen name="frmDangNhap_textsizevalidation">14dp</dimen>
     <dimen name="frmDangNhap_btnLogin_Width">150dp</dimen>
     <dimen name="frmDangNhap_btnLogin_Height">60dp</dimen>
+    <!--frmDangKy-->
+    <dimen name="bntokpopupW">70dp</dimen>
+    <dimen name="bntokpopupH">30dp</dimen>
+    <dimen name="bntdangkyokW">80dp</dimen>
+    <dimen name="bntdangkyokH">40dp</dimen>
+    <dimen name="androidmarginchonanh">75dp</dimen>
+    <dimen name="chonanh">11dp</dimen>
+    <dimen name="avatar">60dp</dimen>
+    <dimen name="avatar1">70dp</dimen>
+    <dimen name="hoten">15dp</dimen>
+    <dimen name="email">15dp</dimen>
+    <dimen name="matkhau">15dp</dimen>
+    <dimen name="nhaplaimapkhau">15dp</dimen>
+    <dimen name="phone">15dp</dimen>
+    <dimen name="diachi">15dp</dimen>
+    <dimen name="loaitaikhoan">15dp</dimen>
+    <dimen name="nguoisudung">15dp</dimen>
+    <dimen name="nguoicungcap">15dp</dimen>
+    <dimen name="okbnt">12dp</dimen>
 </resources>

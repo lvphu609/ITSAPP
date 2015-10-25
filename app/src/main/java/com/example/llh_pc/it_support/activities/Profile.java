@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.graphics.Typeface;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,6 +28,7 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
@@ -74,6 +76,7 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.google.gson.Gson;
 
 import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -100,13 +103,13 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
-    TextView user, provier, chuyenmon, resultText,rateText;
+    TextView user, provier, chuyenmon, resultText,rateText,eemail;
     TextView validationname,validationphone,validationadess,validationphone1,valadationname1,validationadress1;
     RatingBar rateBar;
     Bitmap avatar1;
     char[] array,array1,array2;
     ImageButton setavatar;
-    EditText eemail, efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
+    EditText  efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
     Button pc, laptop, mayin, scan, mayfax, photocopy, editProfile, OK, changePass,okprofile;
     ImageLoader imageload;
     Bitmap thumbnail, bm;
@@ -291,7 +294,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     }
 
     public void setProfile() {
-        eemail = (EditText) findViewById(R.id.email);
+        eemail = (TextView) findViewById(R.id.email);
         efullname = (EditText) findViewById(R.id.full_name);
         eadress = (EditText) findViewById(R.id.dia_chi);
         ephone = (EditText) findViewById(R.id.phone);
@@ -342,8 +345,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 } else {
                     if(efullname.getText().toString().length()>0) {
-                        result = capitalizeFirstLetter(efullname.getText().toString());
-                        efullname.setText(result);
+
                     }
 
 
@@ -372,7 +374,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         s.replace(i - 1, i, "");
 
                 }
-
+                String txt = efullname.getText().toString();
+                if(txt != null && txt.length()>0){
+                    String first = txt.substring(0,1);
+                    if(!(first == first.toUpperCase())){
+                        String result = toUpperCaseFirst(efullname.getText().toString());
+                        efullname.setText(result);
+                        efullname.setSelection(efullname.getText().length());
+                    }
+                }
 
                 if (s.toString().matches("")) {
 
@@ -401,8 +411,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 } else {
 
                         if(eadress.getText().toString().length()>0) {
-                            result = capitalizeFirstLetter(eadress.getText().toString());
-                            eadress.setText(result);
+
                         }
                     }
             }
@@ -425,6 +434,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if(s.subSequence(i-1, i).toString().equals("\n"))
                         s.replace(i-1, i, "");
 
+                }
+                String txt = eadress.getText().toString();
+                if(txt != null && txt.length()>0){
+                    String first = txt.substring(0,1);
+                    if(!(first == first.toUpperCase())){
+                        String result = toUpperCaseFirst(eadress.getText().toString());
+                        eadress.setText(result);
+                        eadress.setSelection(eadress.getText().length());
+                    }
                 }
                 if(s.toString().isEmpty()){
                     validationadess.setVisibility(View.VISIBLE);
@@ -735,7 +753,21 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         passcu = (EditText) promptView.findViewById(R.id.passcu);
         passmoi = (EditText) promptView.findViewById(R.id.passmoi);
         cfpassmoi = (EditText) promptView.findViewById(R.id.cfpassmoi);
+        final TextView Tpassmoi1,Tpassmoi2,Tpasscu1,Tpasscu2,Tcfpassmoi1,Tcfpassmoi2,Tpassmoi3;
+        Tpasscu1 = (TextView) promptView.findViewById(R.id.errorpass1);
+        Tpasscu2 = (TextView) promptView.findViewById(R.id.errorpass2);
+        Tpassmoi1 = (TextView) promptView.findViewById(R.id.errorpassmoi);
+        Tpassmoi2 = (TextView) promptView.findViewById(R.id.errorpassmoi2);
+        Tcfpassmoi1 = (TextView) promptView.findViewById(R.id.errorcfpassmoi);
+        Tcfpassmoi2 = (TextView) promptView.findViewById(R.id.errorcfpassmoi2);
+        Tpassmoi3 = (TextView) promptView.findViewById(R.id.errorpassmoi3);
 
+        passmoi.setTypeface(Typeface.DEFAULT);
+        passmoi.setTransformationMethod(new PasswordTransformationMethod());
+        passcu.setTypeface(Typeface.DEFAULT);
+        passcu.setTransformationMethod(new PasswordTransformationMethod());
+        cfpassmoi.setTypeface(Typeface.DEFAULT);
+        cfpassmoi.setTransformationMethod(new PasswordTransformationMethod());
         passcu.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -744,30 +776,39 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
-                {
+                if (passcu.getText().toString().length() > 5 && passmoi.getText().toString().length() > 5 && cfpassmoi.getText().toString().length() > 5 && cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                        ) {
+                    Tpasscu1.setVisibility(View.GONE);
+                    Tpasscu2.setVisibility(View.GONE);
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
-                }
-                else
-                {
+                } else if (passcu.getText().toString().matches("")) {
+                    Tpasscu1.setVisibility(View.VISIBLE);
+                    Tpasscu2.setVisibility(View.GONE);
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                } else if (passcu.getText().toString().length() < 6) {
+                    Tpasscu1.setVisibility(View.GONE);
+                    Tpasscu2.setVisibility(View.VISIBLE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                } else if (passcu.getText().toString().length() > 5) {
+                    Tpasscu1.setVisibility(View.GONE);
+                    Tpasscu2.setVisibility(View.GONE);
                 }
+
             }
 
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
-                {
-                        okdialog.setEnabled(true);
-                        okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                if (passcu.getText().toString().length() > 5 && passmoi.getText().toString().length() > 5 && cfpassmoi.getText().toString().length() > 5 && cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                        ) {
+                    okdialog.setEnabled(true);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
-                }
-                else
-                {
+                } else {
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
                 }
@@ -781,14 +822,43 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                        )
                 {
+                    Tpassmoi1.setVisibility(View.GONE);
+                    Tpassmoi2.setVisibility(View.GONE);
+                    Tpassmoi3.setVisibility(View.GONE);
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
                 }
-                else
+                else if (passmoi.getText().toString().length()<6 && passmoi.getText().toString().length()>0)
                 {
+                    Tpassmoi2.setVisibility(View.VISIBLE);
+                    Tpassmoi1.setVisibility(View.GONE);
+                    Tpassmoi3.setVisibility(View.GONE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                else if (passmoi.getText().toString().matches(""))
+                {
+                    Tpassmoi2.setVisibility(View.GONE);
+                    Tpassmoi1.setVisibility(View.VISIBLE);
+                    Tpassmoi3.setVisibility(View.GONE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                else if (passmoi.getText().toString().length()>5)
+                {
+                    Tpassmoi1.setVisibility(View.GONE);
+                    Tpassmoi2.setVisibility(View.GONE);
+                    Tpassmoi3.setVisibility(View.GONE);
+                }
+                 if (passmoi.getText().toString().matches(passcu.getText().toString()))
+                {
+                    Tpassmoi1.setVisibility(View.GONE);
+                    Tpassmoi2.setVisibility(View.GONE);
+                    Tpassmoi3.setVisibility(View.VISIBLE);
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
                 }
@@ -796,16 +866,62 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                      && passmoi.getText().toString().equalsIgnoreCase(passcu.getText().toString()))
                 {
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
                 }
+
                 else
                 {
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                if (passmoi.getText().toString().matches(passcu.getText().toString()))
+                {
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+            }
+        });
+
+
+        cfpassmoi.setOnFocusChangeListener(new OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus)
+                {
+                    if (cfpassmoi.getText().toString().length()>0 && cfpassmoi.getText().toString().length()<6)
+                { Tcfpassmoi1.setVisibility(View.VISIBLE);
+                    Tcfpassmoi2.setVisibility(View.GONE);}
+                    else  if (cfpassmoi.getText().toString().length()>5 && cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                           )
+                {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.GONE);
+                }
+                    else
+                {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.VISIBLE);
+                }
+
+                }
+                else
+                {
+                    if (cfpassmoi.getText().toString().length()>5 && cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                            )
+                    {
+                        Tcfpassmoi1.setVisibility(View.GONE);
+                        Tcfpassmoi2.setVisibility(View.GONE);
+                    }
+                    else
+                    {
+                        Tcfpassmoi1.setVisibility(View.GONE);
+                        Tcfpassmoi2.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -817,13 +933,35 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                       )
                 {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.GONE);
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
                 }
-                else
+                else if (cfpassmoi.getText().toString().length() <6 && cfpassmoi.getText().toString().length()>0)
+                {
+                    Tcfpassmoi2.setVisibility(View.VISIBLE);
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                else  if (cfpassmoi.getText().toString().matches(""))
+                {
+                    Tcfpassmoi1.setVisibility(View.VISIBLE);
+                    Tcfpassmoi2.setVisibility(View.GONE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                else if (cfpassmoi.getText().toString().length()>5 && cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.GONE);
+                }
+                if (passmoi.getText().toString().matches(passcu.getText().toString()))
                 {
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
@@ -832,13 +970,23 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString()))
+                if(passcu.getText().toString().length()>5 && passmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().length()>5 &&cfpassmoi.getText().toString().matches(passmoi.getText().toString())
+                       )
                 {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.GONE);
                     okdialog.setEnabled(true);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxanh));
 
                 }
                 else
+                {
+                    Tcfpassmoi1.setVisibility(View.GONE);
+                    Tcfpassmoi2.setVisibility(View.VISIBLE);
+                    okdialog.setEnabled(false);
+                    okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
+                }
+                if (passmoi.getText().toString().matches(passcu.getText().toString()))
                 {
                     okdialog.setEnabled(false);
                     okdialog.setBackgroundColor(getResources().getColor(R.color.mauxam));
@@ -1173,9 +1321,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
 
                 }
-                if(pccheck >0)
-                {
-                    pccheck= 0;
+                if (pccheck > 0) {
+                    pccheck = 0;
                 }
 
 
@@ -1429,29 +1576,29 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     public void onFocusChange(View v, boolean hasFocus) {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
     }
-    public String capitalizeFirstLetter(String s){
-        array = s.toCharArray();
-        // Uppercase first letter.
-        if(array[0] == Character.toLowerCase(array[0]))
-        {
-            array[0] = Character.toUpperCase(array[0]);
-        }
-        else
-        {
-        }
-
-        // Uppercase all letters that follow a whitespace character.
-        for (int i = 1; i < array.length; i++) {
-            if (Character.isWhitespace(array[i - 1])) {
-
-                array[i] = Character.toUpperCase(array[i]);
-
-            }
-
-        }
-        // Result.
-        return new String(array);
-    }
+//    public String capitalizeFirstLetter(String s){
+//        array = s.toCharArray();
+//        // Uppercase first letter.
+//        if(array[0] == Character.toLowerCase(array[0]))
+//        {
+//            array[0] = Character.toUpperCase(array[0]);
+//        }
+//        else
+//        {
+//        }
+//
+//        // Uppercase all letters that follow a whitespace character.
+//        for (int i = 1; i < array.length; i++) {
+//            if (Character.isWhitespace(array[i - 1])) {
+//
+//                array[i] = Character.toUpperCase(array[i]);
+//
+//            }
+//
+//        }
+//        // Result.
+//        return new String(array);
+//    }
 
     @Override
     protected void onResume() {
@@ -1470,7 +1617,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 x = 0;
             }
             else {      valadationname1.setVisibility(View.GONE);
-                result = capitalizeFirstLetter(efullname.getText().toString());
+
                 x = 1;
                 setOKenable();}
         }
@@ -1489,7 +1636,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             }
             else {      validationadress1.setVisibility(View.GONE);
                 if(s.toString().length()>0) {
-                    result = capitalizeFirstLetter(eadress.getText().toString());
+
                 }
                 y=1;
                 setOKenable();}
@@ -1498,5 +1645,20 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     }
 
     private void setValueForGridView(){
+    }
+    public  String toUpperCaseFirst(String s) {
+        if (s != null && s.length() > 0) {
+            String first = s.substring(0, 1).toUpperCase();
+            if (s.length() == 1) {
+                return first;
+            } else {
+                String result = first + s.substring(1);
+                return result;
+            }
+
+
+
+        }else return "";
+
     }
 }

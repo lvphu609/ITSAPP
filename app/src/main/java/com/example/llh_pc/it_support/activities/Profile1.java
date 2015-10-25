@@ -194,4 +194,19 @@ public class Profile1 extends ActionBarActivity implements View.OnClickListener 
     public void onClick(View v) {
 
     }
+    public  String toUpperCaseFirst(String s) {
+        if (s != null && s.length() > 0) {
+            String first = s.substring(0, 1).toUpperCase();
+            if (s.length() == 1) {
+                return first;
+            } else {
+                String result = first + s.substring(1);
+                return result;
+            }
+
+
+
+        }else return "";
+
+    }
 }

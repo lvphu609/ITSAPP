@@ -1,10 +1,12 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.models.JsonParses.PostParse;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -32,6 +35,9 @@ public class frmGhiChu extends AppCompatActivity {
     public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_CREATESubPost + Def.API_FORMAT_JSON;
     private GPSTracker gpsTracker;
     private boolean isGPS;
+    private ProgressDialog progressDialog;
+    private EditText editGhiChu;
+    private String str_GhiChu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,4 +138,75 @@ public class frmGhiChu extends AppCompatActivity {
 
     }
 
+    private class NoteAsyncTack extends AsyncTask<String, Void, String> {
+        /*function
+        * 1: GPS
+        * 2: Call api*/
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(frmGhiChu.this, "IT Support", "Loading...");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String note = params[0];
+                String Longitude = params[1];
+                String Latitude = params[2];
+                final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+                if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                    buildAlertMessageNoGps();
+                } else {
+                    SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmGhiChu.this);
+                    String type_id = sharedPreference.getString("type_id", "YourName");
+                    String token = sharedPreference.getString("token", "YourName");
+                    RestClient restClient = new RestClient(url_get_my_notifications);
+                    if (Float.valueOf(Longitude) != 0.0 || Float.valueOf(Latitude) != 0.0) {
+                        //--------------------server---------------\\
+                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                        restClient.addHeader("token", token);
+                        restClient.addParam("type_id", type_id);
+                        restClient.addParam("location_lat", Longitude);
+                        restClient.addParam("location_lng", Latitude);
+                        restClient.addParam("content", note);
+                        restClient.execute(RequestMethod.POST);
+                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                            String jsonObject = restClient.getResponse();
+                            Gson gson = new Gson();
+                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
+                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                                return "1";
+
+                            } else {
+                                return "2";
+                            }
+                        }
+                    }
+                }
+
+            } catch (Exception ex) {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (s.equals("1")) {
+                Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
+                startActivity(intent);
+                frmTabHost.x = 3;
+            }
+            else
+            {
+                /*Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
+                startActivity(intent);
+                frmTabHost.x = 3;*/
+            }
+        }
+    }
 }

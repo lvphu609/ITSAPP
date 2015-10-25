@@ -31,7 +31,7 @@
                 android:hint="Nhập email"
                 android:inputType="textEmailAddress"
                 android:theme="@style/MyEditTextTheme"
-
+                android:maxLength="25"
                 />
             <TextView
                 android:id="@+id/txtEmail"
@@ -52,7 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/frmDangNhap_edittext_Height"
                 android:hint="Nhập mật khẩu"
-                android:theme="@style/MyEditTextTheme"/>
+                android:theme="@style/MyEditTextTheme"
+                android:maxLength="25"/>
             <TextView
                 android:id="@+id/txtMatKhau"
                 android:layout_width="wrap_content"

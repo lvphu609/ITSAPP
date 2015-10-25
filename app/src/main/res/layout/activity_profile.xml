@@ -39,8 +39,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:id="@+id/profile_image"
-                android:layout_width="71dp"
-                android:layout_height="71dp"
+                android:layout_width="@dimen/avatar"
+                android:layout_height="@dimen/avatar1"
                 android:src="@drawable/avatar"
                 android:enabled="false"
                 android:clickable = "false"
@@ -85,7 +85,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Họ và tên không được để trống."
+                    android:text="@string/Emailtrong"
                     android:textColor="@color/maudo"
                     android:visibility="gone"
                     />
@@ -94,7 +94,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Họ và tên không được bắt đầu bằng khoảng trống."
+                    android:text="@string/nameerror"
                     android:textColor="@color/maudo"
                     android:visibility="gone"
                     />
@@ -145,18 +145,20 @@
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
 
-            <EditText
+            <TextView
+                android:layout_marginTop="5dp"
                 android:paddingTop="17dp"
                 android:textSize="15dp"
                 android:id="@+id/email"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:ems="40"
                 android:singleLine="false"
                 android:enabled="false"
-                android:layout_marginLeft="50dp"
+                android:layout_marginLeft="60dp"
                 android:theme="@style/MyEditTextTheme"
+                android:textColor="@color/mauden"
                 />
 
         </LinearLayout>
@@ -168,6 +170,7 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp">
             <TextView
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -191,11 +194,12 @@
 
                     />
                 <Button
+                    android:layout_marginTop="15dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="30dp"
                     android:id="@+id/changepass"
                     android:text="Thay đổi mật khẩu"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="35dp"
                     android:enabled="false"
                     android:visibility="invisible"
                     android:textAllCaps="false"
@@ -232,15 +236,15 @@
                     android:singleLine="false"
                     android:inputType="number"
                     android:enabled="false"
-                    android:maxLength="25"
+                    android:maxLength="20"
                     android:theme="@style/MyEditTextTheme"
-
+                    android:layout_marginLeft="10dp"
                     />
                 <TextView
                     android:id="@+id/vadalitionphone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Số điện thoại không được bỏ trống."
+                    android:text="@string/Emailtrong"
                     android:textColor="@color/maudo"
                     android:visibility="gone"
                     />
@@ -248,7 +252,7 @@
                     android:id="@+id/vadalitionphone1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Số điện thoại phải có ít nhất 10 ký tự."
+                    android:text="@string/phoneerror"
                     android:textColor="@color/maudo"
                     android:visibility="gone"/>
             </LinearLayout>
@@ -283,7 +287,7 @@
                     android:singleLine="false"
                     android:inputType="textNoSuggestions|textMultiLine"
                     android:enabled="false"
-                    android:layout_marginLeft="30dp"
+                    android:layout_marginLeft="40dp"
                     android:maxLength="30"
                     android:theme="@style/MyEditTextTheme"
 
@@ -294,7 +298,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Địa chỉ không được bỏ trống."
+                    android:text="@string/Emailtrong"
                     android:textColor="@color/maudo"
                     android:visibility="gone"
                     />
@@ -304,7 +308,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Địa chỉ không được bắt đầu bằng khoảng trống."
+                    android:text="@string/addresserror"
                     android:textColor="@color/maudo"
                     android:visibility="gone"
                     />
@@ -330,7 +334,7 @@
                 android:text="Người sử dụng"
                 android:visibility="gone"
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="8dp"/>
             <TextView
                 android:id="@+id/enableProvider"
                 android:layout_width="wrap_content"
@@ -338,7 +342,7 @@
                 android:text="Người cung cấp dịch vụ"
                 android:visibility="gone"
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="8dp"/>
 
         </LinearLayout>
         <LinearLayout
