@@ -2,8 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 22
-    buildToolsVersion '22.0.1'
-
+    //buildToolsVersion '22.0.1'
+    buildToolsVersion '19.1.0'
 
     defaultConfig {
         applicationId "com.example.llh_pc.it_support"
