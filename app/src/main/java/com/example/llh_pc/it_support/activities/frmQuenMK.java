@@ -164,7 +164,9 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
 
         @Override
         protected String doInBackground(String... params) {
-            if(!emailValidator(email)) {
+            Boolean isEmail = isValid(email);
+            if(!isEmail)
+            {
                 return "3";
             }else
             {
@@ -213,7 +215,7 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
                 progressDialog.dismiss();
                 popupValidation(t2);
             }
-            if(s.equals("3"))
+            if (s.equals("3"))
             {
                 String t3 = " Email không hợp lệ hoặc chưa đăng ký.";
                 progressDialog.dismiss();
@@ -245,14 +247,19 @@ public class frmQuenMK extends AppCompatActivity implements InnoFunctionListener
             }
         });
     }
-    public static boolean emailValidator(final String mailAddress) {
 
-        Pattern pattern;
-        Matcher matcher;
-        final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@" + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
-        pattern = Pattern.compile(EMAIL_PATTERN);
-        matcher = pattern.matcher(mailAddress);
-        return matcher.matches();
-
+    public static boolean isValid(String email)
+    {
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches())
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

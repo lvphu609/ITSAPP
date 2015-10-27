@@ -71,7 +71,7 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
                 }else if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_FALSE))
                 {
                     Intent intent = new Intent(this, frmDK_DN.class);
-                    intent.putExtra("checkTOKEN","0");
+                    intent.putExtra("checkTOKEN","1");
                     startActivity(intent);
                 }
             }

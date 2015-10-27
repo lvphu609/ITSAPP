@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.llh_pc.it_support"
     android:installLocation="preferExternal" >
+
     <permission
         android:name="info.androidhive.googlemapsv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -29,13 +30,12 @@
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme" >
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:theme="@style/delete_title_bar"
             android:windowSoftInputMode="stateHidden" >
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,15 +43,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmDK_DN"
             android:label="@string/title_activity_frm_dk__dn"
+            android:screenOrientation="portrait"
             android:theme="@style/delete_title_bar" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmDangNhap"
             android:label="@string/title_activity_frm_dang_nhap"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
@@ -59,86 +59,86 @@
             android:label="@string/title_activity_main2" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmQuenMK"
-            android:windowSoftInputMode="adjustPan"
-            android:label="@string/title_activity_frm_quen_mk" >
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".activities.frmTaoMoiMK"
-            android:label="@string/title_activity_frm_quen_mk" >
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".activities.frmTaoMoiMatKhau"
             android:label="@string/title_activity_frm_quen_mk"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-        </activity>
-        <activity
             android:screenOrientation="portrait"
-            android:name=".activities.frmBaoHu"
-            android:label="@string/title_activity_frm_bao_hu" >
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".activities.frmChildPost"
-            android:label="@string/title_activity_frm_child_post" >
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".activities.Main22Activity"
-            android:label="@string/title_activity_main22" >
-        </activity>
-        <activity
-            android:screenOrientation="portrait"
-            android:name=".activities.frmDangKy"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-            android:label="@string/title_activity_frm_dang_ky"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
+            android:name=".activities.frmTaoMoiMK"
+            android:label="@string/title_activity_frm_quen_mk"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.frmTaoMoiMatKhau"
+            android:label="@string/title_activity_frm_quen_mk"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <activity
+            android:name=".activities.frmBaoHu"
+            android:label="@string/title_activity_frm_bao_hu"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.frmChildPost"
+            android:label="@string/title_activity_frm_child_post"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.Main22Activity"
+            android:label="@string/title_activity_main22"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".activities.frmDangKy"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_frm_dang_ky"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
             android:name=".activities.frmThongBao"
-            android:label="@string/title_activity_frm_thong_bao" >
+            android:label="@string/title_activity_frm_thong_bao"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmTimKiem"
-            android:label="@string/title_activity_frm_tim_kiem" >
+            android:label="@string/title_activity_frm_tim_kiem"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmLuuTru"
-            android:label="@string/title_activity_frm_luu_tru" >
+            android:label="@string/title_activity_frm_luu_tru"
+            android:screenOrientation="portrait" >
         </activity>
 
         <!-- hide keyboard adjustPan -->
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmTabHost"
             android:label="@string/title_activity_frm_tab_host"
+            android:screenOrientation="portrait"
             android:theme="@style/delete_title_bar"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.Profile"
             android:label="@string/title_activity_profile"
-            android:windowSoftInputMode="adjustPan"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.frmGhiChu"
             android:label="@string/title_activity_frm_ghi_chu" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmGhiChuPost"
-            android:label="@string/title_activity_frm_ghi_chu_post" >
+            android:label="@string/title_activity_frm_ghi_chu_post"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.frmChiTietPost"
-            android:label="@string/title_activity_frm_chi_tiet_post" >
+            android:label="@string/title_activity_frm_chi_tiet_post"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.Menu_Left"
@@ -149,17 +149,16 @@
             android:label="@string/title_activity_frm_provider_bao_hong" >
         </activity>
         <activity
-            android:screenOrientation="portrait"
             android:name=".activities.Profile1"
             android:label="@string/title_profile1"
-            android:windowSoftInputMode="adjustPan">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name=".fragments.TabHostHoatDong"
             android:label="@string/title_profile1" >
         </activity>
         <activity
-
             android:name=".activities.Search"
             android:label="@string/title_activity_search" >
             <meta-data
@@ -212,7 +211,6 @@
         <activity
             android:name=".activities.SearchMap"
             android:label="@string/title_activity_search_map" >
-
         </activity>
         <activity
             android:name=".fragments.tabHostTimKiem"
@@ -222,6 +220,11 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyCNdYvJwpxD7qKY1_E-gRPh9_w59tnSV34" />
+
+        <activity
+            android:name=".activities.frmGhiChuKhac"
+            android:label="@string/title_activity_frm_ghi_chu_khac" >
+        </activity>
     </application>
 
 </manifest>

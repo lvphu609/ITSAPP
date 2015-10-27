@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -36,19 +37,28 @@ import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.datas.AccountDAL;
 import com.example.llh_pc.it_support.gcm.QuickstartPreferences;
 import com.example.llh_pc.it_support.gcm.RegistrationIntentService;
+import com.example.llh_pc.it_support.models.Account;
+import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.restclients.RequestMethod;
+import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.CommonFunction;
 import com.example.llh_pc.it_support.utils.Events.eventLogin;
 import com.example.llh_pc.it_support.utils.Events.eventStayLgoin;
+import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.google.gson.Gson;
 
 import org.apache.http.conn.params.ConnManagerParamBean;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class frmDangNhap extends AppCompatActivity implements InnoFunctionListener,CompoundButton.OnFocusChangeListener {
 
-
+    private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "frmDangNhap";
     private BroadcastReceiver mRegistrationBroadcastReceiver;
