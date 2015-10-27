@@ -28,6 +28,7 @@
     <string name="title_activity_frm_tim_kiem">frmTimKiem</string>
     <string name="title_activity_frm_luu_tru">Lưu trữ</string>
     <string name="title_activity_frm_tab_host">frmTabHost</string>
+    <string name="title_activity_frm_ghi_chu_khac">Ghi Chú</string>
     <string name="title_checkbox_preference">Hồ sơ cá nhân</string>
     <string name="title_activity_profile">Chỉnh sửa hồ sơ</string>
     <string name ="title_profile1">Hồ sơ cá nhân</string>
@@ -64,5 +65,8 @@
     <string name="passcu"> Mật khẩu không hợp lệ.</string>
     <string name="cfpassmoi">Xác nhận mật khẩu phải trùng khớp với mật khẩu đã đăng ký.</string>
     <string name="trungpasscu">Mật khẩu mới không được trùng khớp  mật khẩu hiện tại.</string>
+    <!--Other-->
+    <string name="TitlePopUp">IT Support</string>
+    <string name="ValuePopUpOther">Nhập loại thiết bị cần bao hỏng</string>
 
 </resources>
