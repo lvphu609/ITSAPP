@@ -42,6 +42,7 @@ public class frmGhiChu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gpsTracker = new GPSTracker(frmGhiChu.this);
         setContentView(R.layout.activity_frm_ghi_chu);
         /*final EditText editGhiChu = (EditText)findViewById(R.id.edtGhiChu);*/
         Button btnOK = (Button) findViewById(R.id.btnCreatePost);
@@ -57,65 +58,21 @@ public class frmGhiChu extends AppCompatActivity {
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps();
                 } else {
-                    gpsTracker = new GPSTracker(frmGhiChu.this);
                     String Longitude = String.valueOf(gpsTracker.getLongitude());
                     String Latitude = String.valueOf(gpsTracker.getLatitude());
                     new NoteAsyncTack().execute(token, type_id, content, Longitude, Latitude);
                 }
-                /*do {
-                    final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                    if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-                        buildAlertMessageNoGps();
-                    } else
-                    {
-
-                    }
-                }while ()*/
-
-                //function check gps\\
-                /*final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-                    buildAlertMessageNoGps();
-                } else
-                {
-                    SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmGhiChu.this);
-                    String type_id = sharedPreference.getString("type_id", "YourName");
-                    String token = sharedPreference.getString("token", "YourName");
-                    gpsTracker = new GPSTracker(frmGhiChu.this);
-                    String x = String.valueOf(gpsTracker.getLongitude());
-                    String y = String.valueOf(gpsTracker.getLatitude());
-                    String edtGhiChu = editGhiChu.getText().toString();
-                    RestClient restClient = new RestClient(url_get_my_notifications);
-                    if (Float.valueOf(x) != 0.0 || Float.valueOf(y) != 0.0) {
-                        //--------------------server---------------\\
-                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                        restClient.addHeader("token", token);
-                        restClient.addParam("type_id", type_id);
-                        restClient.addParam("location_lat", y);
-                        restClient.addParam("location_lng", x);
-                        restClient.addParam("content", edtGhiChu);
-                        try {
-                            restClient.execute(RequestMethod.POST);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                            String jsonObject = restClient.getResponse();
-                            Gson gson = new Gson();
-                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
-                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                                Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
-                                startActivity(intent);
-                                frmTabHost.x = 3;
-                            }
-                        }
-                    }
-                }*/
             }
         });
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+    private void checkGPS()
+    {
+        double set;
+        do {
+            set = gpsTracker.getLatitude();
+        }while (set != 0.0);
     }
 
     private void buildAlertMessageNoGps() {
@@ -147,39 +104,6 @@ public class frmGhiChu extends AppCompatActivity {
         });
     }
 
-    /* private void buildAlertMessageNoGps() {
-         LayoutInflater li = LayoutInflater.from(frmGhiChu.this);
-         View promptsView = li.inflate(R.layout.popup_validation, null);
-         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(frmGhiChu.this);
-         alertDialogBuilder.setView(promptsView);
-         final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
-         textView.setText("IT Support cần xác định vị trí của bạn. Bạn có muốn bật GPS");
-         // set dialog message
-         alertDialogBuilder
-                 .setTitle("IT Support")
-                 .setCancelable(false)
-                 .setPositiveButton("OK",
-                         new DialogInterface.OnClickListener() {
-                             public void onClick(DialogInterface dialog, int id) {
-                                 startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
-                                 Toast.makeText(frmGhiChu.this, "Mở GPS.", Toast.LENGTH_LONG).show();
-                             }
-                         });
-         alertDialogBuilder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-
-             @Override
-             public void onClick(DialogInterface dialog, int which) {
-                 // Do nothing
-                 dialog.dismiss();
-             }
-         });
-
-         // create alert dialog
-         AlertDialog alertDialog = alertDialogBuilder.create();
-         // show it
-         alertDialog.show();
-
-     }*/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -191,6 +115,23 @@ public class frmGhiChu extends AppCompatActivity {
     }
 
 
+    private class GPSAsyncTack extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(frmGhiChu.this, "IT Support", "Loading...");
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            double set;
+            do {
+                set = gpsTracker.getLatitude();
+            }while (set == 0.0);
+            return "1";
+        }
+    }
     private class NoteAsyncTack extends AsyncTask<String, Void, String> {
         private String jsonObject;
 
@@ -253,7 +194,5 @@ public class frmGhiChu extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-
-
     }
 }

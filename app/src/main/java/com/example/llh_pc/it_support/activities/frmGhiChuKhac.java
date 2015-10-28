@@ -35,85 +35,44 @@ public class frmGhiChuKhac extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private EditText editGhiChu;
     private String str_GhiChu;
+    private String other;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        gpsTracker = new GPSTracker(frmGhiChuKhac.this);
         setContentView(R.layout.activity_frm_ghi_chu_khac);
-        /*final EditText editGhiChu = (EditText)findViewById(R.id.edtGhiChu);*/
-        Button btnOK = (Button) findViewById(R.id.btnCreatePost);
+        Bundle bundle = getIntent().getExtras();
+        other = bundle.getString("Other");
+        Button btnOK = (Button) findViewById(R.id.btnCreatePostOther);
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText editGhiChu = (EditText) findViewById(R.id.edtGhiChu);
+                EditText editGhiChu = (EditText) findViewById(R.id.edtGhiChuOther);
                 SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmGhiChuKhac.this);
                 String token = sharedPreference.getString("token", "YourName");
-                String type_id = sharedPreference.getString("type_id", "YourName");
                 String content = editGhiChu.getText().toString();
                 final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps();
                 } else {
-                    gpsTracker = new GPSTracker(frmGhiChuKhac.this);
+
                     String Longitude = String.valueOf(gpsTracker.getLongitude());
-                    String Latitude = String.valueOf(gpsTracker.getLatitude());
-                    new NoteAsyncTack().execute(token, type_id, content, Longitude, Latitude);
+                    String Latitude = String.valueOf(gpsTracker.getLatitude());;
+                    new NoteAsyncTack().execute(token, other, content, Longitude, Latitude);
                 }
-                /*do {
-                    final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                    if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-                        buildAlertMessageNoGps();
-                    } else
-                    {
-
-                    }
-                }while ()*/
-
-                //function check gps\\
-                /*final LocationManager manager = (LocationManager) getSystemService( Context.LOCATION_SERVICE );
-                if ( !manager.isProviderEnabled( LocationManager.GPS_PROVIDER ) ) {
-                    buildAlertMessageNoGps();
-                } else
-                {
-                    SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmGhiChu.this);
-                    String type_id = sharedPreference.getString("type_id", "YourName");
-                    String token = sharedPreference.getString("token", "YourName");
-                    gpsTracker = new GPSTracker(frmGhiChu.this);
-                    String x = String.valueOf(gpsTracker.getLongitude());
-                    String y = String.valueOf(gpsTracker.getLatitude());
-                    String edtGhiChu = editGhiChu.getText().toString();
-                    RestClient restClient = new RestClient(url_get_my_notifications);
-                    if (Float.valueOf(x) != 0.0 || Float.valueOf(y) != 0.0) {
-                        //--------------------server---------------\\
-                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                        restClient.addHeader("token", token);
-                        restClient.addParam("type_id", type_id);
-                        restClient.addParam("location_lat", y);
-                        restClient.addParam("location_lng", x);
-                        restClient.addParam("content", edtGhiChu);
-                        try {
-                            restClient.execute(RequestMethod.POST);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                            String jsonObject = restClient.getResponse();
-                            Gson gson = new Gson();
-                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
-                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                                Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
-                                startActivity(intent);
-                                frmTabHost.x = 3;
-                            }
-                        }
-                    }
-                }*/
             }
         });
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+    }
+    private void checkGPS()
+    {
+        double set;
+        do {
+            set = gpsTracker.getLatitude();
+        }while (set != 0.0);
     }
     private void buildAlertMessageNoGps() {
         LayoutInflater li = LayoutInflater.from(frmGhiChuKhac.this);
@@ -182,7 +141,7 @@ public class frmGhiChuKhac extends AppCompatActivity {
         protected String doInBackground(String... params) {
             try {
                 String token = params[0];
-                String type_id = params[1];
+                String other = params[1];
                 String content = params[2];
                 String Longitude = params[3];
                 String Latitude = params[4];
@@ -191,7 +150,7 @@ public class frmGhiChuKhac extends AppCompatActivity {
                     //--------------------server---------------\\
                     restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
                     restClient.addHeader("token", token);
-                    restClient.addParam("type_id", type_id);
+                    restClient.addParam("type_id", other);
                     restClient.addParam("location_lat",Latitude);
                     restClient.addParam("location_lng",Longitude);
                     restClient.addParam("content", content);
@@ -208,7 +167,6 @@ public class frmGhiChuKhac extends AppCompatActivity {
                         }
                     }
                 }
-
             } catch (Exception ex) {
 
             }
@@ -228,7 +186,5 @@ public class frmGhiChuKhac extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-
-
     }
 }

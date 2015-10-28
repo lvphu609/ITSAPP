@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,6 +22,9 @@ import com.example.llh_pc.it_support.activities.frmBaoHu;
 import com.example.llh_pc.it_support.activities.frmChildPost;
 import com.example.llh_pc.it_support.activities.frmGhiChu;
 import com.example.llh_pc.it_support.activities.frmGhiChuKhac;
+import com.example.llh_pc.it_support.adapters.PostAdapter;
+import com.example.llh_pc.it_support.models.IDOther;
+import com.example.llh_pc.it_support.models.JsonParses.OtherParse;
 import com.example.llh_pc.it_support.models.JsonParses.PostParse;
 import com.example.llh_pc.it_support.models.Post;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -35,9 +39,10 @@ import java.util.ArrayList;
  * Created by LLH-PC on 9/16/2015.
  */
 public class eventListPostTitle implements AdapterView.OnItemClickListener {
-    public static final String url_get_my_notifications = Def.API_BASE_LINK + Def.API_PostTile + Def.API_FORMAT_JSON;
+    public static final String url_create_type_post_other= Def.API_BASE_LINK + Def.API_create_type_post_other + Def.API_FORMAT_JSON;
     private Context context;
     private ArrayList<Post> arrayListPost;
+    private ArrayList<IDOther> ID = new ArrayList<>();
     public eventListPostTitle(Context current,ArrayList<Post> list)
     {
         this.context = current;
@@ -92,10 +97,16 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
             okpopup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String str_other = edtOther.getText().toString();
-                    new CreatePost().execute(str_other,token);
-
-                    show.dismiss();
+                    try {
+                        String str_other = edtOther.getText().toString();
+                        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+                        final String token = sharedPreference.getString("token", null);
+                        new CreatePost().execute(str_other, token);
+                        show.dismiss();
+                    }catch (Exception ex)
+                    {
+                        Log.e(ex.toString(),"Lỗi");
+                    }
                 }
             });
             Button huypopup= (Button)promptsView.findViewById(R.id.huypopup);
@@ -116,6 +127,7 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
     public class CreatePost extends AsyncTask<String,Void,String>
     {
         private ProgressDialog progressDialog;
+        private IDOther id;
 
         @Override
         protected void onPreExecute() {
@@ -128,9 +140,23 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
             try {
                 String other = params[0];
                 String token = params[1];
-                if(true)
+                RestClient restClient = new RestClient(url_create_type_post_other);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("name", other);
+                restClient.execute(RequestMethod.POST);
+                if(restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
                 {
-                    return "1";
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    OtherParse getListPostJson = gson.fromJson(jsonObject, OtherParse.class);
+                    if(getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
+                    {
+                        id = getListPostJson.getResults();
+                        String temp = id.getId();
+                        return temp;
+                    }
+
                 }
                 else
                 {
@@ -138,7 +164,7 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
                 }
             }catch (Exception ex)
             {
-
+                Log.e(ex.toString(),"Lỗi");
             }
             return null;
         }
@@ -146,13 +172,14 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if(s.equals("1"))
+            if(!s.isEmpty())
             {
                 Intent intent = new Intent(context, frmGhiChuKhac.class);
+                intent.putExtra("Other",s);
                 context.startActivity(intent);
             }else
             {
-                Intent intent = new Intent(context, frmBaoHu.class);
+                Intent intent = new Intent(context, frmGhiChu.class);
                 context.startActivity(intent);
             }
         }

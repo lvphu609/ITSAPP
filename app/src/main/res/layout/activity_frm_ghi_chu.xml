@@ -25,9 +25,10 @@
         <EditText
             android:layout_gravity="top"
             android:id="@+id/edtGhiChu"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Viết ghi chú ở đây.(Có thể bỏ trống)"
+            android:theme="@style/MyEditTextTheme"
             />
     </LinearLayout>
 

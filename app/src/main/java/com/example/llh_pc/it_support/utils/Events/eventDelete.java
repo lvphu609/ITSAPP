@@ -32,14 +32,13 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
     private String t;
     private int current_position = 0;
 
-    public eventDelete(Context current, ArrayList<LuuTruModel> list, LoadPostAdapter loadPostAdapter) {
+    public eventDelete(Context current, ArrayList<LuuTruModel> list) {
         this.context = current;
         this.arrayListPost = list;
-        this.loadPostAdapter = loadPostAdapter;
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        try {
+        /*try {
             current_position = position;
             new AsyncTask<String, Integer, Boolean>(){
                 @Override
@@ -88,8 +87,16 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
 
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        return false;
+        }*/
+        return true;
     }
 
+    private class DeleteNewPost extends AsyncTask<String,Void,String>
+    {
+
+        @Override
+        protected String doInBackground(String... params) {
+            return null;
+        }
+    }
 }
