@@ -2,6 +2,7 @@ package com.example.llh_pc.it_support.activities;
 
 import android.app.ProgressDialog;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -9,6 +10,7 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -77,9 +79,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void initControl() {
         lstPost = (ListView)findViewById(R.id.lsPost);
-
-
-
     }
 
     @Override
@@ -88,13 +87,12 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-               try{
+                try {
 //                   new DialogDefault(frmLuuTru.this.getParent()).showConfirmCloseApp();
-               }
-               catch (Exception e){
-                   Log.e("error", e.getMessage());
-                   e.printStackTrace();
-               }
+                } catch (Exception e) {
+                    Log.e("error", e.getMessage());
+                    e.printStackTrace();
+                }
 
                 return false;
             }
@@ -103,8 +101,11 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void getData(String... params) {
+        GetList();
         new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-    }
+        lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
+        //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails));
+      }
 
     @Override
     public void setData() {
@@ -120,7 +121,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
         @Override
         protected ArrayList<LuuTruModel> doInBackground(String... params) {
-            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
+            /*SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
             token = sharedPreference.getString("token", "YourName");
             account_id = sharedPreference.getString("id", "YourName");
             String page = "1";
@@ -144,7 +145,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
             }catch (Exception ex){
                 Log.e("error" + "Luu Tru", ex.getMessage());
                 ex.printStackTrace();
-            }
+            }*/
             return postDetails;
         }
 
@@ -164,4 +165,59 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         }
         
     };
+    @Override
+    public void onBackPressed() {
+        //final Intent intent = new Intent(this, frmDK_DN.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(frmLuuTru.this);
+        new AlertDialog.Builder(frmLuuTru.this)
+                .setMessage("Thoát app?")
+                .setCancelable(false)
+                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // Perform Your Task Here--When No is pressed
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+     public ArrayList<LuuTruModel> GetList()
+     {
+         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
+         token = sharedPreference.getString("token", "YourName");
+         account_id = sharedPreference.getString("id", "YourName");
+         String page = "1";
+         try
+         {
+             RestClient restClient = new RestClient(url_loadPost);
+             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+             restClient.addHeader("token", token);
+             restClient.addParam("page", page);
+             restClient.addParam("account_id", account_id);
+             restClient.execute(RequestMethod.POST);
+             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                     restClient.getResponse() != null)
+             {
+                 String jsonObject = restClient.getResponse();
+                 LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
+                 if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                     postDetails = luuTruParse.getResults();
+                 }
+             }
+         }catch (Exception ex){
+             Log.e("error" + "Luu Tru", ex.getMessage());
+             ex.printStackTrace();
+         }
+         return postDetails;
+     }
 }

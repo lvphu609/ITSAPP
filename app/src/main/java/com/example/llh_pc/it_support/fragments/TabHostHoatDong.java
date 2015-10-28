@@ -1,10 +1,12 @@
 package com.example.llh_pc.it_support.fragments;
 
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.TabHost;
 import android.widget.TextView;
 
@@ -63,4 +65,5 @@ public class TabHostHoatDong extends TabActivity {
                                                 }
                                             });
     }
+
 }
