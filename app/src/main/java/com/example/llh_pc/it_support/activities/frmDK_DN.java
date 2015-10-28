@@ -37,7 +37,6 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
                 editor.putInt("staylogin", 0);
                 editor.commit();
                 Validation();
-                /*Toast.makeText(frmDK_DN.this, "Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.", Toast.LENGTH_LONG).show();*/
             }
         }
 
@@ -57,10 +56,7 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
                 startActivity(intent);
             }
         });
-
         initControl();
-        //Profile
-
     }
 
     public void Validation(){
@@ -80,10 +76,6 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
                 show.dismiss();
             }
         });
-
-
-        // create alert dialog
-
     }
 
     @Override

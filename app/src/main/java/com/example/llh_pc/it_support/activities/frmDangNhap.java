@@ -203,15 +203,6 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             cbSave.setChecked(true);
             frmDK.dangkythanhcong = false;
         }
-        /*-----------------*/
-
-       /* SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        String name = sharedPreference.getString("tokenGCM", "YourName");
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }*/
 
         if (frmDK.dangkythanhcong == true) {
             edtUserName.setText(accdal.applyEmail.toString());
@@ -233,12 +224,11 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 btnLogin.setEnabled(true);
                 btnLogin.setBackgroundColor(getResources().getColor(R.color.mauxanh));
             }
-
             btnLogin.invalidate();
-
-
         }
 
+
+        /*-----------------GCM--------------------*/
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -249,12 +239,12 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
                 editor.commit();
             }
         };
-
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
+        /*-----------------GCM--------------------*/
     }
 
     private boolean checkPlayServices() {
