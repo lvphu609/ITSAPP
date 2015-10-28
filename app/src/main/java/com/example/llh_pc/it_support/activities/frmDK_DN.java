@@ -31,6 +31,11 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
             String checkTOKEN = bundle.getString("checkTOKEN","0");
             if(checkTOKEN.equals("1"))
             {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmDK_DN.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.putInt("staylogin", 0);
+                editor.commit();
                 Validation();
                 /*Toast.makeText(frmDK_DN.this, "Đã có người đăng nhập tài khoản của bạn từ thiết bị khác.", Toast.LENGTH_LONG).show();*/
             }
@@ -72,11 +77,6 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
         okpopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmDK_DN.this);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt("check", 1);
-                editor.putInt("staylogin", 0);
-                editor.commit();
                 show.dismiss();
             }
         });

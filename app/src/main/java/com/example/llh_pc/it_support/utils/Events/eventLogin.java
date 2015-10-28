@@ -1,5 +1,6 @@
 package com.example.llh_pc.it_support.utils.Events;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -71,7 +72,6 @@ public class eventLogin implements View.OnClickListener {
             *//*load*//*
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
             String name = sharedPreference.getString("storedName", "YourName");*/
-
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             EditText edtUserName = (EditText) views.get(0);
@@ -102,6 +102,7 @@ public class eventLogin implements View.OnClickListener {
                 okpopup.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         show.dismiss();
                     }
                 });
@@ -128,6 +129,7 @@ public class eventLogin implements View.OnClickListener {
                         show.dismiss();
                     }
                 });
+
                 editor.putInt("check", 1);
             } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
@@ -178,6 +180,7 @@ public class eventLogin implements View.OnClickListener {
                             show.dismiss();
                         }
                     });
+
                     editor.putInt("check", 1);
                 }
             }

@@ -32,7 +32,6 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
     public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
     private Context context;
     private ArrayList<LuuTruModel> arrayListPost;
-    private PostDetail postDetail;
     private UserPostDetail uD;
 
     public eventDetailPost(Context current, ArrayList<LuuTruModel> list) {

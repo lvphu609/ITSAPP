@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="10dp"
+    android:paddingLeft="22dp"
+    android:paddingRight="25dp"
+    android:paddingBottom="10dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:textColor="@color/mauden"
+        android:textStyle="bold"
+        android:text="@string/TitlePopUp"/>
+    <TextView
+        android:text="IT Support cần xác định vị trí của bạn. Bạn có muốn bật GPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:id="@+id/tvValidation"
+        android:textColor="@color/mauden"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OK"
+            android:id="@+id/okpopup"
+            android:textColor="@color/actionbar_text"
+            android:background="@color/mauxanh" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                android:id="@+id/huypopup"
+                android:textColor="@color/actionbar_text"
+                android:background="@color/mauxanh"/>
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
