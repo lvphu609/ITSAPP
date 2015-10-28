@@ -7,6 +7,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.llh_pc.it_support.activities.Search;
+import com.example.llh_pc.it_support.activities.SearchMap;
 import com.example.llh_pc.it_support.activities.frmChiTietPost;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
@@ -16,6 +18,8 @@ import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -23,17 +27,21 @@ import java.util.ArrayList;
 /**
  * Created by LLH-PC on 9/27/2015.
  */
-public class eventDetailPost implements AdapterView.OnItemClickListener {
+public class eventDetailPost implements AdapterView.OnItemClickListener{
 
-    public static final String url_get= Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
+    public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
     private Context context;
     private ArrayList<LuuTruModel> arrayListPost;
     private PostDetail postDetail;
     private UserPostDetail uD;
-    public eventDetailPost(Context current,ArrayList<LuuTruModel> list )
-    {
+
+    public eventDetailPost(Context current, ArrayList<LuuTruModel> list) {
         this.context = current;
         this.arrayListPost = list;
+    }
+    public  eventDetailPost(String idSearchMap)
+    {
+
     }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -45,7 +53,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
             RestClient restClient = new RestClient(url_get);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addHeader("token", token);
-            restClient.addParam("id",idPost);
+            restClient.addParam("id", idPost);
             restClient.execute(RequestMethod.POST);
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
@@ -57,15 +65,15 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
                     String diachi = uD.location_name;
                     String ghichu = uD.content;
                     String hoten = uD.normal_account.full_name;
-                    String dienthoai= uD.normal_account.phone_number;
+                    String dienthoai = uD.normal_account.phone_number;
                     String diachinha = uD.normal_account.getAddress();
                     Intent intent = new Intent(context, frmChiTietPost.class);
-                    intent.putExtra( "loaibaohong", loaibaohong );
-                    intent.putExtra( "diachi", diachi );
-                    intent.putExtra( "ghichu", ghichu );
-                    intent.putExtra( "hoten", hoten );
-                    intent.putExtra( "dienthoai", dienthoai );
-                    intent.putExtra( "diachinha", diachinha );
+                    intent.putExtra("loaibaohong", loaibaohong);
+                    intent.putExtra("diachi", diachi);
+                    intent.putExtra("ghichu", ghichu);
+                    intent.putExtra("hoten", hoten);
+                    intent.putExtra("dienthoai", dienthoai);
+                    intent.putExtra("diachinha", diachinha);
                     context.startActivity(intent);
                 }
             }
@@ -73,4 +81,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener {
             e.printStackTrace();
         }
     }
+
 }
+
+

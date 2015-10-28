@@ -1,6 +1,7 @@
 package com.example.llh_pc.it_support.activities;
 
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.example.llh_pc.it_support.utils.Events.eventDelete;
 import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
+import com.example.llh_pc.it_support.utils.Location.GPSTracker;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -48,8 +50,9 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     private String lat="10.7632";
     private String lng = "106.675";
     private TextWatcher mSearchTw;
-    public static ArrayList<LuuTruModel> postDetails;
+   private ArrayList<LuuTruModel> postDetails;
     public String name;
+    private GPSTracker gpsTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +104,8 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
                 String searchString=editsearch.getText().toString();
                 adapter.getFilter().filter(searchString);
                 searchAPI(searchString);
-                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails); list.setAdapter(adapter);
+                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
+                list.setAdapter(adapter);
             }
 
             @Override
@@ -176,26 +180,28 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     }
 
     public void searchAPI(String query){
-        try
-    {
+        try {
+        gpsTracker = new GPSTracker(Search.this);
+        String x = String.valueOf(gpsTracker.getLatitude());
+        String y = String.valueOf(gpsTracker.getLongitude());
         RestClient restClient = new RestClient(url_search);
         restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
         restClient.addHeader("token", token);
         restClient.addParam("page","1");
         restClient.addParam("account_id", account_id);
-        restClient.addParam("location_lat",lat);
-        restClient.addParam("location_lng",lng);
+        restClient.addParam("location_lat",x);
+        restClient.addParam("location_lng",y);
         restClient.addParam("query",query);
         restClient.execute(RequestMethod.POST);
         if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
                 restClient.getResponse() != null)
         {
             String jsonObject = restClient.getResponse();
-            SearchParse searchParse = new Gson().fromJson(jsonObject, SearchParse.class);
+            SearchParse searchParse1 = new Gson().fromJson(jsonObject, SearchParse.class);
 
-            if(searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-                searchParse.getResults();
-                postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse.getResults()));
+            if(searchParse1.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                searchParse1.getResults();
+                postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse1.getResults()));
 
             }
         }
