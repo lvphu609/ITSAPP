@@ -85,7 +85,7 @@ public class SearchParse {
     public void setMessage(String message) {
         this.message = message;
     }
-    public LuuTruModel[] getResults() {
+        public LuuTruModel[] getResults() {
         return results;
     }
 
