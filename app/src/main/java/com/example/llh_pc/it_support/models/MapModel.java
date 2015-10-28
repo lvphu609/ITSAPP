@@ -1,22 +1,16 @@
 package com.example.llh_pc.it_support.models;
 
 import com.google.gson.annotations.SerializedName;
-import com.example.llh_pc.it_support.models.PostType;
-import java.util.ArrayList;
 
 /**
- * Created by LLH-PC on 10/7/2015.
+ * Created by ZBOOK 15 on 10/27/2015.
  */
-public class LuuTruModel {
-
+public class MapModel {
     @SerializedName("id")
     public String id;
 
     @SerializedName("type_id")
     public String type_id;
-
-    @SerializedName("name")
-    public String name;
 
     @SerializedName("content")
     public String content;
@@ -48,6 +42,8 @@ public class LuuTruModel {
     @SerializedName("picked_by")
     public String picked_by;
 
+    @SerializedName("name")
+    public String name;
     @SerializedName("picked_at")
     public String picked_at;
 
@@ -188,11 +184,13 @@ public class LuuTruModel {
         this.status = status;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
     public String getName() {
         return name;
     }
+
 
 }
