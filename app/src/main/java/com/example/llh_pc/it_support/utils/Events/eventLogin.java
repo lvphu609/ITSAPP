@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import com.example.llh_pc.it_support.activities.frmTabHost;
 import com.example.llh_pc.it_support.models.Account;
 import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.models.JsonParses.abc;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
@@ -37,9 +39,9 @@ import java.util.regex.Pattern;
  */
 public class eventLogin implements View.OnClickListener {
     SharedPreferences sharedpreferences;
+    private String url_tokenGCM = Def.API_BASE_LINK + Def.API_tokenGCM + Def.API_FORMAT_JSON;
     private String url_login = Def.API_BASE_LINK + Def.API_LOGIN + Def.API_FORMAT_JSON;
     public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
-    private String url_tokenGCM = Def.API_BASE_LINK + Def.API_tokenGCM + Def.API_FORMAT_JSON;
     public static Context context;
     private ArrayList<View> views;
     private String full_name;
@@ -129,7 +131,6 @@ public class eventLogin implements View.OnClickListener {
                         show.dismiss();
                     }
                 });
-
                 editor.putInt("check", 1);
             } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
@@ -138,15 +139,14 @@ public class eventLogin implements View.OnClickListener {
                 //if result from response success
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     //save values into sharePreference
-                    String t = getLoginJson.getResults().getAccess_token();
                     String id = getLoginJson.getResults().getAccount_id();
-
                     String account_type = getLoginJson.getResults().getAccount_type();
                     token = getLoginJson.getResults().getAccess_token();
+                    new GCMAsyncTask().execute(token);
                     /*--------------------information account------------------*/
                     getAccount(id, token);
                     /*--------------------------------------------------------*/
-                    editor.putString("token", t);
+                    editor.putString("token", token);
                     editor.putString("id", id);
                     editor.putString("email", email);
                     editor.putString("password",P);
@@ -154,7 +154,7 @@ public class eventLogin implements View.OnClickListener {
                     editor.putString("fullname",full_name);*/
                     editor.commit();
                     Toast.makeText(context, "Đăng nhập thành công.", Toast.LENGTH_LONG).show();
-                    /*LoginGCM();*/
+                    //LoginGCM();
                     intent = new Intent(context, frmTabHost.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
@@ -226,13 +226,44 @@ public class eventLogin implements View.OnClickListener {
 
     }
 
-    private class Asysnc extends AsyncTask<String, Void, ArrayList<LoginParse>> {
+    private class GCMAsyncTask extends AsyncTask<String,Void,Boolean>
+    {
         @Override
-        protected ArrayList<LoginParse> doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
+            try {
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+                String tokenGCM = sharedPreference.getString("tokenGCM", "YourName");
+                String token = params[0];
+                RestClient restClient = new RestClient(url_tokenGCM);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("reg_id", tokenGCM);
+                restClient.execute(RequestMethod.POST);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    abc getLoginJson = gson.fromJson(jsonObject, abc.class);
+                    //if result from response success
+                    if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
+                    {
+                        return true;
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Log.e(ex.toString(),"Lỗi");
+            }
+            return false;
+        }
 
-            return null;
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(aBoolean)
+            {
+                return;
+            }
         }
     }
-
 }
 

@@ -115,29 +115,14 @@ public class frmGhiChu extends AppCompatActivity {
     }
 
 
-    private class GPSAsyncTack extends AsyncTask<String, Void, String>
-    {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = ProgressDialog.show(frmGhiChu.this, "IT Support", "Loading...");
-        }
 
-        @Override
-        protected String doInBackground(String... params) {
-            double set;
-            do {
-                set = gpsTracker.getLatitude();
-            }while (set == 0.0);
-            return "1";
-        }
-    }
     private class NoteAsyncTack extends AsyncTask<String, Void, String> {
         private String jsonObject;
 
         /*function
                 * 1: GPS
-                * 2: Call api*/
+                * 2: Call api
+                * */
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -175,6 +160,11 @@ public class frmGhiChu extends AppCompatActivity {
                     }
                 }
 
+                else
+                {
+                    return "2";
+                }
+
             } catch (Exception ex) {
 
             }
@@ -185,12 +175,12 @@ public class frmGhiChu extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s.equals("1")) {
-                Toast.makeText(frmGhiChu.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
                 startActivity(intent);
                 frmTabHost.x = 3;
             } else {
-                Intent intent = new Intent(frmGhiChu.this, frmDK_DN.class);
+                Toast.makeText(frmGhiChu.this, "GPS chưa định vị được vị trí của bạn.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
                 startActivity(intent);
             }
         }

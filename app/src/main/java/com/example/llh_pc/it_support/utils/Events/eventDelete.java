@@ -1,13 +1,20 @@
 package com.example.llh_pc.it_support.utils.Events;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.LoadPostAdapter;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
@@ -31,72 +38,77 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
     private LoadPostAdapter loadPostAdapter;
     private String t;
     private int current_position = 0;
+    private ProgressDialog progressDialog;
 
     public eventDelete(Context current, ArrayList<LuuTruModel> list) {
         this.context = current;
         this.arrayListPost = list;
+        //this.loadPostAdapter = load;
     }
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        /*try {
-            current_position = position;
-            new AsyncTask<String, Integer, Boolean>(){
-                @Override
-                protected Boolean doInBackground(String... params) {
-                    SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
-                    String token = sharedPreference.getString("token", "token");
-                    String account_id = sharedPreference.getString("id", "account");
-                    RestClient restClient = new RestClient(url_get);
-                    restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                    restClient.addHeader("token", token);
-                    restClient.addParam("account_id", account_id);
-                    restClient.addParam("id", params[0]);
-                    try {
-                        restClient.execute(RequestMethod.POST);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                        String jsonObject = restClient.getResponse();
-                        Gson gson = new Gson();
-                        PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
-                        if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+        try
+        {
+            LuuTruModel lt = arrayListPost.get(position);
+            String idpost = lt.getId();
+            new DeletePost().execute(idpost);
 
-                            return true;
-                        }
-                        else{
-                            return false;
-                        }
-                    }
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Boolean valueFromInProgress) {
-                    super.onPostExecute(valueFromInProgress);
-                    if(loadPostAdapter != null && valueFromInProgress){
-                        loadPostAdapter.remove(loadPostAdapter.getData().get(current_position));
-                        loadPostAdapter.notifyDataSetChanged();
-                        Toast.makeText(context, "This post has been deleted.",Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(context, "This post can not delete.",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, loadPostAdapter.getData().get(position).getId());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+        }catch (Exception ex)
+        {
+            Log.e(ex.toString(), "Lỗi");
+        }
         return true;
     }
 
-    private class DeleteNewPost extends AsyncTask<String,Void,String>
+    private class DeletePost extends AsyncTask<String,Void,Boolean>
     {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(context, "IT Support", "Loading...");
+        }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
+            try {
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+                String token = sharedPreference.getString("token", "token");
+                String account_id = sharedPreference.getString("id", "account");
+                String idpost = params[0];
+                RestClient restClient = new RestClient(url_get);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("account_id", account_id);
+                restClient.addParam("id", idpost);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
+                    if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Log.e(ex.toString(),"Lỗi");
+            }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(aBoolean)
+            {
+                Toast.makeText(context, "Xóa thành công.", Toast.LENGTH_LONG).show();
+            }else
+            {
+                Toast.makeText(context, "Xóa thất bại.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 }
