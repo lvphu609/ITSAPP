@@ -67,6 +67,8 @@
     <string name="trungpasscu">Mật khẩu mới không được trùng khớp  mật khẩu hiện tại.</string>
     <!--Other-->
     <string name="TitlePopUp">IT Support</string>
-    <string name="ValuePopUpOther">Nhập loại thiết bị cần bao hỏng</string>
-
+    <string name="ValuePopUpOther">Nhập loại thiết bị cần báo hỏng</string>
+    <string name="title_activity_detail_pick_post">Thông tin chi tiết</string>
+    <!--DetailPost-->
+    <string name="AcceptPost">Chấp nhận báo hỏng</string>
 </resources>

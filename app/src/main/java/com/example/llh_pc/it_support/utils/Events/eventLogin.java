@@ -131,7 +131,6 @@ public class eventLogin implements View.OnClickListener {
                         show.dismiss();
                     }
                 });
-
                 editor.putInt("check", 1);
             } else if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();

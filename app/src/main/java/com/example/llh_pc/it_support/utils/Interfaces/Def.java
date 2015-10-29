@@ -36,6 +36,7 @@ public interface Def {
     public static final String API_CREATE = "accounts/create/";
     //create post
     public static final String API_CREATESubPost = "posts/create/";
+    public static final String API_PickPost = "posts/pick/";
     public static final String API_ChangePassword = "accounts/change_password";
     //load post
     public static final String API_LoadPost = "/posts/get_my_posts/";
