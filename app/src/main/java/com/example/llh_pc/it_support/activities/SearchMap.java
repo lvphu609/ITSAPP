@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -43,14 +44,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 
 public class SearchMap extends AppCompatActivity {
-    private Context context;
     private UserPostDetail uD;
+    Marker markerT;
+    String idPost;
     Double x;
+    LuuTruModel m;
     Double y;
     ListView list;
     EditText editsearch;
@@ -65,7 +70,9 @@ public class SearchMap extends AppCompatActivity {
     MarkerOptions marker;
     private String query;
     public static  ArrayList<LuuTruModel> postDetails;
+    private ArrayList<String> listid = new ArrayList<>();
 
+    private HashMap<Marker,String> hash_posts = new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,8 +113,9 @@ public class SearchMap extends AppCompatActivity {
                 if (searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     postDetails = searchParse.getResults();
                     for (int i = 0; i < postDetails.size(); i++) {
-                        LuuTruModel m = postDetails.get(i);
-
+                         m = postDetails.get(i);
+                       idPost = m.id;
+                        listid.add(idPost);
                         String lang = m.getLocation_lat();
                         String lng = m.getLocation_lng();
 
@@ -115,20 +123,21 @@ public class SearchMap extends AppCompatActivity {
                         Double logpost = Double.valueOf(lng);
 
 
+
                         marker = new MarkerOptions().position(new LatLng(latpost, logpost)).title(m.name).snippet(m.location_name);
 
-                        googleMap.addMarker(marker);
+                        //googleMap.addMarker(marker);
+                        markerT = googleMap.addMarker(marker);
+                        hash_posts.put(markerT,idPost);
+
                         //
-                        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                            @Override
-                            public boolean onMarkerClick(Marker marker) {
-                               click();
-                                return false;
-                            }
-                        });
+
+
 //
                     }
+
                 }
+
             }
         } catch (Exception ex) {
             t = ex.toString();
@@ -142,6 +151,9 @@ public class SearchMap extends AppCompatActivity {
 
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 //seach
+
+
+
 
         editsearch = (EditText) findViewById(R.id.inputSearch);
         editsearch.addTextChangedListener(new TextWatcher() {
@@ -164,8 +176,16 @@ public class SearchMap extends AppCompatActivity {
             }
         });
 
-
-
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                //marker1= googleMap.addMarker(marker);
+                String id = hash_posts.get(marker);
+                Toast.makeText(SearchMap.this, "Id post : " + id, Toast.LENGTH_SHORT).show();
+                click(id);
+                return false;
+            }
+        });
 
     }
 
@@ -197,6 +217,7 @@ public class SearchMap extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
         initilizeMap();
     }
 
@@ -228,18 +249,16 @@ public class SearchMap extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public  void click ()
+    public  void click (String id)
     {
-        for( int i = 0;i< postDetails.size();i++) {
-            LuuTruModel p = postDetails.get(i);
-            String idPost = p.id;
+
             try {
-                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(eventDetailPost.context);
                 String token = sharedPreference.getString("token", "token");
                 RestClient restClient = new RestClient(url_get);
                 restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
                 restClient.addHeader("token", token);
-                restClient.addParam("id", idPost);
+                restClient.addParam("id", id);
                 restClient.execute(RequestMethod.POST);
                 if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                     String jsonObject = restClient.getResponse();
@@ -253,20 +272,20 @@ public class SearchMap extends AppCompatActivity {
                         String hoten = uD.normal_account.full_name;
                         String dienthoai = uD.normal_account.phone_number;
                         String diachinha = uD.normal_account.getAddress();
-                        Intent intent = new Intent(context, frmChiTietPost.class);
+                        Intent intent = new Intent(eventDetailPost.context, frmChiTietPost.class);
                         intent.putExtra("loaibaohong", loaibaohong);
                         intent.putExtra("diachi", diachi);
                         intent.putExtra("ghichu", ghichu);
                         intent.putExtra("hoten", hoten);
                         intent.putExtra("dienthoai", dienthoai);
                         intent.putExtra("diachinha", diachinha);
-                        context.startActivity(intent);
+                        eventDetailPost.context.startActivity(intent);
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+
     }
     public void searchAPI(String query){
         try {
@@ -276,7 +295,7 @@ public class SearchMap extends AppCompatActivity {
             RestClient restClient = new RestClient(url_search);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addHeader("token", token);
-            restClient.addParam("page","1");
+//            restClient.addParam("page","");
             restClient.addParam("account_id", account_id);
             restClient.addParam("location_lat",x);
             restClient.addParam("location_lng",y);
@@ -295,7 +314,7 @@ public class SearchMap extends AppCompatActivity {
 
                     for (int i = 0 ; i <postDetails.size(); i++) {
                          LuuTruModel m = postDetails.get(i);
-
+                        idPost = m.id;
                         String lang = m.getLocation_lat();
                         String lng = m.getLocation_lng();
 
@@ -309,6 +328,8 @@ public class SearchMap extends AppCompatActivity {
 
 
                         googleMap.addMarker(marker);
+                        markerT = googleMap.addMarker(marker);
+                        hash_posts.put(markerT, idPost);
 
                     }
                 }
@@ -318,5 +339,9 @@ public class SearchMap extends AppCompatActivity {
         }}
 
 
-
+//    @Override
+//    public boolean onMarkerClick(Marker marker) {
+//        click(idPost);
+//        return false;
+//    }
 }

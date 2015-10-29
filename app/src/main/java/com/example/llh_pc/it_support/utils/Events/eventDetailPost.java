@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class eventDetailPost implements AdapterView.OnItemClickListener{
 
     public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
-    private Context context;
+    public static  Context context;
     private ArrayList<LuuTruModel> arrayListPost;
     private UserPostDetail uD;
 
@@ -38,10 +38,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
         this.context = current;
         this.arrayListPost = list;
     }
-    public  eventDetailPost(String idSearchMap)
-    {
 
-    }
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LuuTruModel p = arrayListPost.get(position);
