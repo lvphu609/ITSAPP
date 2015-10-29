@@ -175,10 +175,12 @@ public class eventListPostTitle implements AdapterView.OnItemClickListener {
             if(!s.isEmpty())
             {
                 Intent intent = new Intent(context, frmGhiChuKhac.class);
+                progressDialog.dismiss();
                 intent.putExtra("Other",s);
                 context.startActivity(intent);
             }else
             {
+                progressDialog.dismiss();
                 Intent intent = new Intent(context, frmGhiChu.class);
                 context.startActivity(intent);
             }

@@ -84,7 +84,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     @Override
     public void setEventForControl() {
         //lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
-        lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        /*lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
@@ -96,7 +96,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
                 return false;
             }
-        });
+        });*/
     }
 
     @Override
@@ -104,7 +104,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         GetList();
         new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
-        //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails));
+        //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
       }
 
     @Override

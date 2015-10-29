@@ -19,6 +19,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
             <EditText
+                android:maxLength="25"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
                 android:textColorHint="@color/maubac"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

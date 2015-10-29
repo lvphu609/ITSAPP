@@ -1,45 +1,60 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:fillViewport="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:weightSum="100"
     tools:context="com.example.llh_pc.it_support.activities.frmGhiChu">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Viết ghi chú cho báo hỏng"
-        android:textSize="27dp"
-        android:textStyle="bold"
-        android:layout_gravity="center"
-        android:layout_weight="5"/>
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="30">
-        <EditText
-            android:layout_gravity="top"
-            android:id="@+id/edtGhiChu"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:weightSum="100"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="5"
+            android:text="Viết ghi chú cho báo hỏng"
+            android:textSize="27dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Viết ghi chú ở đây.(Có thể bỏ trống)"
-            android:theme="@style/MyEditTextTheme"
-            />
+            android:layout_weight="30"
+            android:orientation="vertical">
+            <!--remove button enter
+            android:imeOptions="actionDone"-->
+            <EditText
+                android:imeOptions="actionDone"
+                android:maxLength="25"
+                android:singleLine="true"
+                android:id="@+id/edtGhiChu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:hint="Viết ghi chú ở đây.(Có thể bỏ trống)"
+
+                android:theme="@style/MyEditTextTheme" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnCreatePost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@color/mauxanh"
+            android:text="OK"
+            android:textColor="@color/actionbar_text" />
+
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnCreatePost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/mauxanh"
-        android:text="OK"
-        android:textColor="@color/actionbar_text"
-        android:layout_gravity="right"
-        />
-
-</LinearLayout>
+</ScrollView>
