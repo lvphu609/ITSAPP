@@ -99,7 +99,6 @@ public class SearchMap extends AppCompatActivity {
             RestClient restClient = new RestClient(url_search);
             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
             restClient.addHeader("token", token);
-            restClient.addParam("page", "1");
             restClient.addParam("account_id", account_id);
             restClient.addParam("location_lat", lat);
             restClient.addParam("location_lng", log);

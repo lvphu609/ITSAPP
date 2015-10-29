@@ -66,7 +66,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                     String hoten = uD.normal_account.full_name;
                     String dienthoai = uD.normal_account.phone_number;
                     String diachinha = uD.normal_account.getAddress();
-                    Intent intent = new Intent(context, frmChiTietPost .class);
+                    Intent intent = new Intent(context, DetailPickPost .class);
                     intent.putExtra("loaibaohong", loaibaohong);
                     intent.putExtra("diachi", diachi);
                     intent.putExtra("ghichu", ghichu);
