@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TabActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -17,6 +18,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -220,7 +222,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         menuItem.setChecked(true);
         selectedItem = menuItem.getItemId();
-
         switch (selectedItem) {
             case R.id.nav_item_1:
                 toolbar.setTitle("Báo hỏng");
@@ -241,7 +242,6 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 logout();
                 break;
         }
-
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -260,6 +260,17 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 LoginParse getLoginJson = gson.fromJson(jsonObject, LoginParse.class);
                 //if result from response success
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putInt("check", 1);
+                    editor.putString("token", "Hai");
+                    editor.putInt("staylogin", 0);
+                    editor.commit();
+                    Intent intent = new Intent(frmTabHost.this, frmDK_DN.class);
+                    startActivity(intent);
+                }
+                else
+                {
                     SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("check", 1);
@@ -295,11 +306,11 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     fullname = getAccountJson.getDKresults().getFull_name().toString();
                     avatar = getAccountJson.getDKresults().getAvatar().toString();
-
                 }
             }
         } catch (Exception ex) {
             ts = ex.toString();
         }
     }
+
 }
