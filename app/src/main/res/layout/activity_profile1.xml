@@ -284,81 +284,90 @@
                 android:textStyle="bold"
                 android:textColor="@color/mauden"
                 />
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="15dp"
-        android:layout_weight="1">
             <TextView
-                android:id="@+id/bntPC"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="PC"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+
                 android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
-                />
-            <TextView
-                android:id="@+id/bntLaptpo"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Laptop"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
-                android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
+                android:id="@+id/link"
+                android:layout_marginLeft="19dp"
+               />
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginLeft="15dp"-->
+        <!--android:layout_weight="1">-->
+            <!--<TextView-->
+                <!--android:id="@+id/bntPC"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="PC"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/bntLaptpo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="Laptop"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
+
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/bntMayin"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="Máy in"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/bntMayScan"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="Máy Scan"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/photocopy"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="Máy Photocopy"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
+                <!--/>-->
+            <!--<TextView-->
+                <!--android:id="@+id/bntMayfax"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:text="Máy Fax"-->
+                <!--android:visibility="gone"-->
+                <!--android:enabled="false"-->
+                <!--android:background="@null"-->
+                <!--android:textColor="@color/mauden"-->
+                <!--android:layout_marginLeft="5dp"-->
 
                 />
-            <TextView
-                android:id="@+id/bntMayin"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Máy in"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
-                android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
-                />
-            <TextView
-                android:id="@+id/bntMayScan"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Máy Scan"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
-                android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
-                />
-            <TextView
-                android:id="@+id/photocopy"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Máy Photocopy"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
-                android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
-                />
-            <TextView
-                android:id="@+id/bntMayfax"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="Máy Fax"
-                android:visibility="gone"
-                android:enabled="false"
-                android:background="@null"
-                android:textColor="@color/mauden"
-                android:layout_marginLeft="5dp"
-
-                />
-    </LinearLayout>
+    <!--</LinearLayout>-->
         </LinearLayout>
 
         <LinearLayout

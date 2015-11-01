@@ -7,6 +7,7 @@ import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,11 @@ public class Profile1 extends ActionBarActivity implements View.OnClickListener 
     TextView user, provier, chuyenmon, resultText,rateText;
     TextView pc, laptop, mayin, scan, mayfax, photocopy, OK, changePass;
     Button editProfile;
+    String showString;
+    String link;
+    ArrayList<String> listString = new ArrayList<>();
     RatingBar rateBar;
+    TextView linkclick;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +59,7 @@ public class Profile1 extends ActionBarActivity implements View.OnClickListener 
         StrictMode.enableDefaults();
         imageload = new ImageLoader(getBaseContext());
         rateText = (TextView) findViewById(R.id.rateText);
+        linkclick = (TextView) findViewById(R.id.link);
         c = (de.hdodenhof.circleimageview.CircleImageView) findViewById(R.id.profile_image);
         c.setOnClickListener(this);
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile1.this);
@@ -129,14 +135,13 @@ public class Profile1 extends ActionBarActivity implements View.OnClickListener 
     public void checkAcctype() {
         user = (TextView) findViewById(R.id.enableUser);
         provier = (TextView) findViewById(R.id.enableProvider);
-        pc = (TextView) findViewById(R.id.bntPC);
-        laptop = (TextView) findViewById(R.id.bntLaptpo);
-        scan = (TextView) findViewById(R.id.bntMayScan);
-        photocopy = (TextView) findViewById(R.id.photocopy);
-        mayfax = (TextView) findViewById(R.id.bntMayfax);
-        mayin = (TextView) findViewById(R.id.bntMayin);
+//        pc = (Button) findViewById(R.id.bntPC);
+//        laptop = (Button) findViewById(R.id.bntLaptpo);
+//        scan = (Button) findViewById(R.id.bntMayScan);
+//        photocopy = (Button) findViewById(R.id.photocopy);
+//        mayfax = (Button) findViewById(R.id.bntMayfax);
+//        mayin = (Button) findViewById(R.id.bntMayin);
         chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
-        rateBar =(RatingBar) findViewById(R.id.ratingBar);
 
         for (int i = 0; i < arr.size(); i++) {
 
@@ -144,39 +149,66 @@ public class Profile1 extends ActionBarActivity implements View.OnClickListener 
                 user.setVisibility(View.VISIBLE);
                 provier.setVisibility(View.GONE);
                 chuyenmon.setVisibility(View.INVISIBLE);
-                rateBar.setVisibility(View.GONE);
-                rateText.setVisibility(View.GONE);
+//                rateBar.setVisibility(View.GONE);
+//                rateText.setVisibility(View.GONE);
             } else {
                 user.setVisibility(View.GONE);
                 provier.setVisibility(View.VISIBLE);
                 chuyenmon.setVisibility(View.VISIBLE);
-                rateBar.setVisibility(View.VISIBLE);
-                rateText.setVisibility(View.VISIBLE);
+//                rateBar.setVisibility(View.VISIBLE);
+//                rateText.setVisibility(View.VISIBLE);
                 if (arr.get(i).equals("3")) {
-
-                    pc.setVisibility(View.VISIBLE);
+                    link = "PC";
+                    listString.add(link);
+                    showListType();
+//                    pc.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("4")) {
-                    laptop.setVisibility(View.VISIBLE);
+                    link = "Laptop";
+                    listString.add(link);
+                    showListType();
+//                    laptop.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("5")) {
-                    mayin.setVisibility(View.VISIBLE);
+                    link = "Máy in";
+                    listString.add(link);
+                    showListType();
+
+//                    mayin.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("6")) {
-                    photocopy.setVisibility(View.VISIBLE);
+//                    photocopy.setVisibility(View.VISIBLE);
+                    link = "Máy Photocopy";
+                    listString.add(link);
+                    showListType();
                 } else if (arr.get(i).equals("7")) {
-                    scan.setVisibility(View.VISIBLE);
+//                    scan.setVisibility(View.VISIBLE);
+                    link = "Máy Scan";
+                    listString.add(link);
+                    showListType();
                 } else if (arr.get(i).equals("8")) {
-                    mayfax.setVisibility(View.VISIBLE);
+//                    mayfax.setVisibility(View.VISIBLE);
+                    link = " Máy Fax";
+                    listString.add(link);
+                    showListType();
                 } else {
-                    pc.setVisibility(View.GONE);
-                    laptop.setVisibility(View.GONE);
-                    mayin.setVisibility(View.GONE);
-                    photocopy.setVisibility(View.GONE);
-                    scan.setVisibility(View.GONE);
-                    mayfax.setVisibility(View.GONE);
+//                    pc.setVisibility(View.GONE);
+//                    laptop.setVisibility(View.GONE);
+//                    mayin.setVisibility(View.GONE);
+//                    photocopy.setVisibility(View.GONE);
+//                    scan.setVisibility(View.GONE);
+//                    mayfax.setVisibility(View.GONE);
+                    link = null;
+
                 }
             }
 
 
         }
+    }
+    public void showListType()
+    {
+
+        showString = TextUtils.join(",", listString);
+        linkclick.setText(showString);
+
     }
     public void editProfile() {
 
