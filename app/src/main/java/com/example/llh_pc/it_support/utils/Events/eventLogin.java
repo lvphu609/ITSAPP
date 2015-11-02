@@ -142,7 +142,10 @@ public class eventLogin implements View.OnClickListener {
                     String id = getLoginJson.getResults().getAccount_id();
                     String account_type = getLoginJson.getResults().getAccount_type();
                     token = getLoginJson.getResults().getAccess_token();
-                     new GCMAsyncTask().execute(token);
+
+                    /*------------------------------------------------------------*/
+                    new GCMAsyncTask().execute(token);
+
                     /*--------------------information account------------------*/
                     getAccount(id, token);
                     /*--------------------------------------------------------*/

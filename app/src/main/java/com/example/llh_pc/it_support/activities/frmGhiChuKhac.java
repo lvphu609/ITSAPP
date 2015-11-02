@@ -58,7 +58,6 @@ public class frmGhiChuKhac extends AppCompatActivity {
                 if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                     buildAlertMessageNoGps();
                 } else {
-
                     String Longitude = String.valueOf(gpsTracker.getLongitude());
                     String Latitude = String.valueOf(gpsTracker.getLatitude());;
                     new NoteAsyncTack().execute(token, other, content, Longitude, Latitude);
@@ -152,8 +151,8 @@ public class frmGhiChuKhac extends AppCompatActivity {
                         restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
                         restClient.addHeader("token", token);
                         restClient.addParam("type_id", other);
-                        restClient.addParam("location_lat", Latitude );
-                        restClient.addParam("location_lng", Longitude);
+                        restClient.addParam("location_lat",Latitude);
+                        restClient.addParam("location_lng",Longitude );;
                         restClient.addParam("content", content);
                         restClient.execute(RequestMethod.POST);
                         if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
