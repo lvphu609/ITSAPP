@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -112,17 +114,9 @@ public class frmGhiChuKhac extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
+        startActivityForResult(myIntent, 0);
+        return true;
     }
     private class NoteAsyncTack extends AsyncTask<String, Void, String> {
         private String jsonObject;
@@ -136,36 +130,47 @@ public class frmGhiChuKhac extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(frmGhiChuKhac.this, "IT Support", "Loading...");
         }
-
+        public boolean isNetworkAvailable() {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
         @Override
         protected String doInBackground(String... params) {
             try {
-                String token = params[0];
-                String other = params[1];
-                String content = params[2];
-                String Longitude = params[3];
-                String Latitude = params[4];
-                RestClient restClient = new RestClient(url_get_my_notifications);
-                if (Float.valueOf(Longitude) != 0.0 || Float.valueOf(Latitude) != 0.0) {
-                    //--------------------server---------------\\
-                    restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                    restClient.addHeader("token", token);
-                    restClient.addParam("type_id", other);
-                    restClient.addParam("location_lat",Latitude);
-                    restClient.addParam("location_lng",Longitude);
-                    restClient.addParam("content", content);
-                    restClient.execute(RequestMethod.POST);
-                    if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                        jsonObject = restClient.getResponse();
-                        Gson gson = new Gson();
-                        PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
-                        if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                            return "1";
+                Boolean checkIntert = isNetworkAvailable();
+                if(checkIntert) {
+                    String token = params[0];
+                    String other = params[1];
+                    String content = params[2];
+                    String Longitude = params[3];
+                    String Latitude = params[4];
+                    RestClient restClient = new RestClient(url_get_my_notifications);
+                    if (Float.valueOf(Longitude) != 0.0 || Float.valueOf(Latitude) != 0.0) {
+                        //--------------------server---------------\\
+                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                        restClient.addHeader("token", token);
+                        restClient.addParam("type_id", other);
+                        restClient.addParam("location_lat", Latitude );
+                        restClient.addParam("location_lng", Longitude);
+                        restClient.addParam("content", content);
+                        restClient.execute(RequestMethod.POST);
+                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                            jsonObject = restClient.getResponse();
+                            Gson gson = new Gson();
+                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
+                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                                return "1";
 
-                        } else {
-                            return "2";
+                            } else {
+                                return "2";
+                            }
                         }
                     }
+                }else
+                {
+                    return "2";
                 }
             } catch (Exception ex) {
 
@@ -177,13 +182,16 @@ public class frmGhiChuKhac extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s.equals("1")) {
+                progressDialog.dismiss();
                 Toast.makeText(frmGhiChuKhac.this, "Báo hỏng thành công.", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(frmGhiChuKhac.this, frmTabHost.class);
                 startActivity(intent);
                 frmTabHost.x = 3;
             } else {
+                progressDialog.dismiss();
                 Intent intent = new Intent(frmGhiChuKhac.this, frmDK_DN.class);
                 startActivity(intent);
+                Toast.makeText(frmGhiChuKhac.this, "không có kết nối internet.", Toast.LENGTH_LONG).show();
             }
         }
     }

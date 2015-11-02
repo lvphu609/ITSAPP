@@ -21,7 +21,7 @@ import com.example.llh_pc.it_support.activities.frmThongBao;
  * Created by ZBOOK 15 on 10/8/2015.
  */
 public class TabHostHoatDong extends TabActivity {
-    TabHost tab;
+    public static TabHost tab;
     TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,6 +25,7 @@ import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Events.eventDetailPickPost;
 import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Location.GPSTracker;
@@ -220,6 +221,7 @@ public class SearchMap extends AppCompatActivity {
                         String id = hash_posts.get(marker);
 //                        click(id);
                        new clickMarker().execute(id);
+                        Toast.makeText(SearchMap.this, "idpost" +id , Toast.LENGTH_SHORT).show();
                         return false;
                     }
                 });
@@ -438,7 +440,7 @@ public class SearchMap extends AppCompatActivity {
             String id = params[0];
 
             try {
-                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(eventDetailPost.context);
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(eventDetailPickPost.context);
                 String token = sharedPreference.getString("token", "token");
                 RestClient restClient = new RestClient(url_get);
                 restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
@@ -457,14 +459,14 @@ public class SearchMap extends AppCompatActivity {
                         String hoten = uD.normal_account.full_name;
                         String dienthoai = uD.normal_account.phone_number;
                         String diachinha = uD.normal_account.getAddress();
-                        Intent intent = new Intent(eventDetailPost.context, frmChiTietPost.class);
+                        Intent intent = new Intent(eventDetailPickPost.context, DetailPickPost.class);
                         intent.putExtra("loaibaohong", loaibaohong);
                         intent.putExtra("diachi", diachi);
                         intent.putExtra("ghichu", ghichu);
                         intent.putExtra("hoten", hoten);
                         intent.putExtra("dienthoai", dienthoai);
                         intent.putExtra("diachinha", diachinha);
-                        eventDetailPost.context.startActivity(intent);
+                        eventDetailPickPost.context.startActivity(intent);
                     }
                 }
             } catch (Exception e) {

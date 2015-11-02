@@ -1,9 +1,12 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -14,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TabHost;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.adapters.ChildPostAdapter;
@@ -24,6 +28,7 @@ import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Events.eventDelete;
+import com.example.llh_pc.it_support.utils.Events.eventDetailPickPost;
 import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
@@ -136,7 +141,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     @Override
     public void setEventForControl() {
 
-       list.setOnItemClickListener(new eventDetailPost(Search.this,postDetails));
+       list.setOnItemClickListener(new eventDetailPickPost(Search.this,postDetails));
 
     }
 
@@ -150,25 +155,20 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
     }
 
-    @Override
+   /* @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_search, menu);
 
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

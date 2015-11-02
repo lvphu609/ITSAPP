@@ -185,7 +185,8 @@
             android:layout_gravity="center_horizontal"
             android:background="@color/mauxanh"
             android:textColor="@color/actionbar_text"
-            android:id="@+id/btnAccept"/>
+            android:id="@+id/btnAccept"
+            />
 
     </LinearLayout>
 </LinearLayout>
