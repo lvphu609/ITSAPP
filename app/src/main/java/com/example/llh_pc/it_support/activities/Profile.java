@@ -100,6 +100,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     private ArrayList<String> arrayListAccount = new ArrayList<String>();
     private ArrayList<String> arr = new ArrayList<String>();
     LinearLayout ll;
+    String showString;
+    String link;
     frmDangKy frmDK = new frmDangKy();
     AccountDAL accdal;
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
@@ -114,6 +116,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     ImageLoader imageload;
     Bitmap thumbnail, bm;
     ArrayList<Integer> list = new ArrayList<>();
+    ArrayList<String> listString = new ArrayList<>();
+    TextView linkclick;
     View[] v;
     int x=1,y=1,z=1;
     public CheckBox cbpc, cbLaptop, cbphoto, cbmayin, cbmayfax, cbscan;
@@ -150,6 +154,8 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         validationadress1=(TextView) findViewById(R.id.validationaddress1);
         ll = (LinearLayout) findViewById(R.id.ll);
 
+        linkclick = (TextView) findViewById(R.id.link);
+
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectDiskReads()
                 .detectDiskWrites()
@@ -184,10 +190,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
         getAccount(name, id);
         setProfile();
         checkAcctype();
+        showListType();
 //        gridView();
         editProfile();
 
-
+        linkclick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopUp();
+            }
+        });
 
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -323,7 +335,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 //            @Override
 //            public void onClick(View v) {
 
-                changeAcctype();
+//                changeAcctype();
+
+
 //                editProfile.setEnabled(false);
 //                editProfile.setVisibility(View.INVISIBLE);
 //                OK.setEnabled(true);
@@ -344,13 +358,13 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
 
                 } else {
-                    if(efullname.getText().toString().length()>0) {
+                    if (efullname.getText().toString().length() > 0) {
 
                     }
 
 
                 }
-                }
+            }
 
         });
         efullname.addTextChangedListener(new TextWatcher() {
@@ -375,9 +389,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 }
                 String txt = efullname.getText().toString();
-                if(txt != null && txt.length()>0){
-                    String first = txt.substring(0,1);
-                    if(!(first == first.toUpperCase())){
+                if (txt != null && txt.length() > 0) {
+                    String first = txt.substring(0, 1);
+                    if (!(first == first.toUpperCase())) {
                         String result = toUpperCaseFirst(efullname.getText().toString());
                         efullname.setText(result);
                         efullname.setSelection(efullname.getText().length());
@@ -391,9 +405,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
                     x = 0;
-                }
-
-                else {
+                } else {
 
                     validationname.setVisibility(View.GONE);
                     valadationname1.setVisibility(View.GONE);
@@ -410,10 +422,10 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 } else {
 
-                        if(eadress.getText().toString().length()>0) {
+                    if (eadress.getText().toString().length() > 0) {
 
-                        }
                     }
+                }
             }
         });
         eadress.addTextChangedListener(new TextWatcher() {
@@ -463,55 +475,51 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-                if(ephone.getText().toString().length()>=10)
-                {
+                if (ephone.getText().toString().length() >= 10) {
                     z = 1;
                 }
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(ephone.getText().toString().length()<=9) {
+                if (ephone.getText().toString().length() <= 9) {
                     validationphone1.setVisibility(View.VISIBLE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    z=0;
+                    z = 0;
                     setOKenable();
+                } else {
+                    validationphone1.setVisibility(View.GONE);
+                    z = 1;
                 }
-                else
-                {validationphone1.setVisibility(View.GONE);
-                z=1;}
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
 
-                for(int i = s.length(); i > 0; i--){
+                for (int i = s.length(); i > 0; i--) {
 
-                    if(s.subSequence(i-1, i).toString().equals("\n"))
-                        s.replace(i-1, i, "");
+                    if (s.subSequence(i - 1, i).toString().equals("\n"))
+                        s.replace(i - 1, i, "");
 
                 }
 
-                if(ephone.getText().toString().length()<=9) {
+                if (ephone.getText().toString().length() <= 9) {
                     validationphone1.setVisibility(View.VISIBLE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    z=0;
+                    z = 0;
                     setOKenable();
-                }
-                else if(s.toString().isEmpty()){
+                } else if (s.toString().isEmpty()) {
                     validationphone.setVisibility(View.VISIBLE);
                     validationphone1.setVisibility(View.GONE);
                     OK.setEnabled(false);
                     OK.setBackgroundColor(getResources().getColor(R.color.mauxam));
-                    z=0;
-                }
-                else
-                {
+                    z = 0;
+                } else {
                     validationphone.setVisibility(View.GONE);
-                    if(s.toString().length()>9) {
+                    if (s.toString().length() > 9) {
                         z = 1;
                         setOKenable();
                     }
@@ -520,12 +528,13 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
             }
         });
 
-                pc.setEnabled(true);
-                laptop.setEnabled(true);
-                photocopy.setEnabled(true);
-                scan.setEnabled(true);
-                mayfax.setEnabled(true);
-                mayin.setEnabled(true);
+//                pc.setEnabled(true);
+//                laptop.setEnabled(true);
+//                photocopy.setEnabled(true);
+//                scan.setEnabled(true);
+//                mayfax.setEnabled(true);
+//                mayin.setEnabled(true);
+
                 c.setEnabled(true);
                 c.setClickable(true);
                 c.setOnClickListener(new View.OnClickListener() {
@@ -534,7 +543,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                         selectImage();
                     }
                 });
-                checkEditAcctype();
+//                checkEditAcctype();
                 changePass.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -564,18 +573,18 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 efullname.setEnabled(false);
                 eadress.setEnabled(false);
                 ephone.setEnabled(false);
-                pc.setEnabled(false);
-                laptop.setEnabled(false);
-                mayin.setEnabled(false);
-                photocopy.setEnabled(false);
-                scan.setEnabled(false);
-                mayfax.setEnabled(false);
-                pc.setTextColor(getResources().getColor(R.color.mauxam));
-                laptop.setTextColor(getResources().getColor(R.color.mauxam));
-                photocopy.setTextColor(getResources().getColor(R.color.mauxam));
-                scan.setTextColor(getResources().getColor(R.color.mauxam));
-                mayfax.setTextColor(getResources().getColor(R.color.mauxam));
-                mayin.setTextColor(getResources().getColor(R.color.mauxam));
+//                pc.setEnabled(false);
+//                laptop.setEnabled(false);
+//                mayin.setEnabled(false);
+//                photocopy.setEnabled(false);
+//                scan.setEnabled(false);
+//                mayfax.setEnabled(false);
+//                pc.setTextColor(getResources().getColor(R.color.mauxam));
+//                laptop.setTextColor(getResources().getColor(R.color.mauxam));
+//                photocopy.setTextColor(getResources().getColor(R.color.mauxam));
+//                scan.setTextColor(getResources().getColor(R.color.mauxam));
+//                mayfax.setTextColor(getResources().getColor(R.color.mauxam));
+//                mayin.setTextColor(getResources().getColor(R.color.mauxam));
                 SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
                 String token = sharedPreference.getString("token", "YourName");
                 String id = sharedPreference.getString("id", "");
@@ -603,12 +612,12 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
     public void checkAcctype() {
         user = (TextView) findViewById(R.id.enableUser);
         provier = (TextView) findViewById(R.id.enableProvider);
-        pc = (Button) findViewById(R.id.bntPC);
-        laptop = (Button) findViewById(R.id.bntLaptpo);
-        scan = (Button) findViewById(R.id.bntMayScan);
-        photocopy = (Button) findViewById(R.id.photocopy);
-        mayfax = (Button) findViewById(R.id.bntMayfax);
-        mayin = (Button) findViewById(R.id.bntMayin);
+//        pc = (Button) findViewById(R.id.bntPC);
+//        laptop = (Button) findViewById(R.id.bntLaptpo);
+//        scan = (Button) findViewById(R.id.bntMayScan);
+//        photocopy = (Button) findViewById(R.id.photocopy);
+//        mayfax = (Button) findViewById(R.id.bntMayfax);
+//        mayin = (Button) findViewById(R.id.bntMayin);
         chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
 
         for (int i = 0; i < arr.size(); i++) {
@@ -626,25 +635,45 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 rateBar.setVisibility(View.VISIBLE);
                 rateText.setVisibility(View.VISIBLE);
                 if (arr.get(i).equals("3")) {
-
-                    pc.setVisibility(View.VISIBLE);
+                    link = "PC";
+                    listString.add(link);
+                    showListType();
+//                    pc.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("4")) {
-                    laptop.setVisibility(View.VISIBLE);
+                    link = "Laptop";
+                    listString.add(link);
+                    showListType();
+//                    laptop.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("5")) {
-                    mayin.setVisibility(View.VISIBLE);
+                    link = "Máy in";
+                    listString.add(link);
+                    showListType();
+
+//                    mayin.setVisibility(View.VISIBLE);
                 } else if (arr.get(i).equals("6")) {
-                    photocopy.setVisibility(View.VISIBLE);
+//                    photocopy.setVisibility(View.VISIBLE);
+                    link = "Máy Photocopy";
+                    listString.add(link);
+                    showListType();
                 } else if (arr.get(i).equals("7")) {
-                    scan.setVisibility(View.VISIBLE);
+//                    scan.setVisibility(View.VISIBLE);
+                    link = "Máy Scan";
+                    listString.add(link);
+                    showListType();
                 } else if (arr.get(i).equals("8")) {
-                    mayfax.setVisibility(View.VISIBLE);
+//                    mayfax.setVisibility(View.VISIBLE);
+                    link = " Máy Fax";
+                    listString.add(link);
+                    showListType();
                 } else {
-                    pc.setVisibility(View.GONE);
-                    laptop.setVisibility(View.GONE);
-                    mayin.setVisibility(View.GONE);
-                    photocopy.setVisibility(View.GONE);
-                    scan.setVisibility(View.GONE);
-                    mayfax.setVisibility(View.GONE);
+//                    pc.setVisibility(View.GONE);
+//                    laptop.setVisibility(View.GONE);
+//                    mayin.setVisibility(View.GONE);
+//                    photocopy.setVisibility(View.GONE);
+//                    scan.setVisibility(View.GONE);
+//                    mayfax.setVisibility(View.GONE);
+                    link = null;
+
                 }
             }
 
@@ -1188,12 +1217,12 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 user = (TextView) findViewById(R.id.enableUser);
                 provier = (TextView) findViewById(R.id.enableProvider);
-                pc = (Button) findViewById(R.id.bntPC);
-                laptop = (Button) findViewById(R.id.bntLaptpo);
-                scan = (Button) findViewById(R.id.bntMayScan);
-                photocopy = (Button) findViewById(R.id.photocopy);
-                mayfax = (Button) findViewById(R.id.bntMayfax);
-                mayin = (Button) findViewById(R.id.bntMayin);
+//                pc = (Button) findViewById(R.id.bntPC);
+//                laptop = (Button) findViewById(R.id.bntLaptpo);
+//                scan = (Button) findViewById(R.id.bntMayScan);
+//                photocopy = (Button) findViewById(R.id.photocopy);
+//                mayfax = (Button) findViewById(R.id.bntMayfax);
+//                mayin = (Button) findViewById(R.id.bntMayin);
                 chuyenmon = (TextView) findViewById(R.id.viewchuyenmon);
                 list.clear();
 
@@ -1204,9 +1233,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(3) || !arrayList.equals("3")) {
                         list.remove((Integer) 3);
                         list.add(3);
-                        pc.setVisibility(View.VISIBLE);
-                        pc.setEnabled(true);
-                        pc.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        pc.setVisibility(View.VISIBLE);
+//                        pc.setEnabled(true);
+//                        pc.setTextColor(getResources().getColor(R.color.mauxanh));
 
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
@@ -1218,7 +1247,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 {
 
                     list.remove((Integer) 3);
-                    pc.setVisibility(View.GONE);
+//                    pc.setVisibility(View.GONE);
 
                 }
 
@@ -1228,9 +1257,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(4) || !arrayList.equals("4")) {
                         list.remove((Integer) 4);
                         list.add(4);
-                        laptop.setVisibility(View.VISIBLE);
-                        laptop.setEnabled(true);
-                        laptop.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        laptop.setVisibility(View.VISIBLE);
+//                        laptop.setEnabled(true);
+//                        laptop.setTextColor(getResources().getColor(R.color.mauxanh));
 
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
                     }
@@ -1238,7 +1267,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 {
                     list.remove((Integer) 4);
-                    laptop.setVisibility(View.GONE);
+//                    laptop.setVisibility(View.GONE);
 
                 }
 
@@ -1249,9 +1278,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(5) || !arrayList.equals("5")) {
                         list.remove((Integer) 5);
                         list.add(5);
-                        mayin.setVisibility(View.VISIBLE);
-                        mayin.setEnabled(true);
-                        mayin.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        mayin.setVisibility(View.VISIBLE);
+//                        mayin.setEnabled(true);
+//                        mayin.setTextColor(getResources().getColor(R.color.mauxanh));
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
                     }
@@ -1259,7 +1288,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 {
                     list.remove((Integer) 5);
-                    mayin.setVisibility(View.GONE);
+//                    mayin.setVisibility(View.GONE);
 
                 }
 
@@ -1270,9 +1299,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(6) || !arrayList.equals("6")) {
                         list.remove((Integer) 6);
                         list.add(6);
-                        photocopy.setVisibility(View.VISIBLE);
-                        photocopy.setEnabled(true);
-                        photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        photocopy.setVisibility(View.VISIBLE);
+//                        photocopy.setEnabled(true);
+//                        photocopy.setTextColor(getResources().getColor(R.color.mauxanh));
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
 
@@ -1282,7 +1311,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 {
 
                     list.remove((Integer) 6);
-                    photocopy.setVisibility(View.GONE);
+//                    photocopy.setVisibility(View.GONE);
 
                 }
 
@@ -1293,16 +1322,16 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(7) || !arrayList.equals("7")) {
                         list.remove((Integer) 7);
                         list.add(7);
-                        scan.setVisibility(View.VISIBLE);
-                        scan.setEnabled(true);
-                        scan.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        scan.setVisibility(View.VISIBLE);
+//                        scan.setEnabled(true);
+//                        scan.setTextColor(getResources().getColor(R.color.mauxanh));
 
                     }
                 } else
 
                 {
                     list.remove((Integer) 7);
-                    scan.setVisibility(View.GONE);
+//                    scan.setVisibility(View.GONE);
 
                 }
 
@@ -1313,9 +1342,9 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                     if (!list.contains(8) || !arrayList.equals("8")) {
                         list.remove((Integer) 8);
                         list.add(8);
-                        mayfax.setVisibility(View.VISIBLE);
-                        mayfax.setEnabled(true);
-                        mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
+//                        mayfax.setVisibility(View.VISIBLE);
+//                        mayfax.setEnabled(true);
+//                        mayfax.setTextColor(getResources().getColor(R.color.mauxanh));
 //                                    Profile.this.putBooleanInPreferences(isChecked, "isChecked");
 
                     }
@@ -1324,7 +1353,7 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
                 {
 
                     list.remove((Integer) 8);
-                    mayfax.setVisibility(View.GONE);
+//                    mayfax.setVisibility(View.GONE);
 
 
                 }
@@ -1335,8 +1364,17 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
                 // checkedbox.joi = String.join(",", list);
                 checkedbox = TextUtils.join(",", list);
+
                 checkedbox = "[" + checkedbox;
                 checkedbox = checkedbox + "]";
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(Profile.this);
+                String token = sharedPreference.getString("token", "YourName");
+
+                String id = sharedPreference.getString("id", "");
+                ChangeEditProfile(id, token, efullname.getText().toString(), ephone.getText().toString(), eadress.getText().toString(), temp, checkedbox);
+                listString.clear();
+                getAccount(token,id);
+                checkAcctype();
                 helpDialog.dismiss();
             }
         });
@@ -1666,6 +1704,15 @@ public class Profile  extends AppCompatActivity implements InnoFunctionListener,
 
 
         }else return "";
+
+    }
+
+
+    public void showListType()
+    {
+
+            showString = TextUtils.join(",",listString);
+            linkclick.setText(showString);
 
     }
 }

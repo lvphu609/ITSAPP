@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,6 +48,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     private EditText mSearchEdt;
     private int page =1;
     private String query;
+    String searchString;
     String t;
     public static final String url_search= Def.API_BASE_LINK + Def.API_Search + Def.API_FORMAT_JSON;
     public ArrayList<LuuTruModel> searchPost;
@@ -57,6 +59,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     private TextWatcher mSearchTw;
    private ArrayList<LuuTruModel> postDetails;
     public String name;
+    String x,y;
     private GPSTracker gpsTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,9 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
         token = sharedPreference.getString("token", "YourName");
         account_id = sharedPreference.getString("id", "YourName");
         list = (ListView) findViewById(R.id.list_view);
-
+        gpsTracker = new GPSTracker(Search.this);
+        y = String.valueOf(gpsTracker.getLongitude());
+        x = String.valueOf(gpsTracker.getLatitude());
         try
         {
             RestClient restClient = new RestClient(url_search);
@@ -106,11 +111,13 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String searchString=editsearch.getText().toString();
-                adapter.getFilter().filter(searchString);
-                searchAPI(searchString);
-                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
-                list.setAdapter(adapter);
+               searchString=editsearch.getText().toString();
+
+//                searchAPI(searchString);
+                new searchList().execute(searchString,x,y);
+//                adapter.getFilter().filter(searchString);
+//                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
+//                list.setAdapter(adapter);
             }
 
             @Override
@@ -202,10 +209,60 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
             if(searchParse1.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
                 searchParse1.getResults();
                 postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse1.getResults()));
-
+                adapter.getFilter().filter(searchString);
+                adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
+                list.setAdapter(adapter);
             }
         }
     }catch (Exception ex){
         t = ex.toString();
-    }}
+    }
+    }
+
+
+    private class searchList extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String query = params[0];
+                String x1 = params[1];
+                String y1 = params[2];
+
+                RestClient restClient = new RestClient(url_search);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("page","1");
+                restClient.addParam("account_id", account_id);
+                restClient.addParam("location_lat",x1);
+                restClient.addParam("location_lng",y1);
+                restClient.addParam("query",query);
+                restClient.execute(RequestMethod.POST);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                        restClient.getResponse() != null)
+                {
+                    String jsonObject = restClient.getResponse();
+                    SearchParse searchParse1 = new Gson().fromJson(jsonObject, SearchParse.class);
+
+                    if(searchParse1.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                        searchParse1.getResults();
+                        postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse1.getResults()));
+
+                    }
+                }
+            }catch (Exception ex){
+                t = ex.toString();
+            }
+            return searchString;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            adapter.getFilter().filter(searchString);
+            adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
+            list.setAdapter(adapter);
+        }
+    }
+
 }

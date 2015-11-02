@@ -520,6 +520,13 @@ public class frmDangKy extends AppCompatActivity implements InnoFunctionListener
                         setDongyEnble();
                     }
                 } else {
+                    if ( Iconfirmpassword.getText().toString().matches(Ipassword.getText().toString()))
+                    {}
+
+                    else if(Iconfirmpassword.getText().toString()!= null)
+                    {
+                        errorcfpassword.setVisibility(View.VISIBLE);
+                    }
                     if (Ipassword.getText().toString().matches("")) {
 //                        errorpass1.setVisibility(View.VISIBLE);
                         errorpass2.setVisibility(View.GONE);
