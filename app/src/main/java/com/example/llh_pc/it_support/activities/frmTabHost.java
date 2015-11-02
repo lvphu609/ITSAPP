@@ -4,11 +4,14 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.TabActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.StrictMode;
 import android.support.v4.app.FragmentTabHost;
 
@@ -20,8 +23,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,11 +38,14 @@ import com.example.llh_pc.it_support.fragments.TabHostHoatDong;
 import com.example.llh_pc.it_support.fragments.tabHostTimKiem;
 import com.example.llh_pc.it_support.models.JsonParses.AccountParse;
 import com.example.llh_pc.it_support.models.JsonParses.LoginParse;
+import com.example.llh_pc.it_support.models.JsonParses.PostParse;
+import com.example.llh_pc.it_support.models.JsonParses.abc;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
+import com.example.llh_pc.it_support.utils.Location.GPSTracker;
 import com.google.gson.Gson;
 
 public class frmTabHost extends TabActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
@@ -47,6 +55,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private ActionBarDrawerToggle mDrawerToggle;
     private int selectedItem;
     private String url_logout = Def.API_BASE_LINK + Def.API_Logout + Def.API_FORMAT_JSON;
+    public static final String url_gcm = Def.API_BASE_LINK + Def.API_update_gcm + Def.API_FORMAT_JSON;
     private int check;
     private Toolbar toolbar;
     private ImageLoader imageload = new ImageLoader(frmTabHost.this);
@@ -62,14 +71,13 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private String ts;
     private String id;
     private String token;
+    private GPSTracker gpsTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_tab_host);
         final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
-
-
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
         /*fullname = sharedPreference.getString("fullname", null);
         avatar = sharedPreference.getString("avatar", null);*/
@@ -77,8 +85,8 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         token = sharedPreference.getString("token",null);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
-        getAccount(id, token);
 
+        getAccount(id, token);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmTabHost.this);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt("staylogin", 1);
@@ -149,19 +157,17 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                     if (tab.getCurrentTab() == 0) {
                                                         toolbar.setTitle("Báo hỏng");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh)); //1st tab selected
-                                                    }
-                                                    else if ((tab.getCurrentTab() == 1)) {
+                                                    } else if ((tab.getCurrentTab() == 1)) {
                                                         toolbar.setTitle("Thông báo");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
                                                     }//2nd tab selected
                                                     else if ((tab.getCurrentTab() == 2)) {
                                                         toolbar.setTitle("Tìm Kiếm");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
-                                                    }
-                                                    else if ((tab.getCurrentTab() == 3))
-                                                    {
+                                                    } else if ((tab.getCurrentTab() == 3)) {
                                                         toolbar.setTitle("Lưu Trữ");
-                                                    tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));}
+                                                        tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
+                                                    }
                                                 }
                                             });
     }
@@ -178,6 +184,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         super.onPause();
 
     }
+
 
 
     private void initNavigation(Bundle savedInstanceState) {
@@ -310,6 +317,62 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
             }
         } catch (Exception ex) {
             ts = ex.toString();
+        }
+    }
+
+    private class GCMAsyncTask extends AsyncTask<String, Void, Boolean>
+    {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            String token = params[0];
+            String location_lat = params[1];
+            String location_lng = params[2];
+            try {
+                RestClient restClient = new RestClient(url_gcm);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("location_lat", location_lat);
+                restClient.addParam("location_lng", location_lng);
+                restClient.execute(RequestMethod.POST);
+                if(restClient.getResponseCode()== Def.RESPONSE_CODE_SUCCESS)
+                {
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    abc getJson = gson.fromJson(jsonObject, abc.class);
+                    if(getJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
+                    {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+
+            }catch (Exception ex)
+            {
+
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if(aBoolean)
+            {
+                String t ="fdsasdfa";
+                String t1 ="fdsasdfadfs";
+            }
+            else
+            {
+                return;
+            }
         }
     }
 
