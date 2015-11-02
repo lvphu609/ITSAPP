@@ -33,7 +33,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile1 extends ActionBarActivity implements View.OnClickListener {
     public static final String url_get_account_info_by_id = Def.API_BASE_LINK + Def.API_GET_ACCOUNT_INFO_BY_ID + Def.API_FORMAT_JSON;
-    private ArrayList<String> arr = new ArrayList<String>();
+   private ArrayList<String> arr = new ArrayList<String>();
     String email, full_name, avatar, phone, address, acctye, checkedbox, temp, arrayList;
     TextView eemail, efullname, eadress, ephone, password, passcu, passmoi, cfpassmoi;
     private CircleImageView c;

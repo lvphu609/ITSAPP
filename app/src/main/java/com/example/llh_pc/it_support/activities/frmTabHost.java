@@ -20,8 +20,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +42,12 @@ import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+
 public class frmTabHost extends TabActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener{
     private DrawerLayout drawerLayout;
     private NavigationView navDrawer;
+    private ArrayList<String> arr = new ArrayList<String>();
     private ActionBarDrawerToggle drawerToggle;
     private ActionBarDrawerToggle mDrawerToggle;
     private int selectedItem;
@@ -62,7 +67,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
     private String ts;
     private String id;
     private String token;
-
+    TabHost tabHost;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,7 +94,7 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         initNavigation(savedInstanceState);
         //final TabHost tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
-        TabHost tabHost = getTabHost();
+        tabHost = getTabHost();
         Resources ressources = getResources();
 
 
@@ -157,6 +162,19 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                     else if ((tab.getCurrentTab() == 2)) {
                                                         toolbar.setTitle("Tìm Kiếm");
                                                         tab.getTabWidget().getChildAt(tab.getCurrentTab()).setBackgroundColor(getResources().getColor(R.color.mauxanh));
+
+
+                                                            for (int i = 0; i < arr.size(); i++) {
+
+                                                            if (arr.get(i).equals("1")) {
+                                                                    showPopUp();
+
+                                                            } else {
+
+                                                            }
+                                                        }
+
+
                                                     }
                                                     else if ((tab.getCurrentTab() == 3))
                                                     {
@@ -306,11 +324,31 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                 if (getAccountJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     fullname = getAccountJson.getDKresults().getFull_name().toString();
                     avatar = getAccountJson.getDKresults().getAvatar().toString();
+                    arr = getAccountJson.getDKresults().getAccount_type();
+
                 }
             }
         } catch (Exception ex) {
             ts = ex.toString();
         }
+    }
+    public void showPopUp() {
+
+        final android.app.AlertDialog.Builder helpBuilder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View checkboxLayout = inflater.inflate(R.layout.popupuser, null);
+        helpBuilder.setView(checkboxLayout);
+        Button okpopup = (Button) checkboxLayout.findViewById(R.id.okpopup);
+        final android.app.AlertDialog show = helpBuilder.show();
+        show.setCancelable(false);
+        okpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tabHost.setCurrentTab(0);
+                show.dismiss();
+            }
+        });
+        show.show();
     }
 
 }
