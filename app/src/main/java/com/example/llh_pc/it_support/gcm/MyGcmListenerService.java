@@ -30,9 +30,12 @@ import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmTabHost;
 import com.google.android.gms.gcm.GcmListenerService;
 
+import org.json.JSONObject;
+
 public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
+    private JSONObject json;
 
     /**
      * Called when message is received.

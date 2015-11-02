@@ -51,6 +51,9 @@ public interface Def {
     public static final String API_checkToken= "accounts/check_token/";
     //create_type_post_other
     public static final String API_create_type_post_other= "config/create_type_post_other/";
+    //update gcm
+    public static final String API_update_gcm = "accounts/update_location/";
+
 
 
 
