@@ -152,8 +152,8 @@ public class frmGhiChu extends AppCompatActivity {
                         restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
                         restClient.addHeader("token", token);
                         restClient.addParam("type_id", type_id);
-                        restClient.addParam("location_lat", Latitude);
-                        restClient.addParam("location_lng", Longitude);
+                        restClient.addParam("location_lat",Latitude );
+                        restClient.addParam("location_lng",Longitude);
                         restClient.addParam("content", content);
                         restClient.execute(RequestMethod.POST);
                         if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
