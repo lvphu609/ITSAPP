@@ -49,6 +49,7 @@ public class frmChiTietPost extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
+        frmTabHost.x = 3;
         startActivityForResult(myIntent, 0);
         return true;
     }

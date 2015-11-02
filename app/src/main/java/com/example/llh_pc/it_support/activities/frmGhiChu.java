@@ -6,6 +6,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -128,34 +130,42 @@ public class frmGhiChu extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = ProgressDialog.show(frmGhiChu.this, "IT Support", "Loading...");
         }
-
+        public boolean isNetworkAvailable() {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
         @Override
         protected String doInBackground(String... params) {
             try {
-                String token = params[0];
-                String type_id = params[1];
-                String content = params[2];
-                String Longitude = params[3];
-                String Latitude = params[4];
-                RestClient restClient = new RestClient(url_get_my_notifications);
-                if (Float.valueOf(Longitude) != 0.0 || Float.valueOf(Latitude) != 0.0) {
-                    //--------------------server---------------\\
-                    restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                    restClient.addHeader("token", token);
-                    restClient.addParam("type_id", type_id);
-                    restClient.addParam("location_lat",Latitude);
-                    restClient.addParam("location_lng",Longitude);
-                    restClient.addParam("content", content);
-                    restClient.execute(RequestMethod.POST);
-                    if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                        jsonObject = restClient.getResponse();
-                        Gson gson = new Gson();
-                        PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
-                        if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                            return "1";
+                Boolean checkIntert = isNetworkAvailable();
+                if(checkIntert) {
+                    String token = params[0];
+                    String type_id = params[1];
+                    String content = params[2];
+                    String Longitude = params[3];
+                    String Latitude = params[4];
+                    RestClient restClient = new RestClient(url_get_my_notifications);
+                    if (Float.valueOf(Longitude) != 0.0 || Float.valueOf(Latitude) != 0.0) {
+                        //--------------------server---------------\\
+                        restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                        restClient.addHeader("token", token);
+                        restClient.addParam("type_id", type_id);
+                        restClient.addParam("location_lat", Latitude);
+                        restClient.addParam("location_lng", Longitude);
+                        restClient.addParam("content", content);
+                        restClient.execute(RequestMethod.POST);
+                        if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                            jsonObject = restClient.getResponse();
+                            Gson gson = new Gson();
+                            PostParse getListPostJson = gson.fromJson(jsonObject, PostParse.class);
+                            if (getListPostJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                                return "1";
 
-                        } else {
-                            return "2";
+                            } else {
+                                return "2";
+                            }
                         }
                     }
                 }
@@ -175,12 +185,14 @@ public class frmGhiChu extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (s.equals("1")) {
+                progressDialog.dismiss();
                 Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
                 startActivity(intent);
                 frmTabHost.x = 3;
             } else {
-                Toast.makeText(frmGhiChu.this, "GPS chưa định vị được vị trí của bạn.", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(frmGhiChu.this, frmTabHost.class);
+                progressDialog.dismiss();
+                Toast.makeText(frmGhiChu.this, "không có kết nối internet.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(frmGhiChu.this, frmDK_DN.class);
                 startActivity(intent);
             }
         }

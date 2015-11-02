@@ -83,20 +83,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void setEventForControl() {
-        //lstPost.setOnItemClickListener(new eventDetailPost(frmLuuTru.this, postDetails));
-        /*lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-//                   new DialogDefault(frmLuuTru.this.getParent()).showConfirmCloseApp();
-                } catch (Exception e) {
-                    Log.e("error", e.getMessage());
-                    e.printStackTrace();
-                }
 
-                return false;
-            }
-        });*/
     }
 
     @Override
@@ -121,31 +108,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
         @Override
         protected ArrayList<LuuTruModel> doInBackground(String... params) {
-            /*SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
-            token = sharedPreference.getString("token", "YourName");
-            account_id = sharedPreference.getString("id", "YourName");
-            String page = "1";
-            try
-            {
-                RestClient restClient = new RestClient(url_loadPost);
-                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                restClient.addHeader("token", token);
-                restClient.addParam("page", page);
-                restClient.addParam("account_id", account_id);
-                restClient.execute(RequestMethod.POST);
-                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
-                        restClient.getResponse() != null)
-                {
-                    String jsonObject = restClient.getResponse();
-                    LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
-                    if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-                        postDetails = luuTruParse.getResults();
-                    }
-                }
-            }catch (Exception ex){
-                Log.e("error" + "Luu Tru", ex.getMessage());
-                ex.printStackTrace();
-            }*/
+
             return postDetails;
         }
 
@@ -165,32 +128,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         }
         
     };
-    @Override
-    public void onBackPressed() {
-        //final Intent intent = new Intent(this, frmDK_DN.class);
-        AlertDialog.Builder builder = new AlertDialog.Builder(frmLuuTru.this);
-        new AlertDialog.Builder(frmLuuTru.this)
-                .setMessage("Thoát app?")
-                .setCancelable(false)
-                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                        dialog.cancel();
-                    }
-                })
-                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which)
-                    {
-                        // Perform Your Task Here--When No is pressed
-                        dialog.cancel();
-                    }
-                }).show();
-    }
      public ArrayList<LuuTruModel> GetList()
      {
          SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
@@ -205,8 +142,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
              restClient.addParam("page", page);
              restClient.addParam("account_id", account_id);
              restClient.execute(RequestMethod.POST);
-             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
-                     restClient.getResponse() != null)
+             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS && restClient.getResponse() != null)
              {
                  String jsonObject = restClient.getResponse();
                  LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);

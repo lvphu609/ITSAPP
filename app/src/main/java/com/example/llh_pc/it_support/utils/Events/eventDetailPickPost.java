@@ -4,42 +4,37 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.internal.widget.DecorToolbar;
 import android.view.View;
 import android.widget.AdapterView;
 
 import com.example.llh_pc.it_support.activities.DetailPickPost;
-import com.example.llh_pc.it_support.activities.Search;
-import com.example.llh_pc.it_support.activities.SearchMap;
 import com.example.llh_pc.it_support.activities.frmChiTietPost;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
-import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
 /**
- * Created by LLH-PC on 9/27/2015.
+ * Created by LLH-PC on 10/29/2015.
  */
-public class eventDetailPost implements AdapterView.OnItemClickListener{
-
+public class eventDetailPickPost implements AdapterView.OnItemClickListener {
     public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
-    public static  Context context;
+    public static Context context;
     private ArrayList<LuuTruModel> arrayListPost;
     private UserPostDetail uD;
 
-    public eventDetailPost(Context current, ArrayList<LuuTruModel> list) {
+    public eventDetailPickPost(Context current, ArrayList<LuuTruModel> list)
+    {
         this.context = current;
         this.arrayListPost = list;
     }
+
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -60,18 +55,17 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     uD = getLoginJson.getResults();
                     String ID_PickPost = uD.getId();
-                    //String ID_PickPost = uD.post_type.getId();
                     String loaibaohong = uD.post_type.getName();
                     String diachi = uD.location_name;
                     String ghichu = uD.content;
                     String hoten = uD.normal_account.full_name;
                     String dienthoai = uD.normal_account.phone_number;
                     String diachinha = uD.normal_account.getAddress();
-                    Intent intent = new Intent(context, frmChiTietPost .class);
+                    Intent intent = new Intent(context, DetailPickPost.class);
                     intent.putExtra("loaibaohong", loaibaohong);
                     intent.putExtra("diachi", diachi);
                     intent.putExtra("ghichu", ghichu);
-                    intent.putExtra("hoten", hoten);
+                     intent.putExtra("hoten", hoten);
                     intent.putExtra("dienthoai", dienthoai);
                     intent.putExtra("diachinha", diachinha);
                     intent.putExtra("IDPostPost", ID_PickPost);
@@ -82,7 +76,4 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
             e.printStackTrace();
         }
     }
-
 }
-
-
