@@ -28,7 +28,12 @@ import android.util.Log;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmTabHost;
+import com.example.llh_pc.it_support.models.JsonParses.NotificationParse;
+import com.example.llh_pc.it_support.models.Notification;
+import com.example.llh_pc.it_support.models.NotificationDetail;
+import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -36,7 +41,8 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
     private JSONObject json;
-
+    private NotificationParse postParse;
+    private ImageLoader imageload = new ImageLoader(this);
     /**
      * Called when message is received.
      *
@@ -77,7 +83,7 @@ public class MyGcmListenerService extends GcmListenerService {
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+
      */
     private void sendNotification(String message) {
         Intent intent = new Intent(this, frmTabHost.class);

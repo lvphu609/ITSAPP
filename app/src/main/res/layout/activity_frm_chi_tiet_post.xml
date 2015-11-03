@@ -194,7 +194,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tvHoTem"
+                android:id="@+id/tvHoTen"
                 android:text="abc"
                 android:textColor="@color/mauxanh"/>
         </LinearLayout>
@@ -228,7 +228,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/mauden"/>
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/edtRating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems = "40"

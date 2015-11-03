@@ -18,18 +18,26 @@ import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 
 public class frmChiTietPost extends AppCompatActivity {
 
-    TextView tvType,tvLocation_Name,tvNote,tvName,tvPhone,tvaddress;
+    TextView tvType, tvLocation_Name, tvNote, tvName, tvPhone, tvaddress, tvThoiGian,tvHoTen,tvSoDienThoai;
+    EditText edtRating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_chi_tiet_post);
 
-        tvType = (TextView)findViewById(R.id.tvTypePost);
-        tvLocation_Name = (TextView)findViewById(R.id.tvLocation);
-        tvNote = (TextView)findViewById(R.id.tvNote);
-        tvName = (TextView)findViewById(R.id.tvName);
-        tvPhone = (TextView)findViewById(R.id.tvPhone_number);
-        tvaddress = (TextView)findViewById(R.id.tvaddress);
+        tvType = (TextView) findViewById(R.id.tvTypePost);
+        tvLocation_Name = (TextView) findViewById(R.id.tvLocation);
+        tvNote = (TextView) findViewById(R.id.tvNote);
+        tvName = (TextView) findViewById(R.id.tvName);
+        tvPhone = (TextView) findViewById(R.id.tvPhone_number);
+        tvaddress = (TextView) findViewById(R.id.tvaddress);
+
+        /*info provider pick post*/
+        tvThoiGian = (TextView) findViewById(R.id.tvThoiGian);
+        tvHoTen = (TextView) findViewById(R.id.tvHoTen);
+        tvSoDienThoai = (TextView)findViewById(R.id.tvSoDienThoai);
+        /*rating*/
+        /*------------*/
 
         Bundle extras = getIntent().getExtras();
         tvType.setText(extras.getString("loaibaohong"));
@@ -40,8 +48,18 @@ public class frmChiTietPost extends AppCompatActivity {
         tvPhone.setText(extras.getString("dienthoai"));
         tvPhone.setTextColor(getResources().getColor(R.color.mauxanh));
         tvaddress.setText(extras.getString("diachinha"));
-        LinearLayout one = (LinearLayout) findViewById(R.id.lnProvider);
-        one.setVisibility(View.INVISIBLE);
+        String updated_at = extras.getString("updated_at");
+        if(updated_at == null)
+        {
+            LinearLayout one = (LinearLayout) findViewById(R.id.lnProvider);
+            one.setVisibility(View.INVISIBLE);
+        }
+        else
+        {
+            tvThoiGian.setText(extras.getString("updated_at"));
+            tvHoTen.setText(extras.getString("full_name"));
+            tvSoDienThoai.setText(extras.getString("phone_number"));
+        }
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

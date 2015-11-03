@@ -67,6 +67,10 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                     String hoten = uD.normal_account.full_name;
                     String dienthoai = uD.normal_account.phone_number;
                     String diachinha = uD.normal_account.getAddress();
+                    /*------------------------------------------------*/
+                    String updated_at = uD.updated_at;
+                    String full_name = uD.normal_account.full_name;
+                    String phone_number = uD.normal_account.phone_number;
                     Intent intent = new Intent(context, frmChiTietPost .class);
                     intent.putExtra("loaibaohong", loaibaohong);
                     intent.putExtra("diachi", diachi);
@@ -75,6 +79,9 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                     intent.putExtra("dienthoai", dienthoai);
                     intent.putExtra("diachinha", diachinha);
                     intent.putExtra("IDPostPost", ID_PickPost);
+                    intent.putExtra("updated_at", updated_at);
+                    intent.putExtra("full_name", full_name);
+                    intent.putExtra("phone_number", phone_number);
                     context.startActivity(intent);
                 }
             }
