@@ -67,7 +67,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         initControl();
         setEventForControl();
         getData();
-//        Tab
     }
 
 

@@ -28,7 +28,12 @@ import android.util.Log;
 
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmTabHost;
+import com.example.llh_pc.it_support.models.JsonParses.NotificationParse;
+import com.example.llh_pc.it_support.models.Notification;
+import com.example.llh_pc.it_support.models.NotificationDetail;
+import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -36,6 +41,9 @@ public class MyGcmListenerService extends GcmListenerService {
 
     private static final String TAG = "MyGcmListenerService";
     private JSONObject json;
+    private NotificationParse postParse;
+    private ImageLoader imageload = new ImageLoader(this);
+    private String avatar, name;
 
     /**
      * Called when message is received.
@@ -50,7 +58,10 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
-
+        Gson gson = new Gson();
+        NotificationParse postParse = gson.fromJson((String) data.get("data"), NotificationParse.class);
+        avatar = postParse.getResults().getPost_type().getAvatar();
+        name = postParse.getResults().getPost_type().getName();
 //        if (from.startsWith("/topics/")) {
 //            // message received from some topic.
 //        } else {
@@ -69,7 +80,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        sendNotification(message, avatar, name);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -77,18 +88,18 @@ public class MyGcmListenerService extends GcmListenerService {
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String message, String avatar, String name) {
         Intent intent = new Intent(this, frmTabHost.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.icon)
-                .setContentTitle("GCM Message")
-                .setContentText(message)
+                .setSmallIcon(R.drawable.its_logo_72x72px)
+                .setContentTitle("IT Support")
+                .setContentText(name)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

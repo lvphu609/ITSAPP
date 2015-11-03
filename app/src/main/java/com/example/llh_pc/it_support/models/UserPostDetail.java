@@ -56,7 +56,7 @@ public class UserPostDetail {
     public Normal_account normal_account;
 
     @SerializedName("provider_account")
-    public String provider_account;
+    public Provider_Account provider_account;
 
     public String getId() {
         return id;
@@ -178,11 +178,11 @@ public class UserPostDetail {
         this.normal_account = normal_account;
     }
 
-    public String getProvider_account() {
+    public Provider_Account getProvider_account() {
         return provider_account;
     }
 
-    public void setProvider_account(String provider_account) {
+    public void setProvider_account(Provider_Account provider_account) {
         this.provider_account = provider_account;
     }
 
