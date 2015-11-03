@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName;
 public class NotificationDetail {
 
     @SerializedName("provider_account")
-    private String provider_account;
+    private Provider_Account provider_account;
 
     @SerializedName("type_id")
     private String type_id;
@@ -64,11 +64,11 @@ public class NotificationDetail {
     @SerializedName("status")
     private String status;
 
-    public String getProvider_account() {
+    public Provider_Account getProvider_account() {
         return provider_account;
     }
 
-    public void setProvider_account(String provider_account) {
+    public void setProvider_account(Provider_Account provider_account) {
         this.provider_account = provider_account;
     }
 
