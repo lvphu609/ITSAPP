@@ -59,9 +59,14 @@ public class MyGcmListenerService extends GcmListenerService {
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
         Gson gson = new Gson();
-        NotificationParse postParse = gson.fromJson((String) data.get("data"), NotificationParse.class);
-        avatar = postParse.getResults().getPost_type().getAvatar();
-        name = postParse.getResults().getPost_type().getName();
+        try {
+            NotificationParse postParse = gson.fromJson((String) data.get("data"), NotificationParse.class);
+            avatar = postParse.getResults().getPost_type().getAvatar();
+            name = postParse.getResults().getPost_type().getName();
+        }catch (Exception ex)
+        {
+            Log.e(ex.toString(),"Looi");
+        }
 //        if (from.startsWith("/topics/")) {
 //            // message received from some topic.
 //        } else {
