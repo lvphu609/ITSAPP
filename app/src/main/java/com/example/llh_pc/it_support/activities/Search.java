@@ -331,6 +331,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
             adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new eventDetailPickPost(Search.this, postDetails));
         }
     }
 
