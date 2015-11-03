@@ -51,6 +51,7 @@ public class SearchMap extends AppCompatActivity {
     LuuTruModel m;
     Double y;
     ListView list;
+    String page1 = "1";
     String lang, lng,id1;
     EditText editsearch;
     private LoadPostAdapter adapter;
@@ -62,6 +63,7 @@ public class SearchMap extends AppCompatActivity {
     private String token, account_id;
     String t;
     MarkerOptions marker;
+    String lat,log;
     private String query;
     public static  ArrayList<LuuTruModel> postDetails;
     private ArrayList<String> listid = new ArrayList<>();
@@ -75,8 +77,8 @@ public class SearchMap extends AppCompatActivity {
         gpsTracker = new GPSTracker(SearchMap.this);
         y = Double.valueOf(gpsTracker.getLongitude());
         x = Double.valueOf(gpsTracker.getLatitude());
-        final String lat = String.valueOf(x);
-        final String log = String.valueOf(y);
+         lat = String.valueOf(x);
+         log = String.valueOf(y);
         setContentView(R.layout.activity_search_map);
         try {
             // Loading map
@@ -90,53 +92,51 @@ public class SearchMap extends AppCompatActivity {
         token = sharedPreference.getString("token", "YourName");
         account_id = sharedPreference.getString("id", "YourName");
 
-        try {
-            RestClient restClient = new RestClient(url_search);
-            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-            restClient.addHeader("token", token);
-            restClient.addParam("page", "1");
-            restClient.addParam("account_id", account_id);
-            restClient.addParam("location_lat", lat);
-            restClient.addParam("location_lng", log);
-            restClient.addParam("query", query);
-            restClient.execute(RequestMethod.POST);
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
-                    restClient.getResponse() != null) {
-                String jsonObject = restClient.getResponse();
-                SearchMapModel searchParse = new Gson().fromJson(jsonObject, SearchMapModel.class);
-
-                if (searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                    postDetails = searchParse.getResults();
-                    for (int i = 0; i < postDetails.size(); i++) {
-                         m = postDetails.get(i);
-                       idPost = m.id;
-                        listid.add(idPost);
-                         lang = m.getLocation_lat();
-                         lng = m.getLocation_lng();
-
-                        Double latpost = Double.valueOf(lang);
-                        Double logpost = Double.valueOf(lng);
-
-
-
-                        marker = new MarkerOptions().position(new LatLng(latpost, logpost)).title(m.name).snippet(m.location_name);
-
-                        //googleMap.addMarker(marker);
-                        markerT = googleMap.addMarker(marker);
-                        hash_posts.put(markerT,idPost);
-
-                        //
-
-
+//        try {
+//            RestClient restClient = new RestClient(url_search);
+//            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+//            restClient.addHeader("token", token);
+//            restClient.addParam("page", "1");
+//            restClient.addParam("account_id", account_id);
+//            restClient.addParam("location_lat", lat);
+//            restClient.addParam("location_lng", log);
+//            restClient.addParam("query", query);
+//            restClient.execute(RequestMethod.POST);
+//            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+//                    restClient.getResponse() != null) {
+//                String jsonObject = restClient.getResponse();
+//                SearchMapModel searchParse = new Gson().fromJson(jsonObject, SearchMapModel.class);
 //
-                    }
-
-                }
-
-            }
-        } catch (Exception ex) {
-            t = ex.toString();
-        }
+//                if (searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+//                    postDetails = searchParse.getResults();
+//                    for (int i = 0; i < postDetails.size(); i++) {
+//                         m = postDetails.get(i);
+//                       idPost = m.id;
+//                        listid.add(idPost);
+//                         lang = m.getLocation_lat();
+//                         lng = m.getLocation_lng();
+//
+//                        Double latpost = Double.valueOf(lang);
+//                        Double logpost = Double.valueOf(lng);
+//
+//
+//
+//                        marker = new MarkerOptions().position(new LatLng(latpost, logpost)).title(m.name).snippet(m.location_name);
+//
+//                        //googleMap.addMarker(marker);
+//                        markerT = googleMap.addMarker(marker);
+//                        hash_posts.put(markerT,idPost);
+//
+//                        //
+////
+//                    }
+//
+//                }
+//
+//            }
+//        } catch (Exception ex) {
+//            t = ex.toString();
+//        }
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
                 new LatLng(x, y)).zoom(15).build();
@@ -208,8 +208,8 @@ public class SearchMap extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         initilizeMap();
+        new MapSearch().execute(page1, lat, log, token, account_id);
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
@@ -221,7 +221,7 @@ public class SearchMap extends AppCompatActivity {
                         String id = hash_posts.get(marker);
 //                        click(id);
                        new clickMarker().execute(id);
-                        Toast.makeText(SearchMap.this, "idpost" +id , Toast.LENGTH_SHORT).show();
+
                         return false;
                     }
                 });
@@ -474,6 +474,71 @@ public class SearchMap extends AppCompatActivity {
             }
 
             return null;
+        }
+    }
+    private class MapSearch extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            String page = params[0];
+            String x1 = params[1];
+            String y1 = params[2];
+            String token = params[3];
+            String accountid = params[4];
+
+            try {
+                RestClient restClient = new RestClient(url_search);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("page", page);
+                restClient.addParam("account_id", accountid);
+                restClient.addParam("location_lat", x1);
+                restClient.addParam("location_lng", y1);
+                restClient.addParam("query", query);
+                restClient.execute(RequestMethod.POST);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
+                        restClient.getResponse() != null) {
+                    String jsonObject = restClient.getResponse();
+                    SearchMapModel searchParse = new Gson().fromJson(jsonObject, SearchMapModel.class);
+
+                    if (searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                        postDetails = searchParse.getResults();
+//                        for (int i = 0; i < postDetails.size(); i++) {
+//                            m = postDetails.get(i);
+//                            idPost = m.id;
+//                            listid.add(idPost);
+//                            lang = m.getLocation_lat();
+//                            lng = m.getLocation_lng();
+
+                            //
+//
+//                        }
+
+                    }
+
+                }
+            } catch (Exception ex) {
+                t = ex.toString();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            for (int i = 0; i < postDetails.size(); i++) {
+                m = postDetails.get(i);
+                idPost = m.id;
+                listid.add(idPost);
+                lang = m.getLocation_lat();
+                lng = m.getLocation_lng();
+                Double latpost = Double.valueOf(lang);
+                Double logpost = Double.valueOf(lng);
+                marker = new MarkerOptions().position(new LatLng(latpost, logpost)).title(m.name).snippet(m.location_name);
+                //googleMap.addMarker(marker);
+                markerT = googleMap.addMarker(marker);
+                hash_posts.put(markerT, idPost);
+            }
         }
     }
 }

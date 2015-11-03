@@ -56,19 +56,6 @@ public class MyGcmListenerService extends GcmListenerService {
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
-        try {
-            Gson gson = new Gson();
-            postParse = gson.fromJson((String) data.get("data"),NotificationParse.class);
-            String avatar = postParse.getResults().getPost_type().getAvatar();
-            String name = postParse.getResults().getPost_type().getName();
-            sendNotification(avatar,name);
-        }catch (Exception ex)
-        {
-            Log.e(ex.toString(),"Lỗi");
-        }
-
-
-        //PostParse postParse = gson.fromJson((String) extras.get("data"),PostParse.class);
 
 //        if (from.startsWith("/topics/")) {
 //            // message received from some topic.
@@ -88,7 +75,7 @@ public class MyGcmListenerService extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        /*sendNotification(avatar,name);*/
+        sendNotification(message);
         // [END_EXCLUDE]
     }
     // [END receive_message]
@@ -98,8 +85,7 @@ public class MyGcmListenerService extends GcmListenerService {
      *
 
      */
-    private void sendNotification(String avatar, String Name) {
-
+    private void sendNotification(String message) {
         Intent intent = new Intent(this, frmTabHost.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -107,8 +93,8 @@ public class MyGcmListenerService extends GcmListenerService {
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.icon)
-                .setContentTitle("")
-                .setContentText(Name)
+                .setContentTitle("GCM Message")
+                .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
