@@ -47,7 +47,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener {
+public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener,View.OnClickListener{
     String t;
     public static final String url_loadPost = Def.API_BASE_LINK + Def.API_LoadPost + Def.API_FORMAT_JSON;
     public static final String url_get= Def.API_BASE_LINK + Def.API_DeletePost + Def.API_FORMAT_JSON;
@@ -62,7 +62,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_luu_tru);
-
         initFlags();
         initControl();
         setEventForControl();
@@ -90,11 +89,22 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         GetList();
         new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
+        lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String t = "fdsasdafsa";
+            }
+        });
         //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
       }
 
     @Override
     public void setData() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 

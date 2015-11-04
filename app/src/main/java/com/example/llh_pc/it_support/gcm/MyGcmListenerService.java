@@ -110,6 +110,6 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentIntent(pendingIntent);
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(++Flags.number_notification /* ID of notification */, notificationBuilder.build());
     }
 }
