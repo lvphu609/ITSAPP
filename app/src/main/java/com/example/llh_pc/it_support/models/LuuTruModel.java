@@ -58,8 +58,8 @@ public class LuuTruModel {
     public String status;
 
     @SerializedName("post_type")
-
     public PostType post_type;
+
     public PostType getPostType() {
         return post_type;
     }
