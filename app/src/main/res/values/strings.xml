@@ -71,4 +71,5 @@
     <string name="title_activity_detail_pick_post">Thông tin chi tiết</string>
     <!--DetailPost-->
     <string name="AcceptPost">Chấp nhận báo hỏng</string>
+    <string name="title_activity_list_notification_adapter">ListNotificationAdapter</string>
 </resources>

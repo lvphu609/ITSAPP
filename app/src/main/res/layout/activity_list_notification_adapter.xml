@@ -48,40 +48,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Địa chỉ" />
-            <LinearLayout
-                android:paddingTop="5dp"
-                android:id="@+id/llbtnCancelFinish"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="right">
-                <Button
-                    android:layout_marginRight="10dp"
-                    android:layout_height="28dp"
-                    android:textSize="12dp"
-                    android:height="30dp"
-                    android:focusable="false"
-                    android:background="@color/maudo"
-                    android:layout_width="70dp"
-                    android:drawableLeft="@drawable/icon_delete"
-                    android:drawablePadding="6dp"
-                    android:gravity="left|center"
-                    android:textColor="@color/actionbar_text"
-                    android:id="@+id/btnCancel"
-                    android:text="Hủy"
-                    />
-                <Button
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="28dp"
-                    android:focusable="false"
-                    android:background="@color/mauxanh"
-                    android:textColor="@color/actionbar_text"
-                    android:text="Hoàn thành"
-                    android:textSize="12dp"
-                    android:id="@+id/btnfinish"/>
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

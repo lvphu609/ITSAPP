@@ -89,12 +89,13 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         GetList();
         new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
-        lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails));
+       /* lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String t = "fdsasdafsa";
             }
-        });
+        });*/
         //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
       }
 
