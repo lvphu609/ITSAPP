@@ -231,6 +231,7 @@
             android:name=".activities.DetailPickPost"
             android:label="@string/title_activity_detail_pick_post" >
         </activity>
+
     </application>
 
 </manifest>

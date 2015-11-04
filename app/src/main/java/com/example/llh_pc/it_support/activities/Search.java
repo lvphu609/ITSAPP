@@ -42,6 +42,7 @@ import com.google.gson.Gson;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class Search extends AppCompatActivity implements SearchView.OnQueryTextListener,InnoFunctionListener{
@@ -49,6 +50,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
      private LoadPostAdapter adapter;
     //Search List
     String m;
+
     private UserPostDetail uD;
     public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
     private ListView mSearchNFilterLv;
@@ -269,7 +271,14 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
                     if(searchParse1.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
                         searchParse1.getResults();
-                        postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse1.getResults()));
+                        ArrayList<LuuTruModel> lm = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse1.getResults()));
+                        ArrayList<LuuTruModel> listluu= new ArrayList<>();
+                        for (int i = 0 ; i<lm.size();i++) {
+                            if (lm.get(i).getStatus().equals("0")) {
+                                listluu.add(lm.get(i));
+                                postDetails = listluu;
+                            }
+                        }
 
                     }
                 }
@@ -316,7 +325,15 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
                     if(searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
                         searchParse.getResults();
-                        postDetails = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse.getResults()));
+                        ArrayList<LuuTruModel> lm = new ArrayList<LuuTruModel>(Arrays.<LuuTruModel>asList(searchParse.getResults()));
+                        ArrayList<LuuTruModel> listluu= new ArrayList<>();
+                        for (int i = 0 ; i<lm.size();i++) {
+                            if (lm.get(i).getStatus().equals("0")) {
+                                listluu.add(lm.get(i));
+                                postDetails = listluu;
+                            }
+                        }
+
 
                     }
                 }

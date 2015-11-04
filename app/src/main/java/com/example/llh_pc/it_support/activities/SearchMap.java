@@ -21,6 +21,7 @@ import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.JsonParses.SearchMapModel;
 import com.example.llh_pc.it_support.models.LuuTruModel;
 import com.example.llh_pc.it_support.models.ModelLatLng;
+import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
@@ -39,6 +40,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -219,8 +221,8 @@ public class SearchMap extends AppCompatActivity {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
                         String id = hash_posts.get(marker);
-//                        click(id);
-                       new clickMarker().execute(id);
+
+                          new clickMarker().execute(id);
 
                         return false;
                     }
@@ -290,7 +292,15 @@ public class SearchMap extends AppCompatActivity {
                         searchParse.getResults();
 
 //
-                        postDetails = searchParse.getResults();
+
+                        ArrayList<LuuTruModel> lm = searchParse.getResults();
+                        ArrayList<LuuTruModel> listluu= new ArrayList<>();
+                        for (int i = 0 ; i<lm.size();i++) {
+                            if (lm.get(i).getStatus().equals("0")) {
+                                listluu.add(lm.get(i));
+                                postDetails = listluu;
+                            }
+                        }
 
                         for (int i = 0; i < postDetails.size(); i++) {
                             LuuTruModel m = postDetails.get(i);
@@ -438,7 +448,6 @@ public class SearchMap extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
             String id = params[0];
-
             try {
                 SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(eventDetailPickPost.context);
                 String token = sharedPreference.getString("token", "token");
@@ -453,6 +462,7 @@ public class SearchMap extends AppCompatActivity {
                     PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
                     if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                         uD = getLoginJson.getResults();
+                        String ID_PickPost = uD.getId();
                         String loaibaohong = uD.post_type.getName();
                         String diachi = uD.location_name;
                         String ghichu = uD.content;
@@ -466,6 +476,7 @@ public class SearchMap extends AppCompatActivity {
                         intent.putExtra("hoten", hoten);
                         intent.putExtra("dienthoai", dienthoai);
                         intent.putExtra("diachinha", diachinha);
+                        intent.putExtra("IDPostPost", ID_PickPost);
                         eventDetailPickPost.context.startActivity(intent);
                     }
                 }
@@ -502,7 +513,16 @@ public class SearchMap extends AppCompatActivity {
                     SearchMapModel searchParse = new Gson().fromJson(jsonObject, SearchMapModel.class);
 
                     if (searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                        postDetails = searchParse.getResults();
+                       searchParse.getResults();
+
+                        ArrayList<LuuTruModel> lm = searchParse.getResults();
+                        ArrayList<LuuTruModel> listluu= new ArrayList<>();
+                        for (int i = 0 ; i<lm.size();i++) {
+                            if (lm.get(i).getStatus().equals("0")) {
+                                listluu.add(lm.get(i));
+                                postDetails = listluu;
+                            }
+                        }
 //                        for (int i = 0; i < postDetails.size(); i++) {
 //                            m = postDetails.get(i);
 //                            idPost = m.id;

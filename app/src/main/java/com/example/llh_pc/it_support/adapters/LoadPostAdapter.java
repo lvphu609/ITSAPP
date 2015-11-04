@@ -41,6 +41,7 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
     public View getView(int position, View convertView, ViewGroup parent) {
         PostHolder holder = null;
         LuuTruModel rowItem = getItem(position);
+
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if(convertView == null)
         {

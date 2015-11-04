@@ -10,6 +10,7 @@ public class Response  <S,T>  {
     public static final String STATUS_SUCCESS = "success";
     public static final String STATUS_FALSE = "failure";
     public static final String STAUS_FALSE = "false";
+    public static final String STATUS_NEW = "0";
     @SerializedName("status")
     private String status;
 
