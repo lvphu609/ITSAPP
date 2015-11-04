@@ -238,6 +238,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     protected void onResume() {
         super.onResume();
         new ListSearch().execute(page1, x, y, token, account_id);
+        
         list.setOnItemClickListener(new eventDetailPickPost(Search.this, postDetails));
 
     }
@@ -331,6 +332,7 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
             adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
             list.setAdapter(adapter);
+            list.setOnItemClickListener(new eventDetailPickPost(Search.this, postDetails));
         }
     }
 

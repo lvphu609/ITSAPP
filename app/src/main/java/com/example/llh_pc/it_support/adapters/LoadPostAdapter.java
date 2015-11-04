@@ -10,10 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.llh_pc.it_support.R;
 import com.example.llh_pc.it_support.activities.frmLuuTru;
+import com.example.llh_pc.it_support.models.JsonParses.LuuTruParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
 import com.example.llh_pc.it_support.utils.Images.ImageLoader;
 import java.util.List;
@@ -51,10 +54,23 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
         {
             holder = (PostHolder) convertView.getTag();
         }
-        final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
-        imgLoader.DisplayImage(data.get(position).getPostType().avatar, icon_post);
-        holder.tvName.setText(rowItem.getPostType().getName());
-        holder.tvlocation_name.setText(rowItem.getLocation_name());
+
+        if(rowItem.getStatus().equals("1"))
+        {
+            final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
+            imgLoader.DisplayImage(data.get(position).getPostType().avatar, icon_post);
+            holder.tvName.setText(rowItem.getPostType().getName());
+            holder.tvlocation_name.setText(rowItem.getLocation_name());
+
+        }else
+        {
+            LinearLayout linearLayout=(LinearLayout) convertView.findViewById(R.id.llbtnCancelFinish);
+            linearLayout.removeAllViews();
+            final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
+            imgLoader.DisplayImage(data.get(position).getPostType().avatar, icon_post);
+            holder.tvName.setText(rowItem.getPostType().getName());
+            holder.tvlocation_name.setText(rowItem.getLocation_name());
+        }
         return convertView;
     }
     static class PostHolder
