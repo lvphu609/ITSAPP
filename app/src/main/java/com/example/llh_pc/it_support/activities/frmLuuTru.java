@@ -58,6 +58,8 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     public static ArrayList<LuuTruModel> postDetails;
 
     private ProgressDialog progress;
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,12 +91,26 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         GetList();
         new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
-        lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        lstPost.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    ProgressDialog.show(view.getRootView().getContext(),  "", "Please Wait....");
+                    String t = "sdfasafsdfsfsfd";
+                }catch (Exception ex)
+                {
+                    Log.e(ex.toString(),"Lỗi");
+                }
+                return true;
+            }
+        });
+        //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails));
+       /* lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String t = "fdsasdafsa";
             }
-        });
+        });*/
         //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
       }
 
