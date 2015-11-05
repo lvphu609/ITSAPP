@@ -42,7 +42,7 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
     Context context;
     int layoutResourceId;
     private List<LuuTruModel> data = null;
-
+    private View v;
     public LoadPostAdapter(Context context, int resource, List<LuuTruModel> objects) {
         super(context, resource, objects);
         this.layoutResourceId = resource;
@@ -51,11 +51,13 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
         imgLoader = new ImageLoader(context);
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
         token = sharedPreference.getString("token", "YourName");
+
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
+            v = convertView;
             PostHolder holder = null;
             final LuuTruModel rowItem = getItem(position);
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
@@ -142,7 +144,7 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
                 {
                     String jsonObject = restClient.getResponse();
                     abc luuTruParse = new Gson().fromJson(jsonObject, abc.class);
-                    if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                    if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_FALSE)){
                         return true;
                     }
                     else
@@ -163,7 +165,8 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
             super.onPostExecute(s);
             if(s)
             {
-
+                LinearLayout linearLayout = (LinearLayout) v.findViewById(R.id.llbtnCancelFinish);
+                linearLayout.removeAllViews();
             }else
             {
 

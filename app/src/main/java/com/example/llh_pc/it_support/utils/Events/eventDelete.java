@@ -50,9 +50,9 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
         try
         {
             progressDialog = ProgressDialog.show(context, "IT Support", "Loading...");
-            LuuTruModel lt = arrayListPost.get(position);
+            /*LuuTruModel lt = arrayListPost.get(position);
             String idpost = lt.getId();
-            new DeletePost().execute(idpost);
+            new DeletePost().execute(idpost);*/
 
         }catch (Exception ex)
         {

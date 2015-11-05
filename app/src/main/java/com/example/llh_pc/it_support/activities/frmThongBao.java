@@ -39,31 +39,7 @@ public class frmThongBao extends ActionBarActivity implements InnoFunctionListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_frm_thong_bao);
-        try {
-            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-            token = sharedPreference.getString("token", null);
-            account_id = sharedPreference.getString("id", null);
-            page ="1";
-            RestClient restClient = new RestClient(url_get_my_notifications);
-            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-            restClient.addHeader("token", token);
-            restClient.addParam("account_id", account_id);
-            restClient.addParam("page", page);
-            restClient.execute(RequestMethod.POST);
-            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
-            {
-                String jsonObject = restClient.getResponse();
-                Gson gson = new Gson();
-                ListNotificationParse listNotificationParse = gson.fromJson(jsonObject, ListNotificationParse.class);
-                if(listNotificationParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
-                {
-                    listNotifi = new ArrayList<ListNotificationModel>(Arrays.asList(listNotificationParse.getResults()));
-                    adapter = new ListNotificationAdapter(frmThongBao.this, R.layout.activity_post_adapter, listNotifi);
-                }
-            }
-        }catch (Exception ex) {
-            Log.e(ex.toString(),"Lỗi");
-        }
+        LoadNotification();
         initFlags();
         initControl();
         setEventForControl();
@@ -75,6 +51,12 @@ public class frmThongBao extends ActionBarActivity implements InnoFunctionListen
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_frm_thong_bao, menu);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LoadNotification();
     }
 
     @Override
@@ -142,5 +124,34 @@ public class frmThongBao extends ActionBarActivity implements InnoFunctionListen
     @Override
     public void setData() {
 
+    }
+
+    private void LoadNotification()
+    {
+        try {
+            SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
+            token = sharedPreference.getString("token", null);
+            account_id = sharedPreference.getString("id", null);
+            page ="1";
+            RestClient restClient = new RestClient(url_get_my_notifications);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.addParam("account_id", account_id);
+            restClient.addParam("page", page);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS)
+            {
+                String jsonObject = restClient.getResponse();
+                Gson gson = new Gson();
+                ListNotificationParse listNotificationParse = gson.fromJson(jsonObject, ListNotificationParse.class);
+                if(listNotificationParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS))
+                {
+                    listNotifi = new ArrayList<ListNotificationModel>(Arrays.asList(listNotificationParse.getResults()));
+                    adapter = new ListNotificationAdapter(frmThongBao.this, R.layout.activity_post_adapter, listNotifi);
+                }
+            }
+        }catch (Exception ex) {
+            Log.e(ex.toString(),"Lỗi");
+        }
     }
 }
