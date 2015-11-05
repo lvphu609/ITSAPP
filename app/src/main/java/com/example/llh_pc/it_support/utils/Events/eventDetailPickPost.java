@@ -28,7 +28,7 @@ public class eventDetailPickPost implements AdapterView.OnItemClickListener {
     public static Context context;
     private ArrayList<LuuTruModel> arrayListPost;
     private UserPostDetail uD;
-
+    public static String idPost;
     public eventDetailPickPost(Context current, ArrayList<LuuTruModel> list)
     {
         this.context = current;
@@ -39,7 +39,7 @@ public class eventDetailPickPost implements AdapterView.OnItemClickListener {
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LuuTruModel p = arrayListPost.get(position);
-        String idPost = p.id;
+         idPost = p.id;
         try {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
             String token = sharedPreference.getString("token", "token");

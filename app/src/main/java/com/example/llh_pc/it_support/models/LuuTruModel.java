@@ -12,6 +12,8 @@ public class LuuTruModel {
     @SerializedName("id")
     public String id;
 
+
+
     @SerializedName("type_id")
     public String type_id;
 
