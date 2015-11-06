@@ -86,8 +86,11 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:paddingLeft="25dp"
+            android:autoLink="all"
+            android:id="@+id/linkcd"
             android:text="Xem chỉ dẫn trên bảng đồ"
-            android:textColor="@color/mauxanh" />
+            android:textColor="@color/mauxanh"
+            android:linksClickable="true"/>
     </LinearLayout>
 
     <LinearLayout

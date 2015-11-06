@@ -53,6 +53,7 @@ public class SearchMap extends AppCompatActivity {
     LuuTruModel m;
     Double y;
     ListView list;
+    public static String id2;
     String page1 = "1";
     String lang, lng,id1;
     EditText editsearch;
@@ -220,10 +221,10 @@ public class SearchMap extends AppCompatActivity {
                 googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                     @Override
                     public boolean onMarkerClick(Marker marker) {
-                        String id = hash_posts.get(marker);
 
-                          new clickMarker().execute(id);
-
+                        id2 = hash_posts.get(marker);
+                          new clickMarker().execute(id2);
+                        ChiDuong.K =1;
                         return false;
                     }
                 });
@@ -354,94 +355,6 @@ public class SearchMap extends AppCompatActivity {
 
     }
 }
-    public  void click (String id)
-    {
-
-            try {
-                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(eventDetailPost.context);
-                String token = sharedPreference.getString("token", "token");
-                RestClient restClient = new RestClient(url_get);
-                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-                restClient.addHeader("token", token);
-                restClient.addParam("id", id);
-                restClient.execute(RequestMethod.POST);
-                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
-                    String jsonObject = restClient.getResponse();
-                    Gson gson = new Gson();
-                    PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
-                    if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
-                        uD = getLoginJson.getResults();
-                        String loaibaohong = uD.post_type.getName();
-                        String diachi = uD.location_name;
-                        String ghichu = uD.content;
-                        String hoten = uD.normal_account.full_name;
-                        String dienthoai = uD.normal_account.phone_number;
-                        String diachinha = uD.normal_account.getAddress();
-                        Intent intent = new Intent(eventDetailPost.context, frmChiTietPost.class);
-                        intent.putExtra("loaibaohong", loaibaohong);
-                        intent.putExtra("diachi", diachi);
-                        intent.putExtra("ghichu", ghichu);
-                        intent.putExtra("hoten", hoten);
-                        intent.putExtra("dienthoai", dienthoai);
-                        intent.putExtra("diachinha", diachinha);
-                        eventDetailPost.context.startActivity(intent);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-    }
-//    public void searchAPI(String query){
-//        try {
-//            gpsTracker = new GPSTracker(SearchMap.this);
-//            String x = String.valueOf(gpsTracker.getLatitude());
-//            String y = String.valueOf(gpsTracker.getLongitude());
-//            RestClient restClient = new RestClient(url_search);
-//            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-//            restClient.addHeader("token", token);
-////            restClient.addParam("page","1");
-//            restClient.addParam("account_id", account_id);
-//            restClient.addParam("location_lat",x);
-//            restClient.addParam("location_lng",y);
-//            restClient.addParam("query",query);
-//            restClient.execute(RequestMethod.POST);
-//            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS &&
-//                    restClient.getResponse() != null)
-//            {
-//                String jsonObject = restClient.getResponse();
-//                SearchMapModel searchParse = new Gson().fromJson(jsonObject, SearchMapModel.class);
-//
-//                if(searchParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-//                    searchParse.getResults();
-//                    googleMap.clear();
-//                    postDetails = searchParse.getResults();
-//
-//                    for (int i = 0 ; i <postDetails.size(); i++) {
-//                         LuuTruModel m = postDetails.get(i);
-//                        idPost = m.id;
-//                        String lang = m.getLocation_lat();
-//                        String lng = m.getLocation_lng();
-//
-//                        Double latpost = Double.valueOf(lang);
-//                        Double logpost = Double.valueOf(lng);
-//
-//
-//
-//                        marker = new MarkerOptions().position(new LatLng(latpost, logpost)).title(m.name).snippet(m.location_name);
-//
-//
-//
-//                        googleMap.addMarker(marker);
-//                        markerT = googleMap.addMarker(marker);
-//                        hash_posts.put(markerT, idPost);
-//
-//                    }
-//                }
-//            }
-//        }catch (Exception ex){
-//            t = ex.toString();
-//        }}
 
     private class clickMarker extends AsyncTask<String, Void, String> {
 

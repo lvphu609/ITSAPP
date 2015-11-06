@@ -47,6 +47,7 @@ public class frmDK_DN extends AppCompatActivity implements InnoFunctionListener 
             public void onClick(View v) {
                 Intent intent1 = new Intent(frmDK_DN.this, frmDangNhap.class);
                 startActivity(intent1);
+                frmDangKy.dangkythanhcong =false;
             }
         });
         Button btnDK = (Button)findViewById(R.id.btnDK);
