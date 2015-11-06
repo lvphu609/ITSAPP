@@ -47,6 +47,7 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
         holder.tvlocation_name = (TextView)convertView.findViewById(R.id.tvlocation_name);
         holder.btnCancel = (Button)convertView.findViewById(R.id.btnCancel);
         holder.btnFinish = (Button)convertView.findViewById(R.id.btnfinish);
+        holder.btnProcessing = (Button) convertView.findViewById(R.id.btnProcessing);
         convertView.setTag(holder);
         LuuTruModel rowItem = data.get(position);
         if(rowItem.getStatus().equals("1"))
@@ -70,6 +71,6 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
     static class PostHolder
     {
         TextView tvName,tvlocation_name;
-        Button btnCancel, btnFinish;
+        Button btnCancel, btnFinish, btnProcessing;
     }
 }

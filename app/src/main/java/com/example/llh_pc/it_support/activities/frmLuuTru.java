@@ -153,5 +153,6 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
     public void setData() {
         adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
         lstPost.setAdapter(adapter);
+        lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
     }
 }
