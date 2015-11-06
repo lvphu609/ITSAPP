@@ -192,6 +192,10 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
                                                     }
                                                 }
                                             });
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
     }
 
     @Override
@@ -206,7 +210,34 @@ public class frmTabHost extends TabActivity implements NavigationView.OnNavigati
         super.onPause();
 
     }
-
+    private void buildAlertMessageNoGps() {
+        LayoutInflater li = LayoutInflater.from(frmTabHost.this);
+        View promptsView = li.inflate(R.layout.popup_note, null);
+        android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+        alertDialogBuilder.setView(promptsView);
+        final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+        // set dialog message
+        alertDialogBuilder.setView(promptsView);
+        // set dialog message
+        alertDialogBuilder.setCancelable(false);
+        final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+        Button okpopup = (Button) promptsView.findViewById(R.id.okpopup);
+        okpopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                Toast.makeText(frmTabHost.this, "Mở GPS.", Toast.LENGTH_LONG).show();
+                show.dismiss();
+            }
+        });
+        Button huypopup = (Button) promptsView.findViewById(R.id.huypopup);
+        huypopup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                show.dismiss();
+            }
+        });
+    }
 
 
     private void initNavigation(Bundle savedInstanceState) {

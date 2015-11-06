@@ -130,8 +130,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".activities.frmGhiChu"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_frm_ghi_chu" >
+            android:label="@string/title_activity_frm_ghi_chu"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.frmGhiChuPost"
@@ -226,8 +226,8 @@
 
         <activity
             android:name=".activities.frmGhiChuKhac"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_frm_ghi_chu_khac" >
+            android:label="@string/title_activity_frm_ghi_chu_khac"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activities.DetailPickPost"
@@ -238,6 +238,10 @@
             android:label="@string/title_chiduong" >
         </activity>
 
-    </application>
+        <!--<activity-->
+            <!--android:name=".adapters.ListNotificationAdapter"-->
+            <!--android:label="@string/title_activity_list_notification_adapter" >-->
+        <!--</activity>-->
 
+    </application>
 </manifest>

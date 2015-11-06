@@ -46,8 +46,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
-public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener,View.OnClickListener{
+public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener{
     String t;
     public static final String url_loadPost = Def.API_BASE_LINK + Def.API_LoadPost + Def.API_FORMAT_JSON;
     public static final String url_get= Def.API_BASE_LINK + Def.API_DeletePost + Def.API_FORMAT_JSON;
@@ -66,8 +67,8 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
         initControl();
         setEventForControl();
         getData();
+        setData();
     }
-
 
     @Override
     public void initFlags() {
@@ -76,6 +77,7 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void initControl() {
+
         lstPost = (ListView)findViewById(R.id.lsPost);
     }
 
@@ -86,15 +88,31 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
 
     @Override
     public void getData(String... params) {
-        GetList();
-        new getPostList().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        lstPost.setOnItemClickListener(new eventDetailPost(this, postDetails));
-        lstPost.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String t = "fdsasdafsa";
+        SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
+        token = sharedPreference.getString("token", "YourName");
+        account_id = sharedPreference.getString("id", "YourName");
+        String page = "1";
+        try
+        {
+            RestClient restClient = new RestClient(url_loadPost);
+            restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+            restClient.addHeader("token", token);
+            restClient.addParam("page", page);
+            restClient.addParam("account_id", account_id);
+            restClient.execute(RequestMethod.POST);
+            if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS && restClient.getResponse() != null)
+            {
+                String jsonObject = restClient.getResponse();
+                LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
+                if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
+                    postDetails = luuTruParse.getResults();
+                }
             }
-        });
+        }
+        catch (Exception ex){
+            Log.e("error" + "Luu Tru", ex.getMessage());
+           ex.printStackTrace();
+        }
         //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
       }
     @Override
@@ -121,71 +139,19 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
                     }
                 }).show();
     }
+//    @Override
+//    public void setData() {
+//
+//
+//        }catch (Exception ex){
+//            Log.e("error" + "Luu Tru", ex.getMessage());
+//            ex.printStackTrace();
+//        }
+//    }
+
     @Override
     public void setData() {
-
+        adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
+        lstPost.setAdapter(adapter);
     }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    private class getPostList extends AsyncTask<String, Integer, ArrayList<LuuTruModel>>{
-        @Override
-        protected void onPreExecute() {
-            progress = ProgressDialog.show(frmLuuTru.this.getParent(), Def.STRING_EMPTY, "Loading...",true);
-            progress.getWindow().setGravity(Gravity.CENTER_VERTICAL);
-        }
-
-        @Override
-        protected ArrayList<LuuTruModel> doInBackground(String... params) {
-
-            return postDetails;
-        }
-
-        @Override
-        protected void onProgressUpdate(Integer... values) {
-            super.onProgressUpdate(values);
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<LuuTruModel> luuTruModels) {
-            super.onPostExecute(luuTruModels);
-            if(luuTruModels != null){
-                adapter = new LoadPostAdapter(frmLuuTru.this, R.layout.activity_load_post_adapter, postDetails);
-                lstPost.setAdapter(adapter);
-            }
-            progress.dismiss();
-        }
-        
-    };
-     public ArrayList<LuuTruModel> GetList()
-     {
-         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(frmLuuTru.this);
-         token = sharedPreference.getString("token", "YourName");
-         account_id = sharedPreference.getString("id", "YourName");
-         String page = "1";
-         try
-         {
-             RestClient restClient = new RestClient(url_loadPost);
-             restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
-             restClient.addHeader("token", token);
-             restClient.addParam("page", page);
-             restClient.addParam("account_id", account_id);
-             restClient.execute(RequestMethod.POST);
-             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS && restClient.getResponse() != null)
-             {
-                 String jsonObject = restClient.getResponse();
-                 LuuTruParse luuTruParse = new Gson().fromJson(jsonObject, LuuTruParse.class);
-                 if(luuTruParse.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)){
-                     postDetails = luuTruParse.getResults();
-                 }
-             }
-         }catch (Exception ex){
-             Log.e("error" + "Luu Tru", ex.getMessage());
-             ex.printStackTrace();
-         }
-         return postDetails;
-     }
 }

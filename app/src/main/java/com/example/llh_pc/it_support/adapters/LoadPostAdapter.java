@@ -40,22 +40,15 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         PostHolder holder = null;
-        LuuTruModel rowItem = getItem(position);
-
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
-        if(convertView == null)
-        {
-            convertView = inflater.inflate(R.layout.activity_load_post_adapter, parent, false);
-            holder = new PostHolder();
-            holder.tvName = (TextView)convertView.findViewById(R.id.tvName);
-            holder.tvlocation_name = (TextView)convertView.findViewById(R.id.tvlocation_name);
-            convertView.setTag(holder);
-        }
-        else
-        {
-            holder = (PostHolder) convertView.getTag();
-        }
-
+        convertView = inflater.inflate(R.layout.activity_load_post_adapter, parent, false);
+        holder = new PostHolder();
+        holder.tvName = (TextView)convertView.findViewById(R.id.tvName);
+        holder.tvlocation_name = (TextView)convertView.findViewById(R.id.tvlocation_name);
+        holder.btnCancel = (Button)convertView.findViewById(R.id.btnCancel);
+        holder.btnFinish = (Button)convertView.findViewById(R.id.btnfinish);
+        convertView.setTag(holder);
+        LuuTruModel rowItem = data.get(position);
         if(rowItem.getStatus().equals("1"))
         {
             final ImageView icon_post = (ImageView)convertView.findViewById(R.id.imgIcon);
@@ -77,19 +70,6 @@ public class LoadPostAdapter extends ArrayAdapter<LuuTruModel> {
     static class PostHolder
     {
         TextView tvName,tvlocation_name;
-    }
-
-    public List<LuuTruModel> getData() {
-        return data;
-    }
-    public void filter(String charText) {
-        charText = charText.toLowerCase(Locale.getDefault());
-        data.clear();
-        if (charText.length() == 0) {
-            data.addAll(frmLuuTru.postDetails);
-        } else {
-
-        }
-        notifyDataSetChanged();
+        Button btnCancel, btnFinish;
     }
 }

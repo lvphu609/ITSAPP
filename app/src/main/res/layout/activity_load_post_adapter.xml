@@ -64,7 +64,7 @@
                     android:background="@color/maudo"
                     android:layout_width="70dp"
                     android:drawableLeft="@drawable/icon_delete"
-                    android:drawablePadding="3dp"
+                    android:drawablePadding="6dp"
                     android:gravity="left|center"
                     android:textColor="@color/actionbar_text"
                     android:id="@+id/btnCancel"

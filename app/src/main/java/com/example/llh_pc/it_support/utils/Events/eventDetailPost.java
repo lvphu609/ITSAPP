@@ -1,8 +1,10 @@
 package com.example.llh_pc.it_support.utils.Events;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.internal.widget.DecorToolbar;
 import android.view.View;
@@ -12,8 +14,10 @@ import com.example.llh_pc.it_support.activities.DetailPickPost;
 import com.example.llh_pc.it_support.activities.Search;
 import com.example.llh_pc.it_support.activities.SearchMap;
 import com.example.llh_pc.it_support.activities.frmChiTietPost;
+import com.example.llh_pc.it_support.models.JsonParses.NotificationParse;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
 import com.example.llh_pc.it_support.models.LuuTruModel;
+import com.example.llh_pc.it_support.models.NotificationDetail;
 import com.example.llh_pc.it_support.models.PostDetail;
 import com.example.llh_pc.it_support.models.UserPostDetail;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
@@ -34,7 +38,8 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
     public static final String url_get = Def.API_BASE_LINK + Def.API_Loadpostdetail + Def.API_FORMAT_JSON;
     public static  Context context;
     private ArrayList<LuuTruModel> arrayListPost;
-    private UserPostDetail uD;
+    private NotificationDetail uD;
+    private ProgressDialog progressDialog;
 
     public eventDetailPost(Context current, ArrayList<LuuTruModel> list) {
         this.context = current;
@@ -56,32 +61,41 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
             if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
                 String jsonObject = restClient.getResponse();
                 Gson gson = new Gson();
-                PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
+                NotificationParse getLoginJson = gson.fromJson(jsonObject, NotificationParse.class);
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     uD = getLoginJson.getResults();
-                    String ID_PickPost = uD.getId();
-                    //String ID_PickPost = uD.post_type.getId();
-                    String loaibaohong = uD.post_type.getName();
-                    String diachi = uD.location_name;
-                    String ghichu = uD.content;
-                    String hoten = uD.normal_account.full_name;
-                    String dienthoai = uD.normal_account.phone_number;
-                    String diachinha = uD.normal_account.getAddress();
-                    /*------------------------------------------------*/
-                    String updated_at = uD.updated_at;
-                    String full_name = uD.provider_account.getFull_name();
-                    String phone_number = uD.provider_account.getPhone_number();
+                    /*infortion post*/
+                    String name = uD.getPost_type().getName();
+                    String Location_name = uD.getLocation_name();
+                    String content = uD.getContent();
+                    /*--------------*/
+                    /*infortion user*/
+                    String full_name= uD.getNormal_account().getFull_name();
+                    String phone_number = uD.getNormal_account().getPhone_number();
+                    String address = uD.getNormal_account().getAddress();
+                    /*--------------*/
                     Intent intent = new Intent(context, frmChiTietPost .class);
-                    intent.putExtra("loaibaohong", loaibaohong);
-                    intent.putExtra("diachi", diachi);
-                    intent.putExtra("ghichu", ghichu);
-                    intent.putExtra("hoten", hoten);
-                    intent.putExtra("dienthoai", dienthoai);
-                    intent.putExtra("diachinha", diachinha);
-                    intent.putExtra("IDPostPost", ID_PickPost);
-                    intent.putExtra("updated_at", updated_at);
-                    intent.putExtra("full_name", full_name);
-                    intent.putExtra("phone_number", phone_number);
+                    intent.putExtra("loaibaohong", name);
+                    intent.putExtra("diachi", Location_name);
+                    intent.putExtra("ghichu", content);
+                    intent.putExtra("hoten", full_name);
+                    intent.putExtra("dienthoai", phone_number);
+                    intent.putExtra("diachinha", address);
+
+                    /*infortion provider*/
+                    String status = uD.getStatus();
+                    if(status.equals("1"))
+                    {
+                        String picked_at = uD.getPicked_at();
+                        String full_name_p = uD.getProvider_account().getFull_name();
+                        String phone_number_p = uD.getProvider_account().getPhone_number();
+                        intent.putExtra("updated_at", picked_at);
+                        intent.putExtra("full_name", full_name_p);
+                        intent.putExtra("phone_number", phone_number_p);
+                    }
+                        /*rating*/
+                    /*---------------*/
+
                     context.startActivity(intent);
                 }
             }
@@ -90,6 +104,19 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
         }
     }
 
+    private class DetailAsyncTask  extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = ProgressDialog.show(context, "IT Support", "Loading...");
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+    }
 }
 
 

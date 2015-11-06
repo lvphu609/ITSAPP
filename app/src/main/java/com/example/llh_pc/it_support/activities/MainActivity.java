@@ -1,14 +1,20 @@
 package com.example.llh_pc.it_support.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.llh_pc.it_support.models.Account;
@@ -32,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
     private String tokenlogin;
     private String t;
+    private String token;
+    private String email;
+    private String pass;
+    private int check;
+    private int staylogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,43 +50,59 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
-        final String token = sharedPreference.getString("token", null);
-        final String email = sharedPreference.getString("email", null);
-        final String pass = sharedPreference.getString("password", null);
-        int check = sharedPreference.getInt("check", 1);
-        int staylogin = sharedPreference.getInt("staylogin", 0);
-        if(staylogin == 1)
-        {
-            if(check == 2) {
-                Thread t = new Thread() {
-                    public void run() {
-                        try {
-                            boolean checkLogin = checkToken(token);
-                            if(checkLogin) {
-                                sleep(2000);
-                                finish();
-                                Intent cv = new Intent(MainActivity.this, frmTabHost.class);
-                                startActivity(cv);
-                            }else
-                            {
-                                LoginTemp(email,pass );
-                                sleep(2000);
-                                finish();
+        token = sharedPreference.getString("token", null);
+        email = sharedPreference.getString("email", null);
+        pass = sharedPreference.getString("password", null);
+        check = sharedPreference.getInt("check", 1);
+        staylogin = sharedPreference.getInt("staylogin", 0);
+
+            if (staylogin == 1) {
+                if (check == 2) {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                boolean checkLogin = checkToken(token);
+                                if (checkLogin) {
+                                    sleep(2000);
+                                    finish();
+                                    Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+                                    startActivity(cv);
+                                } else {
+                                    LoginTemp(email, pass);
+                                    sleep(2000);
+                                    finish();
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
                             }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
                         }
-                    }
-                };
-                t.start();
-            }else {
+                    };
+                    t.start();
+                } else {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                sleep(2000);
+                                finish();
+                                Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                startActivity(cv);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
+                }
+            } else {
                 Thread t = new Thread() {
                     public void run() {
                         try {
+
                             sleep(2000);
                             finish();
                             Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
-                            //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+
                             startActivity(cv);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -85,24 +112,139 @@ public class MainActivity extends AppCompatActivity {
                 t.start();
             }
         }
-        else {
-            Thread t = new Thread() {
-                public void run() {
-                    try {
 
-                        sleep(2000);
-                        finish();
-                        Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
 
-                        startActivity(cv);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    /*@Override
+    protected void onResume() {
+        super.onResume();
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        } else {
+            if (staylogin == 1) {
+                if (check == 2) {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                boolean checkLogin = checkToken(token);
+                                if (checkLogin) {
+                                    sleep(2000);
+                                    finish();
+                                    Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+                                    startActivity(cv);
+                                } else {
+                                    LoginTemp(email, pass);
+                                    sleep(2000);
+                                    finish();
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
+                } else {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                sleep(2000);
+                                finish();
+                                Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                startActivity(cv);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
                 }
-            };
-            t.start();
+            } else {
+                Thread t = new Thread() {
+                    public void run() {
+                        try {
+
+                            sleep(2000);
+                            finish();
+                            Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+
+                            startActivity(cv);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                t.start();
+            }
         }
-    }
+
+    }*/
+
+
+    /*@Override
+    protected void onPause() {
+        super.onPause();
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        } else {
+            if (staylogin == 1) {
+                if (check == 2) {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                boolean checkLogin = checkToken(token);
+                                if (checkLogin) {
+                                    sleep(2000);
+                                    finish();
+                                    Intent cv = new Intent(MainActivity.this, frmTabHost.class);
+                                    startActivity(cv);
+                                } else {
+                                    LoginTemp(email, pass);
+                                    sleep(2000);
+                                    finish();
+                                }
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
+                } else {
+                    Thread t = new Thread() {
+                        public void run() {
+                            try {
+                                sleep(2000);
+                                finish();
+                                Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+                                //Intent cv = new Intent(MainActivity.this, Main2Activity.class);
+                                startActivity(cv);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    t.start();
+                }
+            } else {
+                Thread t = new Thread() {
+                    public void run() {
+                        try {
+
+                            sleep(2000);
+                            finish();
+                            Intent cv = new Intent(MainActivity.this, frmDK_DN.class);
+
+                            startActivity(cv);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                t.start();
+            }
+        }
+    }*/
 
     private boolean checkToken(String token)
     {
@@ -196,4 +338,5 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

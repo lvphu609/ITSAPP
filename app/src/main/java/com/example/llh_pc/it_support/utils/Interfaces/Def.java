@@ -53,6 +53,10 @@ public interface Def {
     public static final String API_create_type_post_other= "config/create_type_post_other/";
     //update gcm
     public static final String API_update_gcm = "accounts/update_location/";
+    //destroy
+    public static final String API_destroy = "posts/destroy/";
+    //get_my_notifications
+    public static final String API_get_my_notifications = "notifications/get_my_notifications/";
 
 
 

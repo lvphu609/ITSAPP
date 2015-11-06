@@ -69,13 +69,6 @@ public class frmGhiChu extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-    private void checkGPS()
-    {
-        double set;
-        do {
-            set = gpsTracker.getLatitude();
-        }while (set != 0.0);
-    }
 
     private void buildAlertMessageNoGps() {
         LayoutInflater li = LayoutInflater.from(frmGhiChu.this);
