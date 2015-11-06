@@ -49,10 +49,27 @@ public class eventDelete implements AdapterView.OnItemLongClickListener {
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         try
         {
-            progressDialog = ProgressDialog.show(context, "IT Support", "Loading...");
-            /*LuuTruModel lt = arrayListPost.get(position);
-            String idpost = lt.getId();
-            new DeletePost().execute(idpost);*/
+            LayoutInflater li = LayoutInflater.from(context);
+            View promptsView = li.inflate(R.layout.popup_validation, null);
+            android.support.v7.app.AlertDialog.Builder alertDialogBuilder = new android.support.v7.app.AlertDialog.Builder(context);
+            alertDialogBuilder.setView(promptsView);
+            final TextView textView = (TextView) promptsView.findViewById(R.id.tvValidation);
+            // set dialog message
+            alertDialogBuilder.setView(promptsView);
+            // set dialog message
+            alertDialogBuilder.setCancelable(false);
+            final android.support.v7.app.AlertDialog show = alertDialogBuilder.show();
+            Button okpopup= (Button) promptsView.findViewById(R.id.okpopup);
+            TextView tv = (TextView)promptsView.findViewById(R.id.tvValidation);
+            tv.setText("Email hoặc mật khẩu không hợp lệ.");
+            okpopup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    show.dismiss();
+                }
+            });
+
 
         }catch (Exception ex)
         {
