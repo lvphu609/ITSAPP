@@ -78,12 +78,14 @@
         <activity
             android:name=".activities.frmBaoHu"
             android:label="@string/title_activity_frm_bao_hu"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activities.frmChildPost"
             android:label="@string/title_activity_frm_child_post"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".activities.Main22Activity"
@@ -230,6 +232,10 @@
         <activity
             android:name=".activities.DetailPickPost"
             android:label="@string/title_activity_detail_pick_post" >
+        </activity>
+        <activity
+            android:name=".activities.ChiDuong"
+            android:label="@string/title_chiduong" >
         </activity>
 
     </application>

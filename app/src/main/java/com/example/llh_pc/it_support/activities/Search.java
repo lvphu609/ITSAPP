@@ -37,11 +37,13 @@ import com.example.llh_pc.it_support.utils.Events.eventDetailPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Interfaces.InnoFunctionListener;
 import com.example.llh_pc.it_support.utils.Location.GPSTracker;
+import com.google.android.gms.maps.model.Marker;
 import com.google.gson.Gson;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -72,6 +74,9 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
     public String name;
     String page1 = "1";
     String x,y;
+    ArrayList<String> idpick;
+    public static String idSearch;
+    private HashMap<eventDetailPickPost,String> hash_posts = new HashMap<>();
     private GPSTracker gpsTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -331,6 +336,8 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
                             if (lm.get(i).getStatus().equals("0")) {
                                 listluu.add(lm.get(i));
                                 postDetails = listluu;
+
+
                             }
                         }
 
@@ -349,7 +356,10 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
             adapter = new LoadPostAdapter(Search.this, R.layout.list_items, postDetails);
             list.setAdapter(adapter);
+
             list.setOnItemClickListener(new eventDetailPickPost(Search.this, postDetails));
+            ChiDuong.K =2;
+
         }
     }
 

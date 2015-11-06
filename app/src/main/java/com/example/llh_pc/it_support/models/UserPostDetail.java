@@ -9,6 +9,8 @@ public class UserPostDetail {
 
     @SerializedName("id")
     public String id;
+    @SerializedName("name")
+    public String name;
 
     @SerializedName("content")
     public String content;
@@ -129,6 +131,8 @@ public class UserPostDetail {
     public void setLocation_name(String location_name) {
         this.location_name = location_name;
     }
+
+
 
     public String getIs_delete() {
         return is_delete;

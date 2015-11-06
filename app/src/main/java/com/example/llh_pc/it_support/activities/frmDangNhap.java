@@ -196,13 +196,7 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         /*phần quên mật khẩu*/
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            boolean value = extras.getBoolean("checkboxFW");
-            edtUserName.setText(extras.getString("EmailFW"));
-            cbSave.setChecked(true);
-            frmDK.dangkythanhcong = false;
-        }
+
 
         if (frmDK.dangkythanhcong == true) {
             edtUserName.setText(accdal.applyEmail.toString());
@@ -226,7 +220,14 @@ public class frmDangNhap extends AppCompatActivity implements InnoFunctionListen
             }
             btnLogin.invalidate();
         }
+        Bundle extras = getIntent().getExtras();
+        if (extras != null ) {
+            frmDK.dangkythanhcong = false;
+            boolean value = extras.getBoolean("checkboxFW");
+            edtUserName.setText(extras.getString("EmailFW"));
+            cbSave.setChecked(true);
 
+        }
 
         /*-----------------GCM--------------------*/
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
