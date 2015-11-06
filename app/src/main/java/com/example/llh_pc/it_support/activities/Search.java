@@ -250,6 +250,31 @@ public class Search extends AppCompatActivity implements SearchView.OnQueryTextL
 
     }
 
+    @Override
+    public void onBackPressed() {
+        //final Intent intent = new Intent(this, frmDK_DN.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Search.this);
+        new AlertDialog.Builder(Search.this.getParent())
+                .setMessage("Thoát app?")
+                .setCancelable(false)
+                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Perform Your Task Here--When No is pressed
+                        dialog.cancel();
+                    }
+                }).show();
+    }
+
     private class searchList extends AsyncTask<String, Void, String> {
 
         @Override
