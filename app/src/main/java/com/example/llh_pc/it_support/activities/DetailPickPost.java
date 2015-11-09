@@ -22,6 +22,7 @@ import com.example.llh_pc.it_support.models.JsonParses.abc;
 import com.example.llh_pc.it_support.restclients.RequestMethod;
 import com.example.llh_pc.it_support.restclients.Response;
 import com.example.llh_pc.it_support.restclients.RestClient;
+import com.example.llh_pc.it_support.utils.Events.eventDetailPickPost;
 import com.example.llh_pc.it_support.utils.Interfaces.Def;
 import com.example.llh_pc.it_support.utils.Location.GPSTracker;
 import com.google.gson.Gson;
@@ -33,7 +34,7 @@ public class DetailPickPost extends AppCompatActivity {
     private String ID_PickPost;
     private GPSTracker gpsTracker;
     private String Longitude,Latitude;
-
+    private TextView linkCD;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +46,7 @@ public class DetailPickPost extends AppCompatActivity {
         tvName = (TextView)findViewById(R.id.tvName);
         tvPhone = (TextView)findViewById(R.id.tvPhone_number);
         tvaddress = (TextView)findViewById(R.id.tvaddress);
-
+        linkCD = (TextView) findViewById(R.id.linkcd);
         Bundle extras = getIntent().getExtras();
         tvType.setText(extras.getString("loaibaohong"));
         tvLocation_Name.setText(extras.getString("diachi"));
@@ -63,7 +64,16 @@ public class DetailPickPost extends AppCompatActivity {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AccpetAsyncTack().execute(ID_PickPost,Longitude,Latitude);
+                new AccpetAsyncTack().execute(ID_PickPost, Longitude, Latitude);
+            }
+        });
+
+
+        linkCD.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent CD = new Intent(DetailPickPost.this,ChiDuong.class);
+                startActivity(CD);
             }
         });
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);

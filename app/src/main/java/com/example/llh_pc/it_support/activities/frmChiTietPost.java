@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -38,6 +39,44 @@ public class frmChiTietPost extends AppCompatActivity {
             NotificationParse getLoginJson = gson.fromJson(jsonObject, NotificationParse.class);
             if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                 uD = getLoginJson.getResults();
+
+                /*if(uD.getStatus().equals("0"))
+                {
+
+                }else
+                {
+                    // this is post pick
+                    if(rowItem.getStatus().equals("1"))
+                    {     // ID current pick post ?
+                        if(rowItem.getPicked_by().equals(account_id)) // account provider
+                        {
+                            // Set processing
+                            if(rowItem.getProcessing().equals("0"))
+                            {
+
+                            }else
+                            {
+
+                            }
+                        }
+                        else // Account user
+                        {
+                            if(.getProcessing().equals("0")) {
+
+                            }else
+                            {
+
+                            }
+
+                        }
+                    }
+                }
+*/
+
+
+
+
+
                 String name = uD.getPost_type().getName();
                 String Location_name = uD.getLocation_name();
                 String content = uD.getContent();
@@ -45,8 +84,6 @@ public class frmChiTietPost extends AppCompatActivity {
                 String picked_at = uD.getPicked_at();
                 String processing = uD.getProcessing();
                 String completed_at = uD.getCompleted_at();
-
-
 
 
                 tvType = (TextView) findViewById(R.id.tvTypePost);
@@ -120,6 +157,10 @@ public class frmChiTietPost extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         TabHostHoatDong tabHostHoatDong = new TabHostHoatDong();
+
+        Intent myIntent = new Intent(getApplicationContext(), frmTabHost.class);
+        frmTabHost.x = 3;
+        startActivityForResult(myIntent, 2);
 
     }
 }

@@ -52,6 +52,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
 
 public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener {
     String t;
@@ -114,10 +115,45 @@ public class frmLuuTru extends AppCompatActivity implements InnoFunctionListener
                 }
             }
         } catch (Exception ex) {
+
             Log.e("error" + "Luu Tru", ex.getMessage());
-            ex.printStackTrace();
+           ex.printStackTrace();
         }
+        //lstPost.setOnItemLongClickListener(new eventDelete(this, postDetails ));
+      }
+    @Override
+    public void onBackPressed() {
+        //final Intent intent = new Intent(this, frmDK_DN.class);
+        AlertDialog.Builder builder = new AlertDialog.Builder(frmLuuTru.this);
+        new AlertDialog.Builder(frmLuuTru.this.getParent())
+                .setMessage("Thoát app?")
+                .setCancelable(false)
+                .setPositiveButton("Đồng ý", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                        dialog.cancel();
+                    }
+                })
+                .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Perform Your Task Here--When No is pressed
+                        dialog.cancel();
+                    }
+                }).show();
     }
+//    @Override
+//    public void setData() {
+//
+//
+//        }catch (Exception ex){
+//            Log.e("error" + "Luu Tru", ex.getMessage());
+//            ex.printStackTrace();
+//        }
+//    }
 
     @Override
     public void setData() {

@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.AdapterView;
 
+import com.example.llh_pc.it_support.activities.ChiDuong;
 import com.example.llh_pc.it_support.activities.DetailPickPost;
 import com.example.llh_pc.it_support.activities.frmChiTietPost;
 import com.example.llh_pc.it_support.models.JsonParses.PostDetailParse;
@@ -29,8 +30,10 @@ public class eventDetailPickPost implements AdapterView.OnItemClickListener {
     private ArrayList<LuuTruModel> arrayListPost;
     private UserPostDetail uD;
     public static String idPost;
+    public static String ID_PickPost;
     public eventDetailPickPost(Context current, ArrayList<LuuTruModel> list)
     {
+
         this.context = current;
         this.arrayListPost = list;
     }
@@ -54,7 +57,7 @@ public class eventDetailPickPost implements AdapterView.OnItemClickListener {
                 PostDetailParse getLoginJson = gson.fromJson(jsonObject, PostDetailParse.class);
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     uD = getLoginJson.getResults();
-                    String ID_PickPost = uD.getId();
+                     ID_PickPost = uD.getId();
                     String loaibaohong = uD.post_type.getName();
                     String diachi = uD.location_name;
                     String ghichu = uD.content;
