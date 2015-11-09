@@ -57,9 +57,10 @@ public interface Def {
     public static final String API_destroy = "posts/destroy/";
     //get_my_notifications
     public static final String API_get_my_notifications = "notifications/get_my_notifications/";
-
-
-
+    //complete
+    public static final String API_complete = "posts/complete/";
+    //processing
+    public static final String API_processing = "posts/processing/";
 
     public static final int RESPONSE_CODE_SUCCESS = 200;
     public static final String REPONSE_CHECKEMAIL="true";

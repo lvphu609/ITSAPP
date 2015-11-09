@@ -94,6 +94,16 @@ public class frmGhiChu extends AppCompatActivity {
         huypopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmGhiChu.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.putString("token", "Hai");
+                editor.putInt("staylogin", 0);
+                editor.commit();
+                Intent intent = new Intent(frmGhiChu.this, frmDangNhap.class);
+                Toast.makeText(frmGhiChu.this, "Vui lòng mở GPS.", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+                show.dismiss();
                 show.dismiss();
             }
         });

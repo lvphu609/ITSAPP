@@ -22,6 +22,7 @@ import com.example.llh_pc.it_support.activities.frmThongBao;
  */
 public class TabHostHoatDong extends TabActivity {
     public static TabHost tab;
+    public static TabHost tabHost;
     TextView tv;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class TabHostHoatDong extends TabActivity {
         setContentView(R.layout.tab_content);
         tab = (TabHost) findViewById(android.R.id.tabhost);
         tab.setup();
-        TabHost tabHost = getTabHost();
+        tabHost = getTabHost();
         Resources ressources = getResources();
 
         Intent intentAndroid = new Intent().setClass(this,frmLuuTru.class);

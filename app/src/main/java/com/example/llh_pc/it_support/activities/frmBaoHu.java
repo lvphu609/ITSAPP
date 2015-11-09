@@ -71,6 +71,10 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
+        final LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            buildAlertMessageNoGps();
+        }
         try {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(this);
             token = sharedPreference.getString("token", null);
@@ -125,6 +129,15 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
         huypopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmBaoHu.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.putString("token", "Hai");
+                editor.putInt("staylogin", 0);
+                editor.commit();
+                Intent intent = new Intent(frmBaoHu.this, frmDangNhap.class);
+                Toast.makeText(frmBaoHu.this, "Vui lòng mở GPS.", Toast.LENGTH_LONG).show();
+                startActivity(intent);
                 show.dismiss();
             }
         });
@@ -149,7 +162,6 @@ public class frmBaoHu extends AppCompatActivity implements InnoFunctionListener 
                 })
                 .setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // Perform Your Task Here--When No is pressed
                         dialog.cancel();
                     }
                 }).show();
