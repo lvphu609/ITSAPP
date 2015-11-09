@@ -99,16 +99,19 @@ public class frmGhiChuKhac extends AppCompatActivity {
         huypopup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(frmGhiChuKhac.this);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putInt("check", 1);
+                editor.putString("token", "Hai");
+                editor.putInt("staylogin", 0);
+                editor.commit();
+                Intent intent = new Intent(frmGhiChuKhac.this, frmDangNhap.class);
+                Toast.makeText(frmGhiChuKhac.this, "Vui lòng mở GPS.", Toast.LENGTH_LONG).show();
+                startActivity(intent);
+                show.dismiss();
                 show.dismiss();
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_ghi_chu_khac, menu);
-        return true;
     }
 
     @Override

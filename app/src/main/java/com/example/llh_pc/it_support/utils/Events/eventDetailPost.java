@@ -39,7 +39,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
     public static  Context context;
     private ArrayList<LuuTruModel> arrayListPost;
     private NotificationDetail uD;
-    private ProgressDialog progressDialog;
+    private ProgressDialog progress;
 
     public eventDetailPost(Context current, ArrayList<LuuTruModel> list) {
         this.context = current;
@@ -49,6 +49,9 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         LuuTruModel p = arrayListPost.get(position);
+        String idPost = p.id;
+        new DetailAsyncTask().execute(idPost);
+        /*LuuTruModel p = arrayListPost.get(position);
         String idPost = p.id;
         try {
             SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
@@ -64,16 +67,16 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                 NotificationParse getLoginJson = gson.fromJson(jsonObject, NotificationParse.class);
                 if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
                     uD = getLoginJson.getResults();
-                    /*infortion post*/
+                    /*//*infortion post*//**//*
                     String name = uD.getPost_type().getName();
                     String Location_name = uD.getLocation_name();
                     String content = uD.getContent();
-                    /*--------------*/
-                    /*infortion user*/
+                    /*//*--------------*//**//*
+                    /*//*infortion user*//**//*
                     String full_name= uD.getNormal_account().getFull_name();
                     String phone_number = uD.getNormal_account().getPhone_number();
                     String address = uD.getNormal_account().getAddress();
-                    /*--------------*/
+                    /*//*--------------*//**//*
                     Intent intent = new Intent(context, frmChiTietPost .class);
                     intent.putExtra("loaibaohong", name);
                     intent.putExtra("diachi", Location_name);
@@ -82,7 +85,7 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                     intent.putExtra("dienthoai", phone_number);
                     intent.putExtra("diachinha", address);
 
-                    /*infortion provider*/
+                    /*//*infortion provider*//**//*
                     String status = uD.getStatus();
                     if(status.equals("1"))
                     {
@@ -93,28 +96,61 @@ public class eventDetailPost implements AdapterView.OnItemClickListener{
                         intent.putExtra("full_name", full_name_p);
                         intent.putExtra("phone_number", phone_number_p);
                     }
-                        /*rating*/
-                    /*---------------*/
+                    if(status.equals("2"))
+                    {
+                        String picked_at = uD.getPicked_at();
+                        String full_name_p = uD.getProvider_account().getFull_name();
+                        String phone_number_p = uD.getProvider_account().getPhone_number();
+                        intent.putExtra("updated_at", picked_at);
+                        intent.putExtra("full_name", full_name_p);
+                        intent.putExtra("phone_number", phone_number_p);
+                    }
+
+                        /*//*rating*//**//*
+                    /*//*---------------*//**//*
 
                     context.startActivity(intent);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
-    private class DetailAsyncTask  extends AsyncTask<Void,Void,Void>
+    private class DetailAsyncTask  extends AsyncTask<String,Void,NotificationDetail>
     {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(context, "IT Support", "Loading...");
+            /*progress = ProgressDialog.show(context.getParent(), Def.STRING_EMPTY, "Loading...",true);
+            progress.getWindow().setGravity(Gravity.CENTER_VERTICAL);*/
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            return null;
+        protected NotificationDetail doInBackground(String... params) {
+            String idPost = params[0];
+            try
+            {
+                SharedPreferences sharedPreference = PreferenceManager.getDefaultSharedPreferences(context);
+                String token = sharedPreference.getString("token", "token");
+                RestClient restClient = new RestClient(url_get);
+                restClient.addBasicAuthentication(Def.API_USERNAME_VALUE, Def.API_PASSWORD_VALUE);
+                restClient.addHeader("token", token);
+                restClient.addParam("id", idPost);
+                restClient.execute(RequestMethod.POST);
+                if (restClient.getResponseCode() == Def.RESPONSE_CODE_SUCCESS) {
+                    String jsonObject = restClient.getResponse();
+                    Gson gson = new Gson();
+                    NotificationParse getLoginJson = gson.fromJson(jsonObject, NotificationParse.class);
+                    if (getLoginJson.getStatus().equalsIgnoreCase(Response.STATUS_SUCCESS)) {
+                        uD = getLoginJson.getResults();
+                    }
+                }
+            }catch (Exception ex)
+            {
+
+            }
+            return uD;
         }
     }
 }

@@ -34,6 +34,9 @@ public class NotificationDetail {
     @SerializedName("location_lng")
     private String location_lng;
 
+    @SerializedName("processing")
+    private String processing;
+
     @SerializedName("completed_at")
     private String completed_at;
 
@@ -215,4 +218,13 @@ public class NotificationDetail {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getProcessing() {
+        return processing;
+    }
+
+    public void setProcessing(String processing) {
+        this.processing = processing;
+    }
+
 }

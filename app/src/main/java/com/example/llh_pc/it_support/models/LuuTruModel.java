@@ -12,8 +12,6 @@ public class LuuTruModel {
     @SerializedName("id")
     public String id;
 
-
-
     @SerializedName("type_id")
     public String type_id;
 
@@ -52,6 +50,17 @@ public class LuuTruModel {
 
     @SerializedName("picked_at")
     public String picked_at;
+
+    public PostType getPost_type() {
+        return post_type;
+    }
+
+    public void setPost_type(PostType post_type) {
+        this.post_type = post_type;
+    }
+
+    @SerializedName("processing")
+    public String processing;
 
     @SerializedName("completed_at")
     public String completed_at;
@@ -196,5 +205,11 @@ public class LuuTruModel {
     public String getName() {
         return name;
     }
+    public String getProcessing() {
+        return processing;
+    }
 
+    public void setProcessing(String processing) {
+        this.processing = processing;
+    }
 }

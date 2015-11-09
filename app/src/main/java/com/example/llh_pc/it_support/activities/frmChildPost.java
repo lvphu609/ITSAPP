@@ -85,14 +85,6 @@ public class frmChildPost extends AppCompatActivity implements InnoFunctionListe
         getSupportActionBar().setHomeAsUpIndicator(R.mipmap.back);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
-   /* @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_frm_child_post, menu);
-        return true;
-    }*/
-
    @Override
    public void onBackPressed() {
        final Intent intent = new Intent(this, frmTabHost.class);
